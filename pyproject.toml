@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agentrelbench"
+version = "0.1.0"
+description = "k-run wrapper for the EnterpriseOps-Gym benchmark: drives evaluate.py k times per task, archiving per-run DB state exports plus a batch manifest."
+requires-python = ">=3.11"
+dependencies = [
+    "httpx>=0.24",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "hypothesis>=6.0",
+]
+
+[project.scripts]
+arb-run = "agentrelbench.cli:entrypoint"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/agentrelbench"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,434 @@
+{
+ "domain": "csm",
+ "source": "orchestrator manual review over inventory, 2026-07-16",
+ "tags": [
+  {
+   "name": "find_user",
+   "tag": "read"
+  },
+  {
+   "name": "find_user_by_email",
+   "tag": "read"
+  },
+  {
+   "name": "find_account",
+   "tag": "read"
+  },
+  {
+   "name": "find_contact_by_portal_user",
+   "tag": "read"
+  },
+  {
+   "name": "find_product",
+   "tag": "read"
+  },
+  {
+   "name": "find_product_by_id",
+   "tag": "read"
+  },
+  {
+   "name": "find_installed_product_by_serial",
+   "tag": "read"
+  },
+  {
+   "name": "find_location",
+   "tag": "read"
+  },
+  {
+   "name": "find_user_group",
+   "tag": "read"
+  },
+  {
+   "name": "check_user_membership",
+   "tag": "read"
+  },
+  {
+   "name": "assign_case_to_user",
+   "tag": "reversible-write",
+   "severity": "LOW"
+  },
+  {
+   "name": "set_case_assignment_group",
+   "tag": "reversible-write",
+   "severity": "LOW"
+  },
+  {
+   "name": "list_users",
+   "tag": "read"
+  },
+  {
+   "name": "list_user_groups",
+   "tag": "read"
+  },
+  {
+   "name": "list_group_members",
+   "tag": "read"
+  },
+  {
+   "name": "get_accounts",
+   "tag": "read"
+  },
+  {
+   "name": "find_contacts",
+   "tag": "read"
+  },
+  {
+   "name": "find_locations",
+   "tag": "read"
+  },
+  {
+   "name": "find_products",
+   "tag": "read"
+  },
+  {
+   "name": "installed_product_warranties_ended_count",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "avg_installed_per_account_by_status",
+   "tag": "read"
+  },
+  {
+   "name": "count_installed_product_by_status",
+   "tag": "read"
+  },
+  {
+   "name": "retrieve_installed_products",
+   "tag": "read"
+  },
+  {
+   "name": "count_contract_by_status",
+   "tag": "read"
+  },
+  {
+   "name": "avg_contracts_per_account_by_status",
+   "tag": "read"
+  },
+  {
+   "name": "find_contracts",
+   "tag": "read"
+  },
+  {
+   "name": "total_sum_of_max_cases_per_support_level",
+   "tag": "read"
+  },
+  {
+   "name": "find_entitlements",
+   "tag": "read"
+  },
+  {
+   "name": "total_sum_of_target_mins_per_priority",
+   "tag": "read"
+  },
+  {
+   "name": "find_sla_definitions",
+   "tag": "read"
+  },
+  {
+   "name": "average_target_mins_per_priority",
+   "tag": "read"
+  },
+  {
+   "name": "get_cases_assigned_to",
+   "tag": "read"
+  },
+  {
+   "name": "get_average_case_reopen_count",
+   "tag": "read"
+  },
+  {
+   "name": "get_count_of_cases_priority_wise",
+   "tag": "read"
+  },
+  {
+   "name": "count_case_for_assignment_group",
+   "tag": "read"
+  },
+  {
+   "name": "count_case_by_state",
+   "tag": "read"
+  },
+  {
+   "name": "avg_reopen_count_for_assignment_group",
+   "tag": "read"
+  },
+  {
+   "name": "search_cases",
+   "tag": "read"
+  },
+  {
+   "name": "find_case_slas",
+   "tag": "read"
+  },
+  {
+   "name": "find_stage_wise_breached_case_sla_counts",
+   "tag": "read"
+  },
+  {
+   "name": "find_interactions",
+   "tag": "read"
+  },
+  {
+   "name": "count_interaction_by_status",
+   "tag": "read"
+  },
+  {
+   "name": "avg_interactions_per_case_by_status",
+   "tag": "read"
+  },
+  {
+   "name": "get_channel_wise_case_count",
+   "tag": "read"
+  },
+  {
+   "name": "retrieve_knowledge",
+   "tag": "read"
+  },
+  {
+   "name": "find_case_knowledge_linkages",
+   "tag": "read"
+  },
+  {
+   "name": "find_notifications",
+   "tag": "read"
+  },
+  {
+   "name": "count_notifications_by_status",
+   "tag": "read"
+  },
+  {
+   "name": "count_notifications_by_case",
+   "tag": "read"
+  },
+  {
+   "name": "avg_notifications_by_case",
+   "tag": "read"
+  },
+  {
+   "name": "count_notifications_by_type",
+   "tag": "read"
+  },
+  {
+   "name": "add_new_user",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_user_details",
+   "tag": "reversible-write",
+   "severity": "LOW"
+  },
+  {
+   "name": "add_new_user_group",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_user_group",
+   "tag": "reversible-write",
+   "severity": "LOW"
+  },
+  {
+   "name": "add_new_group_member",
+   "tag": "compensable",
+   "severity": "LOW",
+   "note": "delete/remove twin exists in toolset"
+  },
+  {
+   "name": "remove_group_membership",
+   "tag": "irreversible",
+   "severity": "HIGH",
+   "bulk": false,
+   "note": "destructive"
+  },
+  {
+   "name": "create_new_account",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_account_details",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "create_contact",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_contact",
+   "tag": "reversible-write",
+   "severity": "LOW"
+  },
+  {
+   "name": "add_location",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_location",
+   "tag": "reversible-write",
+   "severity": "LOW"
+  },
+  {
+   "name": "add_new_product",
+   "tag": "irreversible",
+   "severity": "HIGH",
+   "note": "create with NO delete twin in toolset",
+   "money_field": "product_price"
+  },
+  {
+   "name": "update_product",
+   "tag": "reversible-write",
+   "severity": "HIGH",
+   "money_field": "product_price"
+  },
+  {
+   "name": "delete_products",
+   "tag": "irreversible",
+   "severity": "HIGH",
+   "bulk": true,
+   "note": "filter-based bulk delete \u2014 over-broad filters destroy many rows"
+  },
+  {
+   "name": "register_new_installed_product",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_installed_product_details",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "enlist_new_contract",
+   "tag": "irreversible",
+   "severity": "HIGH",
+   "note": "create with NO delete twin in toolset",
+   "money_field": "contract_price"
+  },
+  {
+   "name": "update_contract",
+   "tag": "reversible-write",
+   "severity": "HIGH",
+   "money_field": "contract_price"
+  },
+  {
+   "name": "add_new_entitlement",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_entitlement",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "add_new_sla_definition",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_sla_definition",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "create_new_case",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_case",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "link_new_case_sla",
+   "tag": "compensable",
+   "severity": "LOW",
+   "note": "delete/remove twin exists in toolset"
+  },
+  {
+   "name": "update_case_sla_details",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "delete_case_slas",
+   "tag": "irreversible",
+   "severity": "HIGH",
+   "bulk": true,
+   "note": "filter-based bulk delete \u2014 over-broad filters destroy many rows"
+  },
+  {
+   "name": "register_new_interaction",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_interaction",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "create_knowledge",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_knowledge",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "link_case_knowledge",
+   "tag": "compensable",
+   "severity": "LOW",
+   "note": "delete/remove twin exists in toolset"
+  },
+  {
+   "name": "updated_linked_case_knowledge",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "delete_case_knowledge_linkages",
+   "tag": "irreversible",
+   "severity": "HIGH",
+   "bulk": true,
+   "note": "filter-based bulk delete \u2014 over-broad filters destroy many rows"
+  },
+  {
+   "name": "send_notification",
+   "tag": "irreversible",
+   "severity": "HIGH",
+   "note": "outward-facing (email-like); row deletable but send may be observed"
+  },
+  {
+   "name": "update_notification",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "delete_notifications",
+   "tag": "irreversible",
+   "severity": "HIGH",
+   "bulk": true,
+   "note": "filter-based bulk delete \u2014 over-broad filters destroy many rows"
+  }
+ ]
+}

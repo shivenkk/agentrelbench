@@ -1,0 +1,628 @@
+{
+  "diff_report": {
+    "cell_diffs": [
+      {
+        "column": "created_on",
+        "row_index": 4,
+        "table": "configuration_item",
+        "values": {
+          "R1": "2026-07-16 11:31:48.787843",
+          "R2": "2026-07-16 11:31:49.151105"
+        }
+      },
+      {
+        "column": "updated_on",
+        "row_index": 4,
+        "table": "configuration_item",
+        "values": {
+          "R1": "2026-07-16 11:31:48.816302",
+          "R2": "2026-07-16 11:31:49.180406"
+        }
+      },
+      {
+        "column": "created_at",
+        "row_index": 23,
+        "table": "incident",
+        "values": {
+          "R1": "2026-07-16 11:31:48.694909",
+          "R2": "2026-07-16 11:31:49.057738"
+        }
+      },
+      {
+        "column": "updated_at",
+        "row_index": 23,
+        "table": "incident",
+        "values": {
+          "R1": "2026-07-16 11:31:48.757304",
+          "R2": "2026-07-16 11:31:49.120182"
+        }
+      },
+      {
+        "column": "created_at",
+        "row_index": 24,
+        "table": "incident",
+        "values": {
+          "R1": "2026-07-16 11:31:48.727715",
+          "R2": "2026-07-16 11:31:49.088894"
+        }
+      },
+      {
+        "column": "updated_at",
+        "row_index": 24,
+        "table": "incident",
+        "values": {
+          "R1": "2026-07-16 11:31:48.727715",
+          "R2": "2026-07-16 11:31:49.088894"
+        }
+      },
+      {
+        "column": "created_on",
+        "row_index": 7,
+        "table": "notification",
+        "values": {
+          "R1": "2026-07-16 11:31:48.845696",
+          "R2": "2026-07-16 11:31:49.207491"
+        }
+      },
+      {
+        "column": "updated_on",
+        "row_index": 7,
+        "table": "notification",
+        "values": {
+          "R1": "2026-07-16 11:31:48.845696",
+          "R2": "2026-07-16 11:31:49.207491"
+        }
+      }
+    ],
+    "labels": [
+      "R1",
+      "R2"
+    ],
+    "row_count_mismatch": {},
+    "tables_not_common_to_all": []
+  },
+  "identical_modulo_volatile_columns": true,
+  "ids_identical": {
+    "ci_a": true,
+    "incident_a": true,
+    "incident_b": true
+  },
+  "raw_identical": false,
+  "replicas": {
+    "R1": {
+      "call_log": [
+        {
+          "arguments": {
+            "assigned_to": "USER_003",
+            "assignment_group": "GROUP_001",
+            "caller_id": "USER_005",
+            "category": "software",
+            "channel": "email",
+            "impact": "medium",
+            "priority": "high",
+            "short_description": "M1 replay incident A",
+            "urgency": "medium"
+          },
+          "ok": true,
+          "parsed_result": {
+            "assigned_to": "USER_003",
+            "assignment_group": "GROUP_001",
+            "caller_id": "USER_005",
+            "category": "software",
+            "caused_by_change": null,
+            "change_request": null,
+            "channel": "email",
+            "close_notes": null,
+            "configuration_item": null,
+            "created_at": "2026-07-16T11:31:48.694909",
+            "description": null,
+            "impact": "medium",
+            "incident_id": "INC_024",
+            "incident_template": null,
+            "number": "INC-000024",
+            "on_hold_reason": null,
+            "parent_incident": null,
+            "priority": "high",
+            "problem": null,
+            "resolution_code": null,
+            "resolution_notes": null,
+            "resolved": null,
+            "resolved_by": null,
+            "service": null,
+            "service_offering": null,
+            "short_description": "M1 replay incident A",
+            "status": "new",
+            "updated_at": "2026-07-16T11:31:48.694909",
+            "urgency": "medium",
+            "worknotes": null
+          },
+          "step": 1,
+          "tool": "create_incident"
+        },
+        {
+          "arguments": {
+            "caller_id": "USER_002",
+            "category": "hardware",
+            "priority": "moderate",
+            "short_description": "M1 replay incident B"
+          },
+          "ok": true,
+          "parsed_result": {
+            "assigned_to": null,
+            "assignment_group": null,
+            "caller_id": "USER_002",
+            "category": "hardware",
+            "caused_by_change": null,
+            "change_request": null,
+            "channel": null,
+            "close_notes": null,
+            "configuration_item": null,
+            "created_at": "2026-07-16T11:31:48.727715",
+            "description": null,
+            "impact": "low",
+            "incident_id": "INC_025",
+            "incident_template": null,
+            "number": "INC-000025",
+            "on_hold_reason": null,
+            "parent_incident": null,
+            "priority": "moderate",
+            "problem": null,
+            "resolution_code": null,
+            "resolution_notes": null,
+            "resolved": null,
+            "resolved_by": null,
+            "service": null,
+            "service_offering": null,
+            "short_description": "M1 replay incident B",
+            "status": "new",
+            "updated_at": "2026-07-16T11:31:48.727715",
+            "urgency": "low",
+            "worknotes": null
+          },
+          "step": 2,
+          "tool": "create_incident"
+        },
+        {
+          "arguments": {
+            "incident_id": "INC_024",
+            "priority": "critical",
+            "status": "in_progress",
+            "worknotes": "M1 audit replay update"
+          },
+          "ok": true,
+          "parsed_result": {
+            "assigned_to": "USER_003",
+            "assignment_group": "GROUP_001",
+            "caller_id": "USER_005",
+            "category": "software",
+            "caused_by_change": null,
+            "change_request": null,
+            "channel": "email",
+            "close_notes": null,
+            "configuration_item": null,
+            "created_at": "2026-07-16T11:31:48.694909",
+            "description": null,
+            "impact": "medium",
+            "incident_id": "INC_024",
+            "incident_template": null,
+            "number": "INC-000024",
+            "on_hold_reason": null,
+            "parent_incident": null,
+            "priority": "critical",
+            "problem": null,
+            "resolution_code": null,
+            "resolution_notes": null,
+            "resolved": null,
+            "resolved_by": null,
+            "service": null,
+            "service_offering": null,
+            "short_description": "M1 replay incident A",
+            "status": "in_progress",
+            "updated_at": "2026-07-16T11:31:48.757304",
+            "urgency": "medium",
+            "worknotes": "M1 audit replay update"
+          },
+          "step": 3,
+          "tool": "update_incident"
+        },
+        {
+          "arguments": {
+            "cost": 999.99,
+            "location_id": "LOC_001",
+            "name": "M1 Audit CI",
+            "owner_id": "USER_003",
+            "serial_number": "M1AUDIT-SN-0001",
+            "status": "in_use"
+          },
+          "ok": true,
+          "parsed_result": {
+            "configuration_item_id": "CI_005",
+            "cost": 999.99,
+            "created_on": "2026-07-16T11:31:48.787843",
+            "location_id": "LOC_001",
+            "name": "M1 Audit CI",
+            "owner_id": "USER_003",
+            "serial_number": "M1AUDIT-SN-0001",
+            "status": "in_use",
+            "updated_on": "2026-07-16T11:31:48.787843"
+          },
+          "step": 4,
+          "tool": "register_configuration_item"
+        },
+        {
+          "arguments": {
+            "configuration_item_id": "CI_005",
+            "cost": 1099.5,
+            "status": "maintenance"
+          },
+          "ok": true,
+          "parsed_result": {
+            "configuration_item_id": "CI_005",
+            "cost": 1099.5,
+            "created_on": "2026-07-16T11:31:48.787843",
+            "location_id": "LOC_001",
+            "name": "M1 Audit CI",
+            "owner_id": "USER_003",
+            "serial_number": "M1AUDIT-SN-0001",
+            "status": "maintenance",
+            "updated_on": "2026-07-16T11:31:48.816302"
+          },
+          "step": 5,
+          "tool": "update_configuration_item"
+        },
+        {
+          "arguments": {
+            "email": "carlos.rodriguez@techcorp.com",
+            "incident_id": "INC_024",
+            "message": "test message",
+            "status": "queued",
+            "subject": "Audit Update",
+            "type": "update"
+          },
+          "ok": true,
+          "parsed_result": {
+            "created_on": "2026-07-16T11:31:48.845696",
+            "email": "carlos.rodriguez@techcorp.com",
+            "incident_id": "INC_024",
+            "message": "test message",
+            "notification_id": "NOTIF_008",
+            "org_id": "ORG_001",
+            "status": "queued",
+            "subject": "Audit Update",
+            "type": "update",
+            "updated_on": "2026-07-16T11:31:48.845696"
+          },
+          "step": 6,
+          "tool": "send_notification"
+        }
+      ],
+      "captured_ids": {
+        "ci_a": "CI_005",
+        "incident_a": "INC_024",
+        "incident_b": "INC_025"
+      },
+      "db_id": "db_1784201508431_bidg0n9e3"
+    },
+    "R2": {
+      "call_log": [
+        {
+          "arguments": {
+            "assigned_to": "USER_003",
+            "assignment_group": "GROUP_001",
+            "caller_id": "USER_005",
+            "category": "software",
+            "channel": "email",
+            "impact": "medium",
+            "priority": "high",
+            "short_description": "M1 replay incident A",
+            "urgency": "medium"
+          },
+          "ok": true,
+          "parsed_result": {
+            "assigned_to": "USER_003",
+            "assignment_group": "GROUP_001",
+            "caller_id": "USER_005",
+            "category": "software",
+            "caused_by_change": null,
+            "change_request": null,
+            "channel": "email",
+            "close_notes": null,
+            "configuration_item": null,
+            "created_at": "2026-07-16T11:31:49.057738",
+            "description": null,
+            "impact": "medium",
+            "incident_id": "INC_024",
+            "incident_template": null,
+            "number": "INC-000024",
+            "on_hold_reason": null,
+            "parent_incident": null,
+            "priority": "high",
+            "problem": null,
+            "resolution_code": null,
+            "resolution_notes": null,
+            "resolved": null,
+            "resolved_by": null,
+            "service": null,
+            "service_offering": null,
+            "short_description": "M1 replay incident A",
+            "status": "new",
+            "updated_at": "2026-07-16T11:31:49.057738",
+            "urgency": "medium",
+            "worknotes": null
+          },
+          "step": 1,
+          "tool": "create_incident"
+        },
+        {
+          "arguments": {
+            "caller_id": "USER_002",
+            "category": "hardware",
+            "priority": "moderate",
+            "short_description": "M1 replay incident B"
+          },
+          "ok": true,
+          "parsed_result": {
+            "assigned_to": null,
+            "assignment_group": null,
+            "caller_id": "USER_002",
+            "category": "hardware",
+            "caused_by_change": null,
+            "change_request": null,
+            "channel": null,
+            "close_notes": null,
+            "configuration_item": null,
+            "created_at": "2026-07-16T11:31:49.088894",
+            "description": null,
+            "impact": "low",
+            "incident_id": "INC_025",
+            "incident_template": null,
+            "number": "INC-000025",
+            "on_hold_reason": null,
+            "parent_incident": null,
+            "priority": "moderate",
+            "problem": null,
+            "resolution_code": null,
+            "resolution_notes": null,
+            "resolved": null,
+            "resolved_by": null,
+            "service": null,
+            "service_offering": null,
+            "short_description": "M1 replay incident B",
+            "status": "new",
+            "updated_at": "2026-07-16T11:31:49.088894",
+            "urgency": "low",
+            "worknotes": null
+          },
+          "step": 2,
+          "tool": "create_incident"
+        },
+        {
+          "arguments": {
+            "incident_id": "INC_024",
+            "priority": "critical",
+            "status": "in_progress",
+            "worknotes": "M1 audit replay update"
+          },
+          "ok": true,
+          "parsed_result": {
+            "assigned_to": "USER_003",
+            "assignment_group": "GROUP_001",
+            "caller_id": "USER_005",
+            "category": "software",
+            "caused_by_change": null,
+            "change_request": null,
+            "channel": "email",
+            "close_notes": null,
+            "configuration_item": null,
+            "created_at": "2026-07-16T11:31:49.057738",
+            "description": null,
+            "impact": "medium",
+            "incident_id": "INC_024",
+            "incident_template": null,
+            "number": "INC-000024",
+            "on_hold_reason": null,
+            "parent_incident": null,
+            "priority": "critical",
+            "problem": null,
+            "resolution_code": null,
+            "resolution_notes": null,
+            "resolved": null,
+            "resolved_by": null,
+            "service": null,
+            "service_offering": null,
+            "short_description": "M1 replay incident A",
+            "status": "in_progress",
+            "updated_at": "2026-07-16T11:31:49.120182",
+            "urgency": "medium",
+            "worknotes": "M1 audit replay update"
+          },
+          "step": 3,
+          "tool": "update_incident"
+        },
+        {
+          "arguments": {
+            "cost": 999.99,
+            "location_id": "LOC_001",
+            "name": "M1 Audit CI",
+            "owner_id": "USER_003",
+            "serial_number": "M1AUDIT-SN-0001",
+            "status": "in_use"
+          },
+          "ok": true,
+          "parsed_result": {
+            "configuration_item_id": "CI_005",
+            "cost": 999.99,
+            "created_on": "2026-07-16T11:31:49.151105",
+            "location_id": "LOC_001",
+            "name": "M1 Audit CI",
+            "owner_id": "USER_003",
+            "serial_number": "M1AUDIT-SN-0001",
+            "status": "in_use",
+            "updated_on": "2026-07-16T11:31:49.151105"
+          },
+          "step": 4,
+          "tool": "register_configuration_item"
+        },
+        {
+          "arguments": {
+            "configuration_item_id": "CI_005",
+            "cost": 1099.5,
+            "status": "maintenance"
+          },
+          "ok": true,
+          "parsed_result": {
+            "configuration_item_id": "CI_005",
+            "cost": 1099.5,
+            "created_on": "2026-07-16T11:31:49.151105",
+            "location_id": "LOC_001",
+            "name": "M1 Audit CI",
+            "owner_id": "USER_003",
+            "serial_number": "M1AUDIT-SN-0001",
+            "status": "maintenance",
+            "updated_on": "2026-07-16T11:31:49.180406"
+          },
+          "step": 5,
+          "tool": "update_configuration_item"
+        },
+        {
+          "arguments": {
+            "email": "carlos.rodriguez@techcorp.com",
+            "incident_id": "INC_024",
+            "message": "test message",
+            "status": "queued",
+            "subject": "Audit Update",
+            "type": "update"
+          },
+          "ok": true,
+          "parsed_result": {
+            "created_on": "2026-07-16T11:31:49.207491",
+            "email": "carlos.rodriguez@techcorp.com",
+            "incident_id": "INC_024",
+            "message": "test message",
+            "notification_id": "NOTIF_008",
+            "org_id": "ORG_001",
+            "status": "queued",
+            "subject": "Audit Update",
+            "type": "update",
+            "updated_on": "2026-07-16T11:31:49.207491"
+          },
+          "step": 6,
+          "tool": "send_notification"
+        }
+      ],
+      "captured_ids": {
+        "ci_a": "CI_005",
+        "incident_a": "INC_024",
+        "incident_b": "INC_025"
+      },
+      "db_id": "db_1784201508851_lfgbeykcf"
+    }
+  },
+  "varying_columns": {
+    "configuration_item.created_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "created_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 4,
+          "values": {
+            "R1": "2026-07-16 11:31:48.787843",
+            "R2": "2026-07-16 11:31:49.151105"
+          }
+        }
+      ],
+      "table": "configuration_item"
+    },
+    "configuration_item.updated_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "updated_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 4,
+          "values": {
+            "R1": "2026-07-16 11:31:48.816302",
+            "R2": "2026-07-16 11:31:49.180406"
+          }
+        }
+      ],
+      "table": "configuration_item"
+    },
+    "incident.created_at": {
+      "behavior": "wall-clock timestamp",
+      "column": "created_at",
+      "diff_count": 2,
+      "examples": [
+        {
+          "row_index": 23,
+          "values": {
+            "R1": "2026-07-16 11:31:48.694909",
+            "R2": "2026-07-16 11:31:49.057738"
+          }
+        },
+        {
+          "row_index": 24,
+          "values": {
+            "R1": "2026-07-16 11:31:48.727715",
+            "R2": "2026-07-16 11:31:49.088894"
+          }
+        }
+      ],
+      "table": "incident"
+    },
+    "incident.updated_at": {
+      "behavior": "wall-clock timestamp",
+      "column": "updated_at",
+      "diff_count": 2,
+      "examples": [
+        {
+          "row_index": 23,
+          "values": {
+            "R1": "2026-07-16 11:31:48.757304",
+            "R2": "2026-07-16 11:31:49.120182"
+          }
+        },
+        {
+          "row_index": 24,
+          "values": {
+            "R1": "2026-07-16 11:31:48.727715",
+            "R2": "2026-07-16 11:31:49.088894"
+          }
+        }
+      ],
+      "table": "incident"
+    },
+    "notification.created_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "created_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 7,
+          "values": {
+            "R1": "2026-07-16 11:31:48.845696",
+            "R2": "2026-07-16 11:31:49.207491"
+          }
+        }
+      ],
+      "table": "notification"
+    },
+    "notification.updated_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "updated_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 7,
+          "values": {
+            "R1": "2026-07-16 11:31:48.845696",
+            "R2": "2026-07-16 11:31:49.207491"
+          }
+        }
+      ],
+      "table": "notification"
+    }
+  },
+  "wall_time_s": 1.44
+}

@@ -1,0 +1,10 @@
+external/
+__pycache__/
+*.pyc
+.venv/
+.env
+.DS_Store
+logs/
+results/
+runs/
+scratch/

@@ -1,0 +1,953 @@
+{
+  "diff_report": {
+    "cell_diffs": [
+      {
+        "column": "start_time",
+        "row_index": 2464,
+        "table": "case_sla",
+        "values": {
+          "R1": "2026-07-16 11:29:20",
+          "R2": "2026-07-16 11:29:20",
+          "R3": "2026-07-16 11:29:21"
+        }
+      },
+      {
+        "column": "start_time",
+        "row_index": 2465,
+        "table": "case_sla",
+        "values": {
+          "R1": "2026-07-16 11:29:20",
+          "R2": "2026-07-16 11:29:20",
+          "R3": "2026-07-16 11:29:21"
+        }
+      },
+      {
+        "column": "sys_created_on",
+        "row_index": 1232,
+        "table": "customer_case",
+        "values": {
+          "R1": "2026-07-16 11:29:20",
+          "R2": "2026-07-16 11:29:20",
+          "R3": "2026-07-16 11:29:21"
+        }
+      },
+      {
+        "column": "sys_updated_on",
+        "row_index": 1232,
+        "table": "customer_case",
+        "values": {
+          "R1": "2026-07-16 11:29:20",
+          "R2": "2026-07-16 11:29:20",
+          "R3": "2026-07-16 11:29:21"
+        }
+      },
+      {
+        "column": "sys_created_on",
+        "row_index": 1233,
+        "table": "customer_case",
+        "values": {
+          "R1": "2026-07-16 11:29:20",
+          "R2": "2026-07-16 11:29:20",
+          "R3": "2026-07-16 11:29:21"
+        }
+      },
+      {
+        "column": "sys_updated_on",
+        "row_index": 1233,
+        "table": "customer_case",
+        "values": {
+          "R1": "2026-07-16 11:29:20",
+          "R2": "2026-07-16 11:29:20",
+          "R3": "2026-07-16 11:29:21"
+        }
+      },
+      {
+        "column": "sys_created_on",
+        "row_index": 733,
+        "table": "notification",
+        "values": {
+          "R1": "2026-07-16 11:29:20",
+          "R2": "2026-07-16 11:29:20",
+          "R3": "2026-07-16 11:29:21"
+        }
+      }
+    ],
+    "labels": [
+      "R1",
+      "R2",
+      "R3"
+    ],
+    "row_count_mismatch": {},
+    "tables_not_common_to_all": []
+  },
+  "identical_modulo_volatile_columns": true,
+  "ids_identical": {
+    "case_a": true,
+    "case_b": true,
+    "notification_a": true,
+    "sla_link_a": true,
+    "sla_link_b": true
+  },
+  "raw_identical": false,
+  "replicas": {
+    "R1": {
+      "call_log": [
+        {
+          "arguments": {
+            "account_id": 1,
+            "assigned_to": 3,
+            "assignment_group_id": 4,
+            "channel": "email",
+            "contact_id": 123,
+            "escalation": false,
+            "installed_product_id": 3,
+            "priority": "high",
+            "product_id": 128,
+            "short_description": "M1 replay case A",
+            "state": "new"
+          },
+          "ok": true,
+          "parsed_result": {
+            "account_id": 1,
+            "assigned_to": 3,
+            "assignment_group_id": 4,
+            "case_id": 1233,
+            "channel": "email",
+            "closed_on": null,
+            "contact_id": 123,
+            "escalation": 0,
+            "escalation_reason": null,
+            "installed_product_id": 3,
+            "number": "CS-0001233",
+            "priority": "high",
+            "product_id": 128,
+            "reopen_count": 0,
+            "short_description": "M1 replay case A",
+            "state": "new",
+            "sys_created_on": "2026-07-16 11:29:20",
+            "sys_updated_on": "2026-07-16 11:29:20"
+          },
+          "step": 1,
+          "tool": "create_new_case"
+        },
+        {
+          "arguments": {
+            "account_id": 1,
+            "assigned_to": 5,
+            "assignment_group_id": 4,
+            "channel": "web",
+            "contact_id": 123,
+            "escalation": false,
+            "installed_product_id": 3,
+            "priority": "moderate",
+            "product_id": 128,
+            "short_description": "M1 replay case B",
+            "state": "new"
+          },
+          "ok": true,
+          "parsed_result": {
+            "account_id": 1,
+            "assigned_to": 5,
+            "assignment_group_id": 4,
+            "case_id": 1234,
+            "channel": "web",
+            "closed_on": null,
+            "contact_id": 123,
+            "escalation": 0,
+            "escalation_reason": null,
+            "installed_product_id": 3,
+            "number": "CS-0001234",
+            "priority": "moderate",
+            "product_id": 128,
+            "reopen_count": 0,
+            "short_description": "M1 replay case B",
+            "state": "new",
+            "sys_created_on": "2026-07-16 11:29:20",
+            "sys_updated_on": "2026-07-16 11:29:20"
+          },
+          "step": 2,
+          "tool": "create_new_case"
+        },
+        {
+          "arguments": {
+            "case_id": 1233,
+            "escalation": true,
+            "escalation_reason": "customer_request",
+            "priority": "critical",
+            "state": "in_progress"
+          },
+          "ok": true,
+          "parsed_result": {
+            "account_id": 1,
+            "assigned_to": 3,
+            "assignment_group_id": 4,
+            "case_id": 1233,
+            "channel": "email",
+            "closed_on": null,
+            "contact_id": 123,
+            "escalation": 1,
+            "escalation_reason": "customer_request",
+            "installed_product_id": 3,
+            "number": "CS-0001233",
+            "priority": "critical",
+            "product_id": 128,
+            "reopen_count": 0,
+            "short_description": "M1 replay case A",
+            "state": "in_progress",
+            "sys_created_on": "2026-07-16 11:29:20",
+            "sys_updated_on": "2026-07-16 11:29:20"
+          },
+          "step": 3,
+          "tool": "update_case"
+        },
+        {
+          "arguments": {
+            "case_id": 1234,
+            "state": "pending"
+          },
+          "ok": true,
+          "parsed_result": {
+            "account_id": 1,
+            "assigned_to": 5,
+            "assignment_group_id": 4,
+            "case_id": 1234,
+            "channel": "web",
+            "closed_on": null,
+            "contact_id": 123,
+            "escalation": 0,
+            "escalation_reason": null,
+            "installed_product_id": 3,
+            "number": "CS-0001234",
+            "priority": "moderate",
+            "product_id": 128,
+            "reopen_count": 0,
+            "short_description": "M1 replay case B",
+            "state": "pending",
+            "sys_created_on": "2026-07-16 11:29:20",
+            "sys_updated_on": "2026-07-16 11:29:20"
+          },
+          "step": 4,
+          "tool": "update_case"
+        },
+        {
+          "arguments": {
+            "assigned_to_user_id": 6,
+            "case_id": 1233
+          },
+          "ok": true,
+          "parsed_result": {
+            "assigned_at": "2026-07-16 11:29:20",
+            "assigned_to": 6,
+            "assignment_status": "success"
+          },
+          "step": 5,
+          "tool": "assign_case_to_user"
+        },
+        {
+          "arguments": {
+            "assigned_to_user_id": 9,
+            "case_id": 1234
+          },
+          "ok": true,
+          "parsed_result": {
+            "assigned_at": "2026-07-16 11:29:20",
+            "assigned_to": 9,
+            "assignment_status": "success"
+          },
+          "step": 6,
+          "tool": "assign_case_to_user"
+        },
+        {
+          "arguments": {
+            "case_id": 1233,
+            "sla_def_id": 1,
+            "stage": "in_progress"
+          },
+          "ok": true,
+          "parsed_result": {
+            "breach_time": null,
+            "case_id": 1233,
+            "case_sla_id": 2465,
+            "completed_time": null,
+            "has_breached": 0,
+            "sla_def_id": 1,
+            "stage": "in_progress",
+            "start_time": "2026-07-16 11:29:20"
+          },
+          "step": 7,
+          "tool": "link_new_case_sla"
+        },
+        {
+          "arguments": {
+            "case_id": 1234,
+            "sla_def_id": 2,
+            "stage": "in_progress"
+          },
+          "ok": true,
+          "parsed_result": {
+            "breach_time": null,
+            "case_id": 1234,
+            "case_sla_id": 2466,
+            "completed_time": null,
+            "has_breached": 0,
+            "sla_def_id": 2,
+            "stage": "in_progress",
+            "start_time": "2026-07-16 11:29:20"
+          },
+          "step": 8,
+          "tool": "link_new_case_sla"
+        },
+        {
+          "arguments": {
+            "case_id": 1233,
+            "email": "replay-audit@example.com",
+            "type": "update"
+          },
+          "ok": true,
+          "parsed_result": {
+            "case_id": 1233,
+            "email": "replay-audit@example.com",
+            "knowledge_id": null,
+            "notification_id": 734,
+            "status": "success",
+            "sys_created_on": "2026-07-16 11:29:20",
+            "type": "update"
+          },
+          "step": 9,
+          "tool": "send_notification"
+        },
+        {
+          "arguments": {
+            "case_sla_id": 2465,
+            "has_breached": false,
+            "stage": "completed"
+          },
+          "ok": true,
+          "parsed_result": {
+            "breach_time": null,
+            "case_id": 1233,
+            "case_sla_id": 2465,
+            "completed_time": null,
+            "has_breached": 0,
+            "sla_def_id": 1,
+            "stage": "completed",
+            "start_time": "2026-07-16 11:29:20"
+          },
+          "step": 10,
+          "tool": "update_case_sla_details"
+        }
+      ],
+      "captured_ids": {
+        "case_a": 1233,
+        "case_b": 1234,
+        "notification_a": 734,
+        "sla_link_a": 2465,
+        "sla_link_b": 2466
+      },
+      "db_id": "db_1784201359702_533ihgfbo"
+    },
+    "R2": {
+      "call_log": [
+        {
+          "arguments": {
+            "account_id": 1,
+            "assigned_to": 3,
+            "assignment_group_id": 4,
+            "channel": "email",
+            "contact_id": 123,
+            "escalation": false,
+            "installed_product_id": 3,
+            "priority": "high",
+            "product_id": 128,
+            "short_description": "M1 replay case A",
+            "state": "new"
+          },
+          "ok": true,
+          "parsed_result": {
+            "account_id": 1,
+            "assigned_to": 3,
+            "assignment_group_id": 4,
+            "case_id": 1233,
+            "channel": "email",
+            "closed_on": null,
+            "contact_id": 123,
+            "escalation": 0,
+            "escalation_reason": null,
+            "installed_product_id": 3,
+            "number": "CS-0001233",
+            "priority": "high",
+            "product_id": 128,
+            "reopen_count": 0,
+            "short_description": "M1 replay case A",
+            "state": "new",
+            "sys_created_on": "2026-07-16 11:29:20",
+            "sys_updated_on": "2026-07-16 11:29:20"
+          },
+          "step": 1,
+          "tool": "create_new_case"
+        },
+        {
+          "arguments": {
+            "account_id": 1,
+            "assigned_to": 5,
+            "assignment_group_id": 4,
+            "channel": "web",
+            "contact_id": 123,
+            "escalation": false,
+            "installed_product_id": 3,
+            "priority": "moderate",
+            "product_id": 128,
+            "short_description": "M1 replay case B",
+            "state": "new"
+          },
+          "ok": true,
+          "parsed_result": {
+            "account_id": 1,
+            "assigned_to": 5,
+            "assignment_group_id": 4,
+            "case_id": 1234,
+            "channel": "web",
+            "closed_on": null,
+            "contact_id": 123,
+            "escalation": 0,
+            "escalation_reason": null,
+            "installed_product_id": 3,
+            "number": "CS-0001234",
+            "priority": "moderate",
+            "product_id": 128,
+            "reopen_count": 0,
+            "short_description": "M1 replay case B",
+            "state": "new",
+            "sys_created_on": "2026-07-16 11:29:20",
+            "sys_updated_on": "2026-07-16 11:29:20"
+          },
+          "step": 2,
+          "tool": "create_new_case"
+        },
+        {
+          "arguments": {
+            "case_id": 1233,
+            "escalation": true,
+            "escalation_reason": "customer_request",
+            "priority": "critical",
+            "state": "in_progress"
+          },
+          "ok": true,
+          "parsed_result": {
+            "account_id": 1,
+            "assigned_to": 3,
+            "assignment_group_id": 4,
+            "case_id": 1233,
+            "channel": "email",
+            "closed_on": null,
+            "contact_id": 123,
+            "escalation": 1,
+            "escalation_reason": "customer_request",
+            "installed_product_id": 3,
+            "number": "CS-0001233",
+            "priority": "critical",
+            "product_id": 128,
+            "reopen_count": 0,
+            "short_description": "M1 replay case A",
+            "state": "in_progress",
+            "sys_created_on": "2026-07-16 11:29:20",
+            "sys_updated_on": "2026-07-16 11:29:20"
+          },
+          "step": 3,
+          "tool": "update_case"
+        },
+        {
+          "arguments": {
+            "case_id": 1234,
+            "state": "pending"
+          },
+          "ok": true,
+          "parsed_result": {
+            "account_id": 1,
+            "assigned_to": 5,
+            "assignment_group_id": 4,
+            "case_id": 1234,
+            "channel": "web",
+            "closed_on": null,
+            "contact_id": 123,
+            "escalation": 0,
+            "escalation_reason": null,
+            "installed_product_id": 3,
+            "number": "CS-0001234",
+            "priority": "moderate",
+            "product_id": 128,
+            "reopen_count": 0,
+            "short_description": "M1 replay case B",
+            "state": "pending",
+            "sys_created_on": "2026-07-16 11:29:20",
+            "sys_updated_on": "2026-07-16 11:29:20"
+          },
+          "step": 4,
+          "tool": "update_case"
+        },
+        {
+          "arguments": {
+            "assigned_to_user_id": 6,
+            "case_id": 1233
+          },
+          "ok": true,
+          "parsed_result": {
+            "assigned_at": "2026-07-16 11:29:20",
+            "assigned_to": 6,
+            "assignment_status": "success"
+          },
+          "step": 5,
+          "tool": "assign_case_to_user"
+        },
+        {
+          "arguments": {
+            "assigned_to_user_id": 9,
+            "case_id": 1234
+          },
+          "ok": true,
+          "parsed_result": {
+            "assigned_at": "2026-07-16 11:29:20",
+            "assigned_to": 9,
+            "assignment_status": "success"
+          },
+          "step": 6,
+          "tool": "assign_case_to_user"
+        },
+        {
+          "arguments": {
+            "case_id": 1233,
+            "sla_def_id": 1,
+            "stage": "in_progress"
+          },
+          "ok": true,
+          "parsed_result": {
+            "breach_time": null,
+            "case_id": 1233,
+            "case_sla_id": 2465,
+            "completed_time": null,
+            "has_breached": 0,
+            "sla_def_id": 1,
+            "stage": "in_progress",
+            "start_time": "2026-07-16 11:29:20"
+          },
+          "step": 7,
+          "tool": "link_new_case_sla"
+        },
+        {
+          "arguments": {
+            "case_id": 1234,
+            "sla_def_id": 2,
+            "stage": "in_progress"
+          },
+          "ok": true,
+          "parsed_result": {
+            "breach_time": null,
+            "case_id": 1234,
+            "case_sla_id": 2466,
+            "completed_time": null,
+            "has_breached": 0,
+            "sla_def_id": 2,
+            "stage": "in_progress",
+            "start_time": "2026-07-16 11:29:20"
+          },
+          "step": 8,
+          "tool": "link_new_case_sla"
+        },
+        {
+          "arguments": {
+            "case_id": 1233,
+            "email": "replay-audit@example.com",
+            "type": "update"
+          },
+          "ok": true,
+          "parsed_result": {
+            "case_id": 1233,
+            "email": "replay-audit@example.com",
+            "knowledge_id": null,
+            "notification_id": 734,
+            "status": "success",
+            "sys_created_on": "2026-07-16 11:29:20",
+            "type": "update"
+          },
+          "step": 9,
+          "tool": "send_notification"
+        },
+        {
+          "arguments": {
+            "case_sla_id": 2465,
+            "has_breached": false,
+            "stage": "completed"
+          },
+          "ok": true,
+          "parsed_result": {
+            "breach_time": null,
+            "case_id": 1233,
+            "case_sla_id": 2465,
+            "completed_time": null,
+            "has_breached": 0,
+            "sla_def_id": 1,
+            "stage": "completed",
+            "start_time": "2026-07-16 11:29:20"
+          },
+          "step": 10,
+          "tool": "update_case_sla_details"
+        }
+      ],
+      "captured_ids": {
+        "case_a": 1233,
+        "case_b": 1234,
+        "notification_a": 734,
+        "sla_link_a": 2465,
+        "sla_link_b": 2466
+      },
+      "db_id": "db_1784201360342_o0ldby591"
+    },
+    "R3": {
+      "call_log": [
+        {
+          "arguments": {
+            "account_id": 1,
+            "assigned_to": 3,
+            "assignment_group_id": 4,
+            "channel": "email",
+            "contact_id": 123,
+            "escalation": false,
+            "installed_product_id": 3,
+            "priority": "high",
+            "product_id": 128,
+            "short_description": "M1 replay case A",
+            "state": "new"
+          },
+          "ok": true,
+          "parsed_result": {
+            "account_id": 1,
+            "assigned_to": 3,
+            "assignment_group_id": 4,
+            "case_id": 1233,
+            "channel": "email",
+            "closed_on": null,
+            "contact_id": 123,
+            "escalation": 0,
+            "escalation_reason": null,
+            "installed_product_id": 3,
+            "number": "CS-0001233",
+            "priority": "high",
+            "product_id": 128,
+            "reopen_count": 0,
+            "short_description": "M1 replay case A",
+            "state": "new",
+            "sys_created_on": "2026-07-16 11:29:21",
+            "sys_updated_on": "2026-07-16 11:29:21"
+          },
+          "step": 1,
+          "tool": "create_new_case"
+        },
+        {
+          "arguments": {
+            "account_id": 1,
+            "assigned_to": 5,
+            "assignment_group_id": 4,
+            "channel": "web",
+            "contact_id": 123,
+            "escalation": false,
+            "installed_product_id": 3,
+            "priority": "moderate",
+            "product_id": 128,
+            "short_description": "M1 replay case B",
+            "state": "new"
+          },
+          "ok": true,
+          "parsed_result": {
+            "account_id": 1,
+            "assigned_to": 5,
+            "assignment_group_id": 4,
+            "case_id": 1234,
+            "channel": "web",
+            "closed_on": null,
+            "contact_id": 123,
+            "escalation": 0,
+            "escalation_reason": null,
+            "installed_product_id": 3,
+            "number": "CS-0001234",
+            "priority": "moderate",
+            "product_id": 128,
+            "reopen_count": 0,
+            "short_description": "M1 replay case B",
+            "state": "new",
+            "sys_created_on": "2026-07-16 11:29:21",
+            "sys_updated_on": "2026-07-16 11:29:21"
+          },
+          "step": 2,
+          "tool": "create_new_case"
+        },
+        {
+          "arguments": {
+            "case_id": 1233,
+            "escalation": true,
+            "escalation_reason": "customer_request",
+            "priority": "critical",
+            "state": "in_progress"
+          },
+          "ok": true,
+          "parsed_result": {
+            "account_id": 1,
+            "assigned_to": 3,
+            "assignment_group_id": 4,
+            "case_id": 1233,
+            "channel": "email",
+            "closed_on": null,
+            "contact_id": 123,
+            "escalation": 1,
+            "escalation_reason": "customer_request",
+            "installed_product_id": 3,
+            "number": "CS-0001233",
+            "priority": "critical",
+            "product_id": 128,
+            "reopen_count": 0,
+            "short_description": "M1 replay case A",
+            "state": "in_progress",
+            "sys_created_on": "2026-07-16 11:29:21",
+            "sys_updated_on": "2026-07-16 11:29:21"
+          },
+          "step": 3,
+          "tool": "update_case"
+        },
+        {
+          "arguments": {
+            "case_id": 1234,
+            "state": "pending"
+          },
+          "ok": true,
+          "parsed_result": {
+            "account_id": 1,
+            "assigned_to": 5,
+            "assignment_group_id": 4,
+            "case_id": 1234,
+            "channel": "web",
+            "closed_on": null,
+            "contact_id": 123,
+            "escalation": 0,
+            "escalation_reason": null,
+            "installed_product_id": 3,
+            "number": "CS-0001234",
+            "priority": "moderate",
+            "product_id": 128,
+            "reopen_count": 0,
+            "short_description": "M1 replay case B",
+            "state": "pending",
+            "sys_created_on": "2026-07-16 11:29:21",
+            "sys_updated_on": "2026-07-16 11:29:21"
+          },
+          "step": 4,
+          "tool": "update_case"
+        },
+        {
+          "arguments": {
+            "assigned_to_user_id": 6,
+            "case_id": 1233
+          },
+          "ok": true,
+          "parsed_result": {
+            "assigned_at": "2026-07-16 11:29:21",
+            "assigned_to": 6,
+            "assignment_status": "success"
+          },
+          "step": 5,
+          "tool": "assign_case_to_user"
+        },
+        {
+          "arguments": {
+            "assigned_to_user_id": 9,
+            "case_id": 1234
+          },
+          "ok": true,
+          "parsed_result": {
+            "assigned_at": "2026-07-16 11:29:21",
+            "assigned_to": 9,
+            "assignment_status": "success"
+          },
+          "step": 6,
+          "tool": "assign_case_to_user"
+        },
+        {
+          "arguments": {
+            "case_id": 1233,
+            "sla_def_id": 1,
+            "stage": "in_progress"
+          },
+          "ok": true,
+          "parsed_result": {
+            "breach_time": null,
+            "case_id": 1233,
+            "case_sla_id": 2465,
+            "completed_time": null,
+            "has_breached": 0,
+            "sla_def_id": 1,
+            "stage": "in_progress",
+            "start_time": "2026-07-16 11:29:21"
+          },
+          "step": 7,
+          "tool": "link_new_case_sla"
+        },
+        {
+          "arguments": {
+            "case_id": 1234,
+            "sla_def_id": 2,
+            "stage": "in_progress"
+          },
+          "ok": true,
+          "parsed_result": {
+            "breach_time": null,
+            "case_id": 1234,
+            "case_sla_id": 2466,
+            "completed_time": null,
+            "has_breached": 0,
+            "sla_def_id": 2,
+            "stage": "in_progress",
+            "start_time": "2026-07-16 11:29:21"
+          },
+          "step": 8,
+          "tool": "link_new_case_sla"
+        },
+        {
+          "arguments": {
+            "case_id": 1233,
+            "email": "replay-audit@example.com",
+            "type": "update"
+          },
+          "ok": true,
+          "parsed_result": {
+            "case_id": 1233,
+            "email": "replay-audit@example.com",
+            "knowledge_id": null,
+            "notification_id": 734,
+            "status": "success",
+            "sys_created_on": "2026-07-16 11:29:21",
+            "type": "update"
+          },
+          "step": 9,
+          "tool": "send_notification"
+        },
+        {
+          "arguments": {
+            "case_sla_id": 2465,
+            "has_breached": false,
+            "stage": "completed"
+          },
+          "ok": true,
+          "parsed_result": {
+            "breach_time": null,
+            "case_id": 1233,
+            "case_sla_id": 2465,
+            "completed_time": null,
+            "has_breached": 0,
+            "sla_def_id": 1,
+            "stage": "completed",
+            "start_time": "2026-07-16 11:29:21"
+          },
+          "step": 10,
+          "tool": "update_case_sla_details"
+        }
+      ],
+      "captured_ids": {
+        "case_a": 1233,
+        "case_b": 1234,
+        "notification_a": 734,
+        "sla_link_a": 2465,
+        "sla_link_b": 2466
+      },
+      "db_id": "db_1784201360940_wq39qchuy"
+    }
+  },
+  "varying_columns": {
+    "case_sla.start_time": {
+      "behavior": "wall-clock timestamp",
+      "column": "start_time",
+      "diff_count": 2,
+      "examples": [
+        {
+          "row_index": 2464,
+          "values": {
+            "R1": "2026-07-16 11:29:20",
+            "R2": "2026-07-16 11:29:20",
+            "R3": "2026-07-16 11:29:21"
+          }
+        },
+        {
+          "row_index": 2465,
+          "values": {
+            "R1": "2026-07-16 11:29:20",
+            "R2": "2026-07-16 11:29:20",
+            "R3": "2026-07-16 11:29:21"
+          }
+        }
+      ],
+      "table": "case_sla"
+    },
+    "customer_case.sys_created_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "sys_created_on",
+      "diff_count": 2,
+      "examples": [
+        {
+          "row_index": 1232,
+          "values": {
+            "R1": "2026-07-16 11:29:20",
+            "R2": "2026-07-16 11:29:20",
+            "R3": "2026-07-16 11:29:21"
+          }
+        },
+        {
+          "row_index": 1233,
+          "values": {
+            "R1": "2026-07-16 11:29:20",
+            "R2": "2026-07-16 11:29:20",
+            "R3": "2026-07-16 11:29:21"
+          }
+        }
+      ],
+      "table": "customer_case"
+    },
+    "customer_case.sys_updated_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "sys_updated_on",
+      "diff_count": 2,
+      "examples": [
+        {
+          "row_index": 1232,
+          "values": {
+            "R1": "2026-07-16 11:29:20",
+            "R2": "2026-07-16 11:29:20",
+            "R3": "2026-07-16 11:29:21"
+          }
+        },
+        {
+          "row_index": 1233,
+          "values": {
+            "R1": "2026-07-16 11:29:20",
+            "R2": "2026-07-16 11:29:20",
+            "R3": "2026-07-16 11:29:21"
+          }
+        }
+      ],
+      "table": "customer_case"
+    },
+    "notification.sys_created_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "sys_created_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 733,
+          "values": {
+            "R1": "2026-07-16 11:29:20",
+            "R2": "2026-07-16 11:29:20",
+            "R3": "2026-07-16 11:29:21"
+          }
+        }
+      ],
+      "table": "notification"
+    }
+  },
+  "wall_time_s": 3.35
+}

@@ -1,0 +1,145 @@
+{
+  "captured_new_row_ids": {
+    "case_a": {
+      "R1": 1233,
+      "R2": 1233,
+      "R3": 1233
+    },
+    "case_b": {
+      "R1": 1234,
+      "R2": 1234,
+      "R3": 1234
+    },
+    "notification_a": {
+      "R1": 734,
+      "R2": 734,
+      "R3": 734
+    },
+    "sla_link_a": {
+      "R1": 2465,
+      "R2": 2465,
+      "R3": 2465
+    },
+    "sla_link_b": {
+      "R1": 2466,
+      "R2": 2466,
+      "R3": 2466
+    }
+  },
+  "distinct_tools_used": [
+    "assign_case_to_user",
+    "create_new_case",
+    "link_new_case_sla",
+    "send_notification",
+    "update_case",
+    "update_case_sla_details"
+  ],
+  "domain": "csm",
+  "identical_modulo_volatile_columns": true,
+  "new_row_pk_identical_across_replays": {
+    "case_a": true,
+    "case_b": true,
+    "notification_a": true,
+    "sla_link_a": true,
+    "sla_link_b": true
+  },
+  "raw_identical": false,
+  "replicas": {
+    "R1": "db_1784201359702_533ihgfbo",
+    "R2": "db_1784201360342_o0ldby591",
+    "R3": "db_1784201360940_wq39qchuy"
+  },
+  "row_count_mismatch": {},
+  "sequence_length": 10,
+  "tables_not_common_to_all": [],
+  "volatile_columns": {
+    "case_sla.start_time": {
+      "behavior": "wall-clock timestamp",
+      "column": "start_time",
+      "diff_count": 2,
+      "examples": [
+        {
+          "row_index": 2464,
+          "values": {
+            "R1": "2026-07-16 11:29:20",
+            "R2": "2026-07-16 11:29:20",
+            "R3": "2026-07-16 11:29:21"
+          }
+        },
+        {
+          "row_index": 2465,
+          "values": {
+            "R1": "2026-07-16 11:29:20",
+            "R2": "2026-07-16 11:29:20",
+            "R3": "2026-07-16 11:29:21"
+          }
+        }
+      ],
+      "table": "case_sla"
+    },
+    "customer_case.sys_created_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "sys_created_on",
+      "diff_count": 2,
+      "examples": [
+        {
+          "row_index": 1232,
+          "values": {
+            "R1": "2026-07-16 11:29:20",
+            "R2": "2026-07-16 11:29:20",
+            "R3": "2026-07-16 11:29:21"
+          }
+        },
+        {
+          "row_index": 1233,
+          "values": {
+            "R1": "2026-07-16 11:29:20",
+            "R2": "2026-07-16 11:29:20",
+            "R3": "2026-07-16 11:29:21"
+          }
+        }
+      ],
+      "table": "customer_case"
+    },
+    "customer_case.sys_updated_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "sys_updated_on",
+      "diff_count": 2,
+      "examples": [
+        {
+          "row_index": 1232,
+          "values": {
+            "R1": "2026-07-16 11:29:20",
+            "R2": "2026-07-16 11:29:20",
+            "R3": "2026-07-16 11:29:21"
+          }
+        },
+        {
+          "row_index": 1233,
+          "values": {
+            "R1": "2026-07-16 11:29:20",
+            "R2": "2026-07-16 11:29:20",
+            "R3": "2026-07-16 11:29:21"
+          }
+        }
+      ],
+      "table": "customer_case"
+    },
+    "notification.sys_created_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "sys_created_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 733,
+          "values": {
+            "R1": "2026-07-16 11:29:20",
+            "R2": "2026-07-16 11:29:20",
+            "R3": "2026-07-16 11:29:21"
+          }
+        }
+      ],
+      "table": "notification"
+    }
+  }
+}

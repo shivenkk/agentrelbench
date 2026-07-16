@@ -1,0 +1,194 @@
+{
+  "all_checks_passed": true,
+  "call_log": [
+    {
+      "arguments": {
+        "account_id": 1,
+        "assigned_to": 3,
+        "assignment_group_id": 4,
+        "channel": "email",
+        "contact_id": 123,
+        "escalation": false,
+        "installed_product_id": 3,
+        "priority": "high",
+        "product_id": 128,
+        "short_description": "ISOLATION TEST case on A",
+        "state": "new"
+      },
+      "ok": true,
+      "parsed_result": {
+        "account_id": 1,
+        "assigned_to": 3,
+        "assignment_group_id": 4,
+        "case_id": 1233,
+        "channel": "email",
+        "closed_on": null,
+        "contact_id": 123,
+        "escalation": 0,
+        "escalation_reason": null,
+        "installed_product_id": 3,
+        "number": "CS-0001233",
+        "priority": "high",
+        "product_id": 128,
+        "reopen_count": 0,
+        "short_description": "ISOLATION TEST case on A",
+        "state": "new",
+        "sys_created_on": "2026-07-16 11:33:42",
+        "sys_updated_on": "2026-07-16 11:33:42"
+      },
+      "routed_to_db_id": "db_1784201621981_n706j3xpf",
+      "tool": "create_new_case"
+    },
+    {
+      "arguments": {
+        "account_id": 1,
+        "assigned_to": 5,
+        "assignment_group_id": 4,
+        "channel": "web",
+        "contact_id": 123,
+        "escalation": false,
+        "installed_product_id": 3,
+        "priority": "moderate",
+        "product_id": 128,
+        "short_description": "ISOLATION TEST case on B",
+        "state": "new"
+      },
+      "ok": true,
+      "parsed_result": {
+        "account_id": 1,
+        "assigned_to": 5,
+        "assignment_group_id": 4,
+        "case_id": 1233,
+        "channel": "web",
+        "closed_on": null,
+        "contact_id": 123,
+        "escalation": 0,
+        "escalation_reason": null,
+        "installed_product_id": 3,
+        "number": "CS-0001233",
+        "priority": "moderate",
+        "product_id": 128,
+        "reopen_count": 0,
+        "short_description": "ISOLATION TEST case on B",
+        "state": "new",
+        "sys_created_on": "2026-07-16 11:33:42",
+        "sys_updated_on": "2026-07-16 11:33:42"
+      },
+      "routed_to_db_id": "db_1784201622322_kwoqaj04q",
+      "tool": "create_new_case"
+    },
+    {
+      "arguments": {
+        "case_id": 1233,
+        "state": "in_progress"
+      },
+      "ok": true,
+      "parsed_result": {
+        "account_id": 1,
+        "assigned_to": 3,
+        "assignment_group_id": 4,
+        "case_id": 1233,
+        "channel": "email",
+        "closed_on": null,
+        "contact_id": 123,
+        "escalation": 0,
+        "escalation_reason": null,
+        "installed_product_id": 3,
+        "number": "CS-0001233",
+        "priority": "high",
+        "product_id": 128,
+        "reopen_count": 0,
+        "short_description": "ISOLATION TEST case on A",
+        "state": "in_progress",
+        "sys_created_on": "2026-07-16 11:33:42",
+        "sys_updated_on": "2026-07-16 11:33:42"
+      },
+      "routed_to_db_id": "db_1784201621981_n706j3xpf",
+      "tool": "update_case"
+    },
+    {
+      "arguments": {
+        "case_id": 1233,
+        "state": "pending"
+      },
+      "ok": true,
+      "parsed_result": {
+        "account_id": 1,
+        "assigned_to": 5,
+        "assignment_group_id": 4,
+        "case_id": 1233,
+        "channel": "web",
+        "closed_on": null,
+        "contact_id": 123,
+        "escalation": 0,
+        "escalation_reason": null,
+        "installed_product_id": 3,
+        "number": "CS-0001233",
+        "priority": "moderate",
+        "product_id": 128,
+        "reopen_count": 0,
+        "short_description": "ISOLATION TEST case on B",
+        "state": "pending",
+        "sys_created_on": "2026-07-16 11:33:42",
+        "sys_updated_on": "2026-07-16 11:33:42"
+      },
+      "routed_to_db_id": "db_1784201622322_kwoqaj04q",
+      "tool": "update_case"
+    },
+    {
+      "arguments": {
+        "assigned_to_user_id": 6,
+        "case_id": 1233
+      },
+      "ok": true,
+      "parsed_result": {
+        "assigned_at": "2026-07-16 11:33:42",
+        "assigned_to": 6,
+        "assignment_status": "success"
+      },
+      "routed_to_db_id": "db_1784201621981_n706j3xpf",
+      "tool": "assign_case_to_user"
+    },
+    {
+      "arguments": {
+        "assigned_to_user_id": 9,
+        "case_id": 1233
+      },
+      "ok": true,
+      "parsed_result": {
+        "assigned_at": "2026-07-16 11:33:42",
+        "assigned_to": 9,
+        "assignment_status": "success"
+      },
+      "routed_to_db_id": "db_1784201622322_kwoqaj04q",
+      "tool": "assign_case_to_user"
+    }
+  ],
+  "case_a_id": 1233,
+  "case_b_id": 1233,
+  "checks": {
+    "case_a_absent_from_db_b": true,
+    "case_a_present_in_db_a": true,
+    "case_b_absent_from_db_a": true,
+    "case_b_present_in_db_b": true,
+    "db_a_case_content_correct": true,
+    "db_b_case_content_correct": true,
+    "no_A_description_anywhere_in_B": true,
+    "no_B_description_anywhere_in_A": true,
+    "row_count_delta_db_a_is_exactly_1": true,
+    "row_count_delta_db_b_is_exactly_1": true
+  },
+  "customer_case_row_count_after": {
+    "A": 1233,
+    "B": 1233
+  },
+  "customer_case_row_count_before": {
+    "A": 1232,
+    "B": 1232
+  },
+  "db_a": "db_1784201621981_n706j3xpf",
+  "db_b": "db_1784201622322_kwoqaj04q",
+  "routing_conclusion": "per-call argument (x-database-id header on each tools/call request) -- confirmed empirically: a single shared MCP session correctly alternated writes between two databases call-by-call with zero cross-contamination",
+  "same_pk_collision_across_independent_dbs": true,
+  "wall_time_s": 1.51
+}

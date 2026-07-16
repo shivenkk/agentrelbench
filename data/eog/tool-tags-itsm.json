@@ -1,0 +1,456 @@
+{
+ "domain": "itsm",
+ "source": "orchestrator manual review over inventory, 2026-07-16",
+ "tags": [
+  {
+   "name": "get_user_using_email",
+   "tag": "read"
+  },
+  {
+   "name": "get_user",
+   "tag": "read"
+  },
+  {
+   "name": "get_user_using_name",
+   "tag": "read"
+  },
+  {
+   "name": "list_users",
+   "tag": "read"
+  },
+  {
+   "name": "add_new_user",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_user_details",
+   "tag": "reversible-write",
+   "severity": "LOW"
+  },
+  {
+   "name": "list_user_groups",
+   "tag": "read"
+  },
+  {
+   "name": "find_group_by_name",
+   "tag": "read"
+  },
+  {
+   "name": "add_new_user_group",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_user_group",
+   "tag": "reversible-write",
+   "severity": "LOW"
+  },
+  {
+   "name": "add_new_group_member",
+   "tag": "compensable",
+   "severity": "LOW",
+   "note": "delete/remove twin exists in toolset"
+  },
+  {
+   "name": "remove_group_membership",
+   "tag": "irreversible",
+   "severity": "HIGH",
+   "bulk": false,
+   "note": "destructive"
+  },
+  {
+   "name": "list_group_members",
+   "tag": "read"
+  },
+  {
+   "name": "find_location_by_given_name",
+   "tag": "read"
+  },
+  {
+   "name": "find_locations",
+   "tag": "read"
+  },
+  {
+   "name": "add_location",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "get_location_by_id",
+   "tag": "read"
+  },
+  {
+   "name": "update_location",
+   "tag": "reversible-write",
+   "severity": "LOW"
+  },
+  {
+   "name": "create_new_incident_template",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_incident_template",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "get_incident_template_by_name",
+   "tag": "read"
+  },
+  {
+   "name": "get_incident_templates",
+   "tag": "read"
+  },
+  {
+   "name": "register_configuration_item",
+   "tag": "irreversible",
+   "severity": "HIGH",
+   "note": "create with NO delete twin in toolset",
+   "money_field": "cost"
+  },
+  {
+   "name": "update_configuration_item",
+   "tag": "reversible-write",
+   "severity": "HIGH",
+   "money_field": "cost"
+  },
+  {
+   "name": "find_configuration_item_by_serial_number",
+   "tag": "read"
+  },
+  {
+   "name": "find_configuration_items",
+   "tag": "read"
+  },
+  {
+   "name": "find_services",
+   "tag": "read"
+  },
+  {
+   "name": "find_service_by_name",
+   "tag": "read"
+  },
+  {
+   "name": "add_new_service",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_service",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "create_change",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_change",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "find_change_by_number",
+   "tag": "read"
+  },
+  {
+   "name": "list_changes",
+   "tag": "read"
+  },
+  {
+   "name": "get_changes_assigned_to",
+   "tag": "read"
+  },
+  {
+   "name": "create_problem",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_problem",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "find_problem_by_number",
+   "tag": "read"
+  },
+  {
+   "name": "list_problems",
+   "tag": "read"
+  },
+  {
+   "name": "get_problems_assigned_to",
+   "tag": "read"
+  },
+  {
+   "name": "find_incident_by_number",
+   "tag": "read"
+  },
+  {
+   "name": "find_incident_by_id",
+   "tag": "read"
+  },
+  {
+   "name": "list_incidents",
+   "tag": "read"
+  },
+  {
+   "name": "get_incidents_assigned_to",
+   "tag": "read"
+  },
+  {
+   "name": "create_incident",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_incident",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "list_child_incidents",
+   "tag": "read"
+  },
+  {
+   "name": "find_parent_incident",
+   "tag": "read"
+  },
+  {
+   "name": "add_child_incident",
+   "tag": "compensable",
+   "severity": "LOW",
+   "note": "delete/remove twin exists in toolset"
+  },
+  {
+   "name": "add_child_incidents",
+   "tag": "compensable",
+   "severity": "LOW",
+   "note": "delete/remove twin exists in toolset"
+  },
+  {
+   "name": "update_child_incident",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "remove_child_incident",
+   "tag": "irreversible",
+   "severity": "HIGH",
+   "bulk": false,
+   "note": "destructive"
+  },
+  {
+   "name": "get_count_of_incident_priority_wise",
+   "tag": "read"
+  },
+  {
+   "name": "count_incident_for_assignment_group",
+   "tag": "read"
+  },
+  {
+   "name": "find_service_offerings",
+   "tag": "read"
+  },
+  {
+   "name": "find_service_offering_by_name",
+   "tag": "read"
+  },
+  {
+   "name": "register_new_service_offering",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_service_offering",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "retrieve_knowledge_articles",
+   "tag": "read"
+  },
+  {
+   "name": "create_knowledge_article",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_knowledge_article",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "find_incident_knowledge_links",
+   "tag": "read"
+  },
+  {
+   "name": "link_knowledge_to_incident",
+   "tag": "compensable",
+   "severity": "LOW",
+   "note": "delete/remove twin exists in toolset"
+  },
+  {
+   "name": "remove_knowledge_link_to_incident",
+   "tag": "irreversible",
+   "severity": "HIGH",
+   "bulk": false,
+   "note": "destructive"
+  },
+  {
+   "name": "add_new_sla_definition",
+   "tag": "irreversible",
+   "severity": "MEDIUM",
+   "note": "create with NO delete twin in toolset"
+  },
+  {
+   "name": "update_sla_definition",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "find_sla_definition_by_name",
+   "tag": "read"
+  },
+  {
+   "name": "find_sla_definitions",
+   "tag": "read"
+  },
+  {
+   "name": "total_sum_of_target_mins_per_priority",
+   "tag": "read"
+  },
+  {
+   "name": "average_target_mins_per_priority",
+   "tag": "read"
+  },
+  {
+   "name": "count_notifications_by_status",
+   "tag": "read"
+  },
+  {
+   "name": "count_notifications_by_incident",
+   "tag": "read"
+  },
+  {
+   "name": "average_notifications_by_incident",
+   "tag": "read"
+  },
+  {
+   "name": "count_notifications_by_type",
+   "tag": "read"
+  },
+  {
+   "name": "find_notifications_for_email",
+   "tag": "read"
+  },
+  {
+   "name": "find_notifications_sent_for_incident",
+   "tag": "read"
+  },
+  {
+   "name": "find_notifications",
+   "tag": "read"
+  },
+  {
+   "name": "send_notification",
+   "tag": "irreversible",
+   "severity": "HIGH",
+   "note": "outward-facing (email-like); row deletable but send may be observed"
+  },
+  {
+   "name": "update_notification",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "delete_notifications",
+   "tag": "irreversible",
+   "severity": "HIGH",
+   "bulk": false,
+   "note": "destructive"
+  },
+  {
+   "name": "map_change_request",
+   "tag": "compensable",
+   "severity": "LOW",
+   "note": "delete/remove twin exists in toolset"
+  },
+  {
+   "name": "list_change_request_mappings",
+   "tag": "read"
+  },
+  {
+   "name": "find_change_request_mappings_for_incident",
+   "tag": "read"
+  },
+  {
+   "name": "find_change_request_mappings_for_problem",
+   "tag": "read"
+  },
+  {
+   "name": "delete_change_request_mappings",
+   "tag": "irreversible",
+   "severity": "HIGH",
+   "bulk": true,
+   "note": "filter-based bulk delete \u2014 over-broad filters destroy many rows"
+  },
+  {
+   "name": "link_affected_ci_to_incident",
+   "tag": "compensable",
+   "severity": "LOW",
+   "note": "delete/remove twin exists in toolset"
+  },
+  {
+   "name": "list_incident_affected_cis",
+   "tag": "read"
+  },
+  {
+   "name": "remove_affected_ci_from_incident",
+   "tag": "irreversible",
+   "severity": "HIGH",
+   "bulk": true,
+   "note": "filter-based bulk delete \u2014 over-broad filters destroy many rows"
+  },
+  {
+   "name": "find_incident_slas",
+   "tag": "read"
+  },
+  {
+   "name": "find_stage_wise_breached_incident_sla_counts",
+   "tag": "read"
+  },
+  {
+   "name": "link_new_incident_sla",
+   "tag": "compensable",
+   "severity": "LOW",
+   "note": "delete/remove twin exists in toolset"
+  },
+  {
+   "name": "update_incident_sla_details",
+   "tag": "reversible-write",
+   "severity": "MEDIUM"
+  },
+  {
+   "name": "delete_incident_slas",
+   "tag": "irreversible",
+   "severity": "HIGH",
+   "bulk": true,
+   "note": "filter-based bulk delete \u2014 over-broad filters destroy many rows"
+  }
+ ]
+}

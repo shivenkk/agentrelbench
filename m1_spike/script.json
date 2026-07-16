@@ -1,0 +1,50 @@
+[
+  {
+    "tool_calls": [
+      {
+        "name": "create_new_case",
+        "arguments": {
+          "account_id": 1,
+          "contact_id": 123,
+          "channel": "email",
+          "priority": "high",
+          "state": "new",
+          "short_description": "M1 spike: Wilson case needs escalation review",
+          "assignment_group_id": 4,
+          "assigned_to": 3,
+          "escalation": false,
+          "product_id": 128,
+          "installed_product_id": 3
+        }
+      }
+    ]
+  },
+  {
+    "tool_calls": [
+      {
+        "name": "update_case",
+        "arguments": {
+          "case_id": 1233,
+          "state": "in_progress",
+          "priority": "critical",
+          "escalation": true,
+          "escalation_reason": "customer_request"
+        }
+      }
+    ]
+  },
+  {
+    "tool_calls": [
+      {
+        "name": "assign_case_to_user",
+        "arguments": {
+          "case_id": 1233,
+          "assigned_to_user_id": 6
+        }
+      }
+    ]
+  },
+  {
+    "content": "Created case CS-0001233 for account 1 / contact 123, escalated it to critical/in_progress with reason customer_request, and reassigned it to agent 6. All three actions are complete."
+  }
+]

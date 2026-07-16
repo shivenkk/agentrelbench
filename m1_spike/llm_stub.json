@@ -1,0 +1,8 @@
+{
+    "llm_provider": "openrouter",
+    "llm_model": "scripted-responder",
+    "llm_api_key": "not-needed",
+    "llm_api_endpoint": "http://127.0.0.1:8099/v1",
+    "temperature": 0.0,
+    "max_tokens": 4096
+}

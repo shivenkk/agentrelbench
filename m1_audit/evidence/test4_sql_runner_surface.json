@@ -1,0 +1,121 @@
+{
+  "biggest_table": "case_sla",
+  "biggest_table_row_count": 2464,
+  "db_id": "db_1784201548362_o6tjwv9cz",
+  "explicit_limit_override": {
+    "matches_true_row_count": true,
+    "query_sent": "SELECT * FROM case_sla LIMIT 1000000;",
+    "rows_returned": 2464
+  },
+  "full_dump_timing": {
+    "avg_ms_per_table": 16.91,
+    "total_rows": 10633,
+    "total_tables": 18,
+    "wall_time_s": 0.304
+  },
+  "implicit_limit_truncation": {
+    "echoed_query_from_server": "SELECT * FROM case_sla LIMIT 100",
+    "query_sent": "SELECT * FROM case_sla;",
+    "rows_returned_without_explicit_limit": 100,
+    "truncated": true
+  },
+  "join_sample": [
+    {
+      "case_id": 1,
+      "first_name": "Susan",
+      "last_name": "Garcia",
+      "state": "new"
+    },
+    {
+      "case_id": 2,
+      "first_name": null,
+      "last_name": null,
+      "state": "new"
+    },
+    {
+      "case_id": 3,
+      "first_name": "Erica",
+      "last_name": "Good",
+      "state": "new"
+    },
+    {
+      "case_id": 4,
+      "first_name": "Kathryn",
+      "last_name": "Brown",
+      "state": "in_progress"
+    },
+    {
+      "case_id": 5,
+      "first_name": "Ryan",
+      "last_name": "Allen",
+      "state": "in_progress"
+    }
+  ],
+  "join_supported": true,
+  "pragma_rejected": true,
+  "pragma_rejection_message": "Client error '400 Bad Request' for url 'http://localhost:8001/api/sql-runner'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400",
+  "row_counts": {
+    "account": 52,
+    "case_knowledge": 527,
+    "case_sla": 2464,
+    "contact": 124,
+    "contract": 153,
+    "customer_case": 1232,
+    "entitlement": 431,
+    "installed_product": 300,
+    "interaction": 1232,
+    "knowledge": 369,
+    "location": 906,
+    "notification": 733,
+    "product": 240,
+    "sla_definition": 12,
+    "sqlite_sequence": 17,
+    "user": 802,
+    "user_group": 80,
+    "user_group_member": 959
+  },
+  "sqlite_master_accessible": true,
+  "tables": [
+    "location",
+    "sqlite_sequence",
+    "user",
+    "user_group",
+    "account",
+    "product",
+    "installed_product",
+    "contact",
+    "contract",
+    "entitlement",
+    "sla_definition",
+    "customer_case",
+    "case_sla",
+    "interaction",
+    "knowledge",
+    "case_knowledge",
+    "notification",
+    "user_group_member"
+  ],
+  "three_table_join_and_group_by_supported": true,
+  "three_table_join_sample": [
+    {
+      "account_name": "ServiceNow",
+      "case_count": 69
+    },
+    {
+      "account_name": "Zebra Partners",
+      "case_count": 112
+    },
+    {
+      "account_name": "Acme Systems",
+      "case_count": 92
+    },
+    {
+      "account_name": "Globex",
+      "case_count": 96
+    },
+    {
+      "account_name": "Initech",
+      "case_count": 108
+    }
+  ]
+}

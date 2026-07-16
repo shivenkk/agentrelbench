@@ -1,0 +1,144 @@
+{
+  "captured_new_row_ids": {
+    "ci_a": {
+      "R1": "CI_005",
+      "R2": "CI_005"
+    },
+    "incident_a": {
+      "R1": "INC_024",
+      "R2": "INC_024"
+    },
+    "incident_b": {
+      "R1": "INC_025",
+      "R2": "INC_025"
+    }
+  },
+  "distinct_tools_used": [
+    "create_incident",
+    "register_configuration_item",
+    "send_notification",
+    "update_configuration_item",
+    "update_incident"
+  ],
+  "domain": "itsm",
+  "identical_modulo_volatile_columns": true,
+  "new_row_pk_identical_across_replays": {
+    "ci_a": true,
+    "incident_a": true,
+    "incident_b": true
+  },
+  "raw_identical": false,
+  "replicas": {
+    "R1": "db_1784201508431_bidg0n9e3",
+    "R2": "db_1784201508851_lfgbeykcf"
+  },
+  "row_count_mismatch": {},
+  "sequence_length": 6,
+  "tables_not_common_to_all": [],
+  "volatile_columns": {
+    "configuration_item.created_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "created_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 4,
+          "values": {
+            "R1": "2026-07-16 11:31:48.787843",
+            "R2": "2026-07-16 11:31:49.151105"
+          }
+        }
+      ],
+      "table": "configuration_item"
+    },
+    "configuration_item.updated_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "updated_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 4,
+          "values": {
+            "R1": "2026-07-16 11:31:48.816302",
+            "R2": "2026-07-16 11:31:49.180406"
+          }
+        }
+      ],
+      "table": "configuration_item"
+    },
+    "incident.created_at": {
+      "behavior": "wall-clock timestamp",
+      "column": "created_at",
+      "diff_count": 2,
+      "examples": [
+        {
+          "row_index": 23,
+          "values": {
+            "R1": "2026-07-16 11:31:48.694909",
+            "R2": "2026-07-16 11:31:49.057738"
+          }
+        },
+        {
+          "row_index": 24,
+          "values": {
+            "R1": "2026-07-16 11:31:48.727715",
+            "R2": "2026-07-16 11:31:49.088894"
+          }
+        }
+      ],
+      "table": "incident"
+    },
+    "incident.updated_at": {
+      "behavior": "wall-clock timestamp",
+      "column": "updated_at",
+      "diff_count": 2,
+      "examples": [
+        {
+          "row_index": 23,
+          "values": {
+            "R1": "2026-07-16 11:31:48.757304",
+            "R2": "2026-07-16 11:31:49.120182"
+          }
+        },
+        {
+          "row_index": 24,
+          "values": {
+            "R1": "2026-07-16 11:31:48.727715",
+            "R2": "2026-07-16 11:31:49.088894"
+          }
+        }
+      ],
+      "table": "incident"
+    },
+    "notification.created_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "created_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 7,
+          "values": {
+            "R1": "2026-07-16 11:31:48.845696",
+            "R2": "2026-07-16 11:31:49.207491"
+          }
+        }
+      ],
+      "table": "notification"
+    },
+    "notification.updated_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "updated_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 7,
+          "values": {
+            "R1": "2026-07-16 11:31:48.845696",
+            "R2": "2026-07-16 11:31:49.207491"
+          }
+        }
+      ],
+      "table": "notification"
+    }
+  }
+}
