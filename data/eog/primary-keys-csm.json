@@ -1,0 +1,23 @@
+{
+  "domain": "csm",
+  "source": "extracted from sqlite_master DDL, live seeded DB, 2026-07-16",
+  "primary_keys": {
+    "location": "location_id",
+    "user": "user_id",
+    "user_group": "group_id",
+    "account": "account_id",
+    "product": "product_id",
+    "installed_product": "installed_product_id",
+    "contact": "contact_id",
+    "contract": "contract_id",
+    "entitlement": "entitlement_id",
+    "sla_definition": "sla_def_id",
+    "customer_case": "case_id",
+    "case_sla": "case_sla_id",
+    "interaction": "interaction_id",
+    "knowledge": "knowledge_id",
+    "case_knowledge": "case_kb_id",
+    "notification": "notification_id",
+    "user_group_member": "member_id"
+  }
+}

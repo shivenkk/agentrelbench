@@ -1,0 +1,803 @@
+{
+  "call_logs": {
+    "R1": [
+      {
+        "arguments": {
+          "incident_id": "INC_002",
+          "on_hold_reason": "Awaiting Change",
+          "priority": "critical",
+          "status": "on_hold",
+          "worknotes": "M4 reaudit worknote"
+        },
+        "ok": true,
+        "parsed_result": {
+          "assigned_to": "USER_004",
+          "assignment_group": "GROUP_002",
+          "caller_id": "USER_005",
+          "category": "hardware",
+          "caused_by_change": null,
+          "change_request": null,
+          "channel": "phone",
+          "close_notes": null,
+          "configuration_item": "CI_002",
+          "created_at": "2024-02-20T11:45:00",
+          "description": "Desktop workstation fails to power on, no display output",
+          "impact": "high",
+          "incident_id": "INC_002",
+          "incident_template": "TMPL_002",
+          "number": "INC0000002",
+          "on_hold_reason": "Awaiting Change",
+          "parent_incident": null,
+          "priority": "critical",
+          "problem": null,
+          "resolution_code": null,
+          "resolution_notes": null,
+          "resolved": null,
+          "resolved_by": null,
+          "service": "SVC_002",
+          "service_offering": "SVCOFF_002",
+          "short_description": "Desktop computer not booting",
+          "status": "on_hold",
+          "updated_at": "2026-07-16T16:25:10.815204",
+          "urgency": "high",
+          "worknotes": "M4 reaudit worknote"
+        },
+        "step": 1,
+        "tool": "update_incident"
+      },
+      {
+        "arguments": {
+          "change_id": "CHG_001",
+          "close_notes": "M4 reaudit close note",
+          "priority": "high",
+          "status": "implement"
+        },
+        "ok": true,
+        "parsed_result": {
+          "assigned_to": "USER_002",
+          "assignment_group": "GROUP_002",
+          "cab_required": true,
+          "category": "system_software",
+          "change_id": "CHG_001",
+          "close_code": "successful",
+          "close_notes": "M4 reaudit close note",
+          "configuration_item": null,
+          "created_on": "2024-02-05T09:00:00",
+          "description": "Apply critical security updates to email server infrastructure",
+          "impact": "medium",
+          "implementation_plan": "Schedule maintenance window, apply patches, restart services",
+          "number": "CHG0000001",
+          "priority": "high",
+          "requested_by": "USER_001",
+          "risk": "high",
+          "service": "SVC_001",
+          "service_offering": "SVCOFF_001",
+          "short_description": "Email server security patch",
+          "status": "implement",
+          "testing_plan": "Verify email functionality, test user authentication",
+          "updated_on": "2026-07-16T16:25:10.867296"
+        },
+        "step": 2,
+        "tool": "update_change"
+      },
+      {
+        "arguments": {
+          "configuration_item_id": "CI_001",
+          "cost": 1250.75,
+          "status": "maintenance"
+        },
+        "ok": true,
+        "parsed_result": {
+          "configuration_item_id": "CI_001",
+          "cost": 1250.75,
+          "created_on": "2024-01-10T10:00:00",
+          "location_id": "LOC_001",
+          "name": "Carlos Laptop",
+          "owner_id": "USER_003",
+          "serial_number": "LAPTOP-NYC-001",
+          "status": "maintenance",
+          "updated_on": "2026-07-16T16:25:10.910191"
+        },
+        "step": 3,
+        "tool": "update_configuration_item"
+      },
+      {
+        "arguments": {
+          "child_incident": "INC_008",
+          "parent_incident": "INC_003"
+        },
+        "ok": true,
+        "parsed_result": {
+          "child_incident": "INC_008",
+          "child_incident_mapping_id": "CINC_008",
+          "created_at": "2026-07-16T16:25:10.947932",
+          "parent_incident": "INC_003",
+          "updated_at": "2026-07-16T16:25:10.947935"
+        },
+        "step": 4,
+        "tool": "add_child_incident"
+      },
+      {
+        "arguments": {
+          "child_incident_mapping_id": "CINC_008"
+        },
+        "ok": true,
+        "parsed_result": {
+          "message": "Child incident mapping removed successfully"
+        },
+        "step": 5,
+        "tool": "remove_child_incident"
+      },
+      {
+        "arguments": {
+          "change_id": "CHG_002",
+          "incident_id": "INC_005"
+        },
+        "ok": true,
+        "parsed_result": {
+          "change_id": "CHG_002",
+          "change_request_mapping_id": "CRM_006",
+          "created_at": "2026-07-16T16:25:11.027489",
+          "incident_id": "INC_005",
+          "org_id": "ORG_001",
+          "problem_id": null,
+          "updated_at": "2026-07-16T16:25:11.027491"
+        },
+        "step": 6,
+        "tool": "map_change_request"
+      },
+      {
+        "arguments": {
+          "email": "carlos.rodriguez@techcorp.com",
+          "incident_id": "INC_001",
+          "message": "Determinism reaudit test message",
+          "status": "sent",
+          "subject": "M4 reaudit notification",
+          "type": "update"
+        },
+        "ok": true,
+        "parsed_result": {
+          "created_on": "2026-07-16T16:25:11.065977",
+          "email": "carlos.rodriguez@techcorp.com",
+          "incident_id": "INC_001",
+          "message": "Determinism reaudit test message",
+          "notification_id": "NOTIF_008",
+          "org_id": "ORG_001",
+          "status": "sent",
+          "subject": "M4 reaudit notification",
+          "type": "update",
+          "updated_on": "2026-07-16T16:25:11.065977"
+        },
+        "step": 7,
+        "tool": "send_notification"
+      },
+      {
+        "arguments": {
+          "incident_sla_id": "TSLA_001"
+        },
+        "ok": true,
+        "parsed_result": {
+          "deleted_count": 1
+        },
+        "step": 8,
+        "tool": "delete_incident_slas"
+      }
+    ],
+    "R2": [
+      {
+        "arguments": {
+          "incident_id": "INC_002",
+          "on_hold_reason": "Awaiting Change",
+          "priority": "critical",
+          "status": "on_hold",
+          "worknotes": "M4 reaudit worknote"
+        },
+        "ok": true,
+        "parsed_result": {
+          "assigned_to": "USER_004",
+          "assignment_group": "GROUP_002",
+          "caller_id": "USER_005",
+          "category": "hardware",
+          "caused_by_change": null,
+          "change_request": null,
+          "channel": "phone",
+          "close_notes": null,
+          "configuration_item": "CI_002",
+          "created_at": "2024-02-20T11:45:00",
+          "description": "Desktop workstation fails to power on, no display output",
+          "impact": "high",
+          "incident_id": "INC_002",
+          "incident_template": "TMPL_002",
+          "number": "INC0000002",
+          "on_hold_reason": "Awaiting Change",
+          "parent_incident": null,
+          "priority": "critical",
+          "problem": null,
+          "resolution_code": null,
+          "resolution_notes": null,
+          "resolved": null,
+          "resolved_by": null,
+          "service": "SVC_002",
+          "service_offering": "SVCOFF_002",
+          "short_description": "Desktop computer not booting",
+          "status": "on_hold",
+          "updated_at": "2026-07-16T16:25:11.380979",
+          "urgency": "high",
+          "worknotes": "M4 reaudit worknote"
+        },
+        "step": 1,
+        "tool": "update_incident"
+      },
+      {
+        "arguments": {
+          "change_id": "CHG_001",
+          "close_notes": "M4 reaudit close note",
+          "priority": "high",
+          "status": "implement"
+        },
+        "ok": true,
+        "parsed_result": {
+          "assigned_to": "USER_002",
+          "assignment_group": "GROUP_002",
+          "cab_required": true,
+          "category": "system_software",
+          "change_id": "CHG_001",
+          "close_code": "successful",
+          "close_notes": "M4 reaudit close note",
+          "configuration_item": null,
+          "created_on": "2024-02-05T09:00:00",
+          "description": "Apply critical security updates to email server infrastructure",
+          "impact": "medium",
+          "implementation_plan": "Schedule maintenance window, apply patches, restart services",
+          "number": "CHG0000001",
+          "priority": "high",
+          "requested_by": "USER_001",
+          "risk": "high",
+          "service": "SVC_001",
+          "service_offering": "SVCOFF_001",
+          "short_description": "Email server security patch",
+          "status": "implement",
+          "testing_plan": "Verify email functionality, test user authentication",
+          "updated_on": "2026-07-16T16:25:11.423594"
+        },
+        "step": 2,
+        "tool": "update_change"
+      },
+      {
+        "arguments": {
+          "configuration_item_id": "CI_001",
+          "cost": 1250.75,
+          "status": "maintenance"
+        },
+        "ok": true,
+        "parsed_result": {
+          "configuration_item_id": "CI_001",
+          "cost": 1250.75,
+          "created_on": "2024-01-10T10:00:00",
+          "location_id": "LOC_001",
+          "name": "Carlos Laptop",
+          "owner_id": "USER_003",
+          "serial_number": "LAPTOP-NYC-001",
+          "status": "maintenance",
+          "updated_on": "2026-07-16T16:25:11.462095"
+        },
+        "step": 3,
+        "tool": "update_configuration_item"
+      },
+      {
+        "arguments": {
+          "child_incident": "INC_008",
+          "parent_incident": "INC_003"
+        },
+        "ok": true,
+        "parsed_result": {
+          "child_incident": "INC_008",
+          "child_incident_mapping_id": "CINC_008",
+          "created_at": "2026-07-16T16:25:11.500900",
+          "parent_incident": "INC_003",
+          "updated_at": "2026-07-16T16:25:11.500902"
+        },
+        "step": 4,
+        "tool": "add_child_incident"
+      },
+      {
+        "arguments": {
+          "child_incident_mapping_id": "CINC_008"
+        },
+        "ok": true,
+        "parsed_result": {
+          "message": "Child incident mapping removed successfully"
+        },
+        "step": 5,
+        "tool": "remove_child_incident"
+      },
+      {
+        "arguments": {
+          "change_id": "CHG_002",
+          "incident_id": "INC_005"
+        },
+        "ok": true,
+        "parsed_result": {
+          "change_id": "CHG_002",
+          "change_request_mapping_id": "CRM_006",
+          "created_at": "2026-07-16T16:25:11.579460",
+          "incident_id": "INC_005",
+          "org_id": "ORG_001",
+          "problem_id": null,
+          "updated_at": "2026-07-16T16:25:11.579464"
+        },
+        "step": 6,
+        "tool": "map_change_request"
+      },
+      {
+        "arguments": {
+          "email": "carlos.rodriguez@techcorp.com",
+          "incident_id": "INC_001",
+          "message": "Determinism reaudit test message",
+          "status": "sent",
+          "subject": "M4 reaudit notification",
+          "type": "update"
+        },
+        "ok": true,
+        "parsed_result": {
+          "created_on": "2026-07-16T16:25:11.617261",
+          "email": "carlos.rodriguez@techcorp.com",
+          "incident_id": "INC_001",
+          "message": "Determinism reaudit test message",
+          "notification_id": "NOTIF_008",
+          "org_id": "ORG_001",
+          "status": "sent",
+          "subject": "M4 reaudit notification",
+          "type": "update",
+          "updated_on": "2026-07-16T16:25:11.617261"
+        },
+        "step": 7,
+        "tool": "send_notification"
+      },
+      {
+        "arguments": {
+          "incident_sla_id": "TSLA_001"
+        },
+        "ok": true,
+        "parsed_result": {
+          "deleted_count": 1
+        },
+        "step": 8,
+        "tool": "delete_incident_slas"
+      }
+    ],
+    "R3": [
+      {
+        "arguments": {
+          "incident_id": "INC_002",
+          "on_hold_reason": "Awaiting Change",
+          "priority": "critical",
+          "status": "on_hold",
+          "worknotes": "M4 reaudit worknote"
+        },
+        "ok": true,
+        "parsed_result": {
+          "assigned_to": "USER_004",
+          "assignment_group": "GROUP_002",
+          "caller_id": "USER_005",
+          "category": "hardware",
+          "caused_by_change": null,
+          "change_request": null,
+          "channel": "phone",
+          "close_notes": null,
+          "configuration_item": "CI_002",
+          "created_at": "2024-02-20T11:45:00",
+          "description": "Desktop workstation fails to power on, no display output",
+          "impact": "high",
+          "incident_id": "INC_002",
+          "incident_template": "TMPL_002",
+          "number": "INC0000002",
+          "on_hold_reason": "Awaiting Change",
+          "parent_incident": null,
+          "priority": "critical",
+          "problem": null,
+          "resolution_code": null,
+          "resolution_notes": null,
+          "resolved": null,
+          "resolved_by": null,
+          "service": "SVC_002",
+          "service_offering": "SVCOFF_002",
+          "short_description": "Desktop computer not booting",
+          "status": "on_hold",
+          "updated_at": "2026-07-16T16:25:11.964896",
+          "urgency": "high",
+          "worknotes": "M4 reaudit worknote"
+        },
+        "step": 1,
+        "tool": "update_incident"
+      },
+      {
+        "arguments": {
+          "change_id": "CHG_001",
+          "close_notes": "M4 reaudit close note",
+          "priority": "high",
+          "status": "implement"
+        },
+        "ok": true,
+        "parsed_result": {
+          "assigned_to": "USER_002",
+          "assignment_group": "GROUP_002",
+          "cab_required": true,
+          "category": "system_software",
+          "change_id": "CHG_001",
+          "close_code": "successful",
+          "close_notes": "M4 reaudit close note",
+          "configuration_item": null,
+          "created_on": "2024-02-05T09:00:00",
+          "description": "Apply critical security updates to email server infrastructure",
+          "impact": "medium",
+          "implementation_plan": "Schedule maintenance window, apply patches, restart services",
+          "number": "CHG0000001",
+          "priority": "high",
+          "requested_by": "USER_001",
+          "risk": "high",
+          "service": "SVC_001",
+          "service_offering": "SVCOFF_001",
+          "short_description": "Email server security patch",
+          "status": "implement",
+          "testing_plan": "Verify email functionality, test user authentication",
+          "updated_on": "2026-07-16T16:25:12.011251"
+        },
+        "step": 2,
+        "tool": "update_change"
+      },
+      {
+        "arguments": {
+          "configuration_item_id": "CI_001",
+          "cost": 1250.75,
+          "status": "maintenance"
+        },
+        "ok": true,
+        "parsed_result": {
+          "configuration_item_id": "CI_001",
+          "cost": 1250.75,
+          "created_on": "2024-01-10T10:00:00",
+          "location_id": "LOC_001",
+          "name": "Carlos Laptop",
+          "owner_id": "USER_003",
+          "serial_number": "LAPTOP-NYC-001",
+          "status": "maintenance",
+          "updated_on": "2026-07-16T16:25:12.054568"
+        },
+        "step": 3,
+        "tool": "update_configuration_item"
+      },
+      {
+        "arguments": {
+          "child_incident": "INC_008",
+          "parent_incident": "INC_003"
+        },
+        "ok": true,
+        "parsed_result": {
+          "child_incident": "INC_008",
+          "child_incident_mapping_id": "CINC_008",
+          "created_at": "2026-07-16T16:25:12.093109",
+          "parent_incident": "INC_003",
+          "updated_at": "2026-07-16T16:25:12.093112"
+        },
+        "step": 4,
+        "tool": "add_child_incident"
+      },
+      {
+        "arguments": {
+          "child_incident_mapping_id": "CINC_008"
+        },
+        "ok": true,
+        "parsed_result": {
+          "message": "Child incident mapping removed successfully"
+        },
+        "step": 5,
+        "tool": "remove_child_incident"
+      },
+      {
+        "arguments": {
+          "change_id": "CHG_002",
+          "incident_id": "INC_005"
+        },
+        "ok": true,
+        "parsed_result": {
+          "change_id": "CHG_002",
+          "change_request_mapping_id": "CRM_006",
+          "created_at": "2026-07-16T16:25:12.171052",
+          "incident_id": "INC_005",
+          "org_id": "ORG_001",
+          "problem_id": null,
+          "updated_at": "2026-07-16T16:25:12.171056"
+        },
+        "step": 6,
+        "tool": "map_change_request"
+      },
+      {
+        "arguments": {
+          "email": "carlos.rodriguez@techcorp.com",
+          "incident_id": "INC_001",
+          "message": "Determinism reaudit test message",
+          "status": "sent",
+          "subject": "M4 reaudit notification",
+          "type": "update"
+        },
+        "ok": true,
+        "parsed_result": {
+          "created_on": "2026-07-16T16:25:12.210958",
+          "email": "carlos.rodriguez@techcorp.com",
+          "incident_id": "INC_001",
+          "message": "Determinism reaudit test message",
+          "notification_id": "NOTIF_008",
+          "org_id": "ORG_001",
+          "status": "sent",
+          "subject": "M4 reaudit notification",
+          "type": "update",
+          "updated_on": "2026-07-16T16:25:12.210958"
+        },
+        "step": 7,
+        "tool": "send_notification"
+      },
+      {
+        "arguments": {
+          "incident_sla_id": "TSLA_001"
+        },
+        "ok": true,
+        "parsed_result": {
+          "deleted_count": 1
+        },
+        "step": 8,
+        "tool": "delete_incident_slas"
+      }
+    ]
+  },
+  "captured_new_row_ids": {
+    "new_change_request_mapping": {
+      "R1": "CRM_006",
+      "R2": "CRM_006",
+      "R3": "CRM_006"
+    },
+    "new_child_mapping": {
+      "R1": "CINC_008",
+      "R2": "CINC_008",
+      "R3": "CINC_008"
+    },
+    "new_notification": {
+      "R1": "NOTIF_008",
+      "R2": "NOTIF_008",
+      "R3": "NOTIF_008"
+    }
+  },
+  "coverage_complete": true,
+  "diff_report": {
+    "cell_diffs": [
+      {
+        "column": "updated_on",
+        "row_index": 0,
+        "table": "change",
+        "values": {
+          "R1": "2026-07-16 16:25:10.867296",
+          "R2": "2026-07-16 16:25:11.423594",
+          "R3": "2026-07-16 16:25:12.011251"
+        }
+      },
+      {
+        "column": "created_at",
+        "row_index": 5,
+        "table": "change_request_mapping",
+        "values": {
+          "R1": "2026-07-16 16:25:11.027489",
+          "R2": "2026-07-16 16:25:11.579460",
+          "R3": "2026-07-16 16:25:12.171052"
+        }
+      },
+      {
+        "column": "updated_at",
+        "row_index": 5,
+        "table": "change_request_mapping",
+        "values": {
+          "R1": "2026-07-16 16:25:11.027491",
+          "R2": "2026-07-16 16:25:11.579464",
+          "R3": "2026-07-16 16:25:12.171056"
+        }
+      },
+      {
+        "column": "updated_on",
+        "row_index": 0,
+        "table": "configuration_item",
+        "values": {
+          "R1": "2026-07-16 16:25:10.910191",
+          "R2": "2026-07-16 16:25:11.462095",
+          "R3": "2026-07-16 16:25:12.054568"
+        }
+      },
+      {
+        "column": "updated_at",
+        "row_index": 1,
+        "table": "incident",
+        "values": {
+          "R1": "2026-07-16 16:25:10.815204",
+          "R2": "2026-07-16 16:25:11.380979",
+          "R3": "2026-07-16 16:25:11.964896"
+        }
+      },
+      {
+        "column": "created_on",
+        "row_index": 7,
+        "table": "notification",
+        "values": {
+          "R1": "2026-07-16 16:25:11.065977",
+          "R2": "2026-07-16 16:25:11.617261",
+          "R3": "2026-07-16 16:25:12.210958"
+        }
+      },
+      {
+        "column": "updated_on",
+        "row_index": 7,
+        "table": "notification",
+        "values": {
+          "R1": "2026-07-16 16:25:11.065977",
+          "R2": "2026-07-16 16:25:11.617261",
+          "R3": "2026-07-16 16:25:12.210958"
+        }
+      }
+    ],
+    "labels": [
+      "R1",
+      "R2",
+      "R3"
+    ],
+    "row_count_mismatch": {},
+    "tables_not_common_to_all": []
+  },
+  "identical_modulo_volatile_columns": true,
+  "mutating_union": [
+    "add_child_incident",
+    "delete_incident_slas",
+    "map_change_request",
+    "remove_child_incident",
+    "send_notification",
+    "update_change",
+    "update_configuration_item",
+    "update_incident"
+  ],
+  "mutating_union_count": 8,
+  "new_row_pk_identical_across_replays": {
+    "new_change_request_mapping": true,
+    "new_child_mapping": true,
+    "new_notification": true
+  },
+  "non_timestamp_varying_columns": {},
+  "raw_identical": false,
+  "replicas": {
+    "R1": "db_1784219110432_7bi0of02e",
+    "R2": "db_1784219111107_l6jinyxr2",
+    "R3": "db_1784219111656_vjgxi928i"
+  },
+  "test": "A_mutating_determinism_itsm",
+  "tools_exercised": [
+    "add_child_incident",
+    "delete_incident_slas",
+    "map_change_request",
+    "remove_child_incident",
+    "send_notification",
+    "update_change",
+    "update_configuration_item",
+    "update_incident"
+  ],
+  "tools_exercised_count": 8,
+  "varying_columns": {
+    "change.updated_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "updated_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 0,
+          "values": {
+            "R1": "2026-07-16 16:25:10.867296",
+            "R2": "2026-07-16 16:25:11.423594",
+            "R3": "2026-07-16 16:25:12.011251"
+          }
+        }
+      ],
+      "table": "change"
+    },
+    "change_request_mapping.created_at": {
+      "behavior": "wall-clock timestamp",
+      "column": "created_at",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 5,
+          "values": {
+            "R1": "2026-07-16 16:25:11.027489",
+            "R2": "2026-07-16 16:25:11.579460",
+            "R3": "2026-07-16 16:25:12.171052"
+          }
+        }
+      ],
+      "table": "change_request_mapping"
+    },
+    "change_request_mapping.updated_at": {
+      "behavior": "wall-clock timestamp",
+      "column": "updated_at",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 5,
+          "values": {
+            "R1": "2026-07-16 16:25:11.027491",
+            "R2": "2026-07-16 16:25:11.579464",
+            "R3": "2026-07-16 16:25:12.171056"
+          }
+        }
+      ],
+      "table": "change_request_mapping"
+    },
+    "configuration_item.updated_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "updated_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 0,
+          "values": {
+            "R1": "2026-07-16 16:25:10.910191",
+            "R2": "2026-07-16 16:25:11.462095",
+            "R3": "2026-07-16 16:25:12.054568"
+          }
+        }
+      ],
+      "table": "configuration_item"
+    },
+    "incident.updated_at": {
+      "behavior": "wall-clock timestamp",
+      "column": "updated_at",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 1,
+          "values": {
+            "R1": "2026-07-16 16:25:10.815204",
+            "R2": "2026-07-16 16:25:11.380979",
+            "R3": "2026-07-16 16:25:11.964896"
+          }
+        }
+      ],
+      "table": "incident"
+    },
+    "notification.created_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "created_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 7,
+          "values": {
+            "R1": "2026-07-16 16:25:11.065977",
+            "R2": "2026-07-16 16:25:11.617261",
+            "R3": "2026-07-16 16:25:12.210958"
+          }
+        }
+      ],
+      "table": "notification"
+    },
+    "notification.updated_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "updated_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 7,
+          "values": {
+            "R1": "2026-07-16 16:25:11.065977",
+            "R2": "2026-07-16 16:25:11.617261",
+            "R3": "2026-07-16 16:25:12.210958"
+          }
+        }
+      ],
+      "table": "notification"
+    }
+  },
+  "wall_time_s": 3.03
+}

@@ -1,0 +1,46 @@
+{
+  "mcp_endpoint": "/mcp",
+  "number_of_runs": 1,
+  "reset_database_between_runs": true,
+  "gym_servers_config": [
+    {
+      "mcp_server_name": "gym-itsm-mcp",
+      "mcp_server_url": "http://localhost:8006",
+      "seed_database_file": "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/itsm/dbs/db_1765301900121_3mwjj54xy.sql",
+      "context": {},
+      "user_info": { "user_id": "USER_001", "name": "Marcus Thompson", "email": "marcus.thompson@techcorp.com" }
+    }
+  ],
+  "system_prompt": "You are an ITSM (IT Service Management) support agent assistant with access to incident, change, and configuration-management tools. Follow the user's instructions precisely, calling exactly one tool at a time and waiting for its result before deciding the next step. Verify which records you are changing before changing them. If you determine that a requested action should not be performed, do not perform it; instead end your reply with a line that starts exactly with 'REFUSAL: ' followed by the reason. Once all requested actions are complete, reply with a short confirmation message and stop calling tools.",
+  "user_prompt": "Following the Q3 asset revaluation, the recorded cost of Carlos Rodriguez's New York laptop needs to be corrected to $2,400. Please update that asset's cost in the CMDB. Only that one asset's cost should change.",
+  "selected_tools": [
+    "find_configuration_items",
+    "find_configuration_item_by_serial_number",
+    "get_user_using_name",
+    "get_user",
+    "update_configuration_item"
+  ],
+  "restricted_tools": [],
+  "verifiers": [
+    {
+      "verifier_type": "database_state",
+      "name": "carlos_laptop_cost_corrected",
+      "gym_name": "gym-itsm-mcp",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM configuration_item WHERE configuration_item_id = 'CI_001' AND cost = 2400;",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "exactly_one_ci_at_new_cost",
+      "gym_name": "gym-itsm-mcp",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM configuration_item WHERE cost = 2400;",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    }
+  ]
+}

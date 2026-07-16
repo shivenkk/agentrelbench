@@ -1,144 +1,399 @@
 {
-  "captured_new_row_ids": {
-    "ci_a": {
-      "R1": "CI_005",
-      "R2": "CI_005"
-    },
-    "incident_a": {
-      "R1": "INC_024",
-      "R2": "INC_024"
-    },
-    "incident_b": {
-      "R1": "INC_025",
-      "R2": "INC_025"
-    }
+ "captured_new_row_ids": {
+  "ci_a": {
+   "R1": "CI_005",
+   "R2": "CI_005"
   },
-  "distinct_tools_used": [
-    "create_incident",
-    "register_configuration_item",
-    "send_notification",
-    "update_configuration_item",
-    "update_incident"
-  ],
-  "domain": "itsm",
-  "identical_modulo_volatile_columns": true,
-  "new_row_pk_identical_across_replays": {
-    "ci_a": true,
-    "incident_a": true,
-    "incident_b": true
+  "incident_a": {
+   "R1": "INC_024",
+   "R2": "INC_024"
   },
-  "raw_identical": false,
-  "replicas": {
-    "R1": "db_1784201508431_bidg0n9e3",
-    "R2": "db_1784201508851_lfgbeykcf"
-  },
-  "row_count_mismatch": {},
-  "sequence_length": 6,
-  "tables_not_common_to_all": [],
-  "volatile_columns": {
-    "configuration_item.created_on": {
-      "behavior": "wall-clock timestamp",
-      "column": "created_on",
-      "diff_count": 1,
-      "examples": [
-        {
-          "row_index": 4,
-          "values": {
-            "R1": "2026-07-16 11:31:48.787843",
-            "R2": "2026-07-16 11:31:49.151105"
-          }
-        }
-      ],
-      "table": "configuration_item"
-    },
-    "configuration_item.updated_on": {
-      "behavior": "wall-clock timestamp",
-      "column": "updated_on",
-      "diff_count": 1,
-      "examples": [
-        {
-          "row_index": 4,
-          "values": {
-            "R1": "2026-07-16 11:31:48.816302",
-            "R2": "2026-07-16 11:31:49.180406"
-          }
-        }
-      ],
-      "table": "configuration_item"
-    },
-    "incident.created_at": {
-      "behavior": "wall-clock timestamp",
-      "column": "created_at",
-      "diff_count": 2,
-      "examples": [
-        {
-          "row_index": 23,
-          "values": {
-            "R1": "2026-07-16 11:31:48.694909",
-            "R2": "2026-07-16 11:31:49.057738"
-          }
-        },
-        {
-          "row_index": 24,
-          "values": {
-            "R1": "2026-07-16 11:31:48.727715",
-            "R2": "2026-07-16 11:31:49.088894"
-          }
-        }
-      ],
-      "table": "incident"
-    },
-    "incident.updated_at": {
-      "behavior": "wall-clock timestamp",
-      "column": "updated_at",
-      "diff_count": 2,
-      "examples": [
-        {
-          "row_index": 23,
-          "values": {
-            "R1": "2026-07-16 11:31:48.757304",
-            "R2": "2026-07-16 11:31:49.120182"
-          }
-        },
-        {
-          "row_index": 24,
-          "values": {
-            "R1": "2026-07-16 11:31:48.727715",
-            "R2": "2026-07-16 11:31:49.088894"
-          }
-        }
-      ],
-      "table": "incident"
-    },
-    "notification.created_on": {
-      "behavior": "wall-clock timestamp",
-      "column": "created_on",
-      "diff_count": 1,
-      "examples": [
-        {
-          "row_index": 7,
-          "values": {
-            "R1": "2026-07-16 11:31:48.845696",
-            "R2": "2026-07-16 11:31:49.207491"
-          }
-        }
-      ],
-      "table": "notification"
-    },
-    "notification.updated_on": {
-      "behavior": "wall-clock timestamp",
-      "column": "updated_on",
-      "diff_count": 1,
-      "examples": [
-        {
-          "row_index": 7,
-          "values": {
-            "R1": "2026-07-16 11:31:48.845696",
-            "R2": "2026-07-16 11:31:49.207491"
-          }
-        }
-      ],
-      "table": "notification"
-    }
+  "incident_b": {
+   "R1": "INC_025",
+   "R2": "INC_025"
   }
+ },
+ "distinct_tools_used": [
+  "create_incident",
+  "register_configuration_item",
+  "send_notification",
+  "update_configuration_item",
+  "update_incident"
+ ],
+ "domain": "itsm",
+ "identical_modulo_volatile_columns": true,
+ "new_row_pk_identical_across_replays": {
+  "ci_a": true,
+  "incident_a": true,
+  "incident_b": true
+ },
+ "raw_identical": false,
+ "replicas": {
+  "R1": "db_1784201508431_bidg0n9e3",
+  "R2": "db_1784201508851_lfgbeykcf"
+ },
+ "row_count_mismatch": {},
+ "sequence_length": 6,
+ "tables_not_common_to_all": [],
+ "volatile_columns": {
+  "configuration_item.created_on": {
+   "behavior": "wall-clock timestamp",
+   "column": "created_on",
+   "diff_count": 1,
+   "examples": [
+    {
+     "row_index": 4,
+     "values": {
+      "R1": "2026-07-16 11:31:48.787843",
+      "R2": "2026-07-16 11:31:49.151105"
+     }
+    }
+   ],
+   "table": "configuration_item"
+  },
+  "configuration_item.updated_on": {
+   "behavior": "wall-clock timestamp",
+   "column": "updated_on",
+   "diff_count": 1,
+   "examples": [
+    {
+     "row_index": 4,
+     "values": {
+      "R1": "2026-07-16 11:31:48.816302",
+      "R2": "2026-07-16 11:31:49.180406"
+     }
+    }
+   ],
+   "table": "configuration_item"
+  },
+  "incident.created_at": {
+   "behavior": "wall-clock timestamp",
+   "column": "created_at",
+   "diff_count": 2,
+   "examples": [
+    {
+     "row_index": 23,
+     "values": {
+      "R1": "2026-07-16 11:31:48.694909",
+      "R2": "2026-07-16 11:31:49.057738"
+     }
+    },
+    {
+     "row_index": 24,
+     "values": {
+      "R1": "2026-07-16 11:31:48.727715",
+      "R2": "2026-07-16 11:31:49.088894"
+     }
+    }
+   ],
+   "table": "incident"
+  },
+  "incident.updated_at": {
+   "behavior": "wall-clock timestamp",
+   "column": "updated_at",
+   "diff_count": 2,
+   "examples": [
+    {
+     "row_index": 23,
+     "values": {
+      "R1": "2026-07-16 11:31:48.757304",
+      "R2": "2026-07-16 11:31:49.120182"
+     }
+    },
+    {
+     "row_index": 24,
+     "values": {
+      "R1": "2026-07-16 11:31:48.727715",
+      "R2": "2026-07-16 11:31:49.088894"
+     }
+    }
+   ],
+   "table": "incident"
+  },
+  "notification.created_on": {
+   "behavior": "wall-clock timestamp",
+   "column": "created_on",
+   "diff_count": 1,
+   "examples": [
+    {
+     "row_index": 7,
+     "values": {
+      "R1": "2026-07-16 11:31:48.845696",
+      "R2": "2026-07-16 11:31:49.207491"
+     }
+    }
+   ],
+   "table": "notification"
+  },
+  "notification.updated_on": {
+   "behavior": "wall-clock timestamp",
+   "column": "updated_on",
+   "diff_count": 1,
+   "examples": [
+    {
+     "row_index": 7,
+     "values": {
+      "R1": "2026-07-16 11:31:48.845696",
+      "R2": "2026-07-16 11:31:49.207491"
+     }
+    }
+   ],
+   "table": "notification"
+  },
+  "problem.created_on": {
+   "table": "problem",
+   "column": "created_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "problem.updated_on": {
+   "table": "problem",
+   "column": "updated_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "organization.created_at": {
+   "table": "organization",
+   "column": "created_at",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "organization.updated_at": {
+   "table": "organization",
+   "column": "updated_at",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "users.created_on": {
+   "table": "users",
+   "column": "created_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "users.updated_on": {
+   "table": "users",
+   "column": "updated_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "location.created_on": {
+   "table": "location",
+   "column": "created_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "location.updated_on": {
+   "table": "location",
+   "column": "updated_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "child_incident.created_at": {
+   "table": "child_incident",
+   "column": "created_at",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "child_incident.updated_at": {
+   "table": "child_incident",
+   "column": "updated_at",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "sla_definition.created_on": {
+   "table": "sla_definition",
+   "column": "created_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "sla_definition.updated_on": {
+   "table": "sla_definition",
+   "column": "updated_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "user_group.created_on": {
+   "table": "user_group",
+   "column": "created_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "user_group.updated_on": {
+   "table": "user_group",
+   "column": "updated_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "service.created_on": {
+   "table": "service",
+   "column": "created_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "service.updated_on": {
+   "table": "service",
+   "column": "updated_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "incident_sla.created_on": {
+   "table": "incident_sla",
+   "column": "created_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "incident_sla.updated_on": {
+   "table": "incident_sla",
+   "column": "updated_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "knowledge.created_on": {
+   "table": "knowledge",
+   "column": "created_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "knowledge.updated_on": {
+   "table": "knowledge",
+   "column": "updated_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "user_group_member.created_on": {
+   "table": "user_group_member",
+   "column": "created_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "user_group_member.updated_on": {
+   "table": "user_group_member",
+   "column": "updated_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "service_offering.created_on": {
+   "table": "service_offering",
+   "column": "created_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "service_offering.updated_on": {
+   "table": "service_offering",
+   "column": "updated_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "incident_affected_cis.created_on": {
+   "table": "incident_affected_cis",
+   "column": "created_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "incident_affected_cis.updated_on": {
+   "table": "incident_affected_cis",
+   "column": "updated_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "incident_knowledge.created_on": {
+   "table": "incident_knowledge",
+   "column": "created_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "incident_knowledge.updated_on": {
+   "table": "incident_knowledge",
+   "column": "updated_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "incident_template.created_at": {
+   "table": "incident_template",
+   "column": "created_at",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "incident_template.updated_at": {
+   "table": "incident_template",
+   "column": "updated_at",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "change.created_on": {
+   "table": "change",
+   "column": "created_on",
+   "behavior": "schema-convention audit timestamp (server-stamped on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "change.updated_on": {
+   "table": "change",
+   "column": "updated_on",
+   "behavior": "wall-clock timestamp",
+   "diff_count": 1,
+   "examples": [
+    {
+     "row_index": 0,
+     "values": {
+      "R1": "2026-07-16 16:25:10.867296",
+      "R2": "2026-07-16 16:25:11.423594",
+      "R3": "2026-07-16 16:25:12.011251"
+     }
+    }
+   ],
+   "provenance": "CONFIRMED by M4 full-toolset re-audit (m4_reaudit/test_a_mutating_determinism_itsm.py, 2026-07-16) -- was a systematic-DDL-scan placeholder ('empirical confirmation due in M4 full-toolset re-audit'); now backed by a live 3-replica diff."
+  },
+  "change_request_mapping.created_at": {
+   "table": "change_request_mapping",
+   "column": "created_at",
+   "behavior": "wall-clock timestamp",
+   "diff_count": 1,
+   "examples": [
+    {
+     "row_index": 5,
+     "values": {
+      "R1": "2026-07-16 16:25:11.027489",
+      "R2": "2026-07-16 16:25:11.579460",
+      "R3": "2026-07-16 16:25:12.171052"
+     }
+    }
+   ],
+   "provenance": "CONFIRMED by M4 full-toolset re-audit (m4_reaudit/test_a_mutating_determinism_itsm.py, 2026-07-16) -- was a systematic-DDL-scan placeholder ('empirical confirmation due in M4 full-toolset re-audit'); now backed by a live 3-replica diff."
+  },
+  "change_request_mapping.updated_at": {
+   "table": "change_request_mapping",
+   "column": "updated_at",
+   "behavior": "wall-clock timestamp",
+   "diff_count": 1,
+   "examples": [
+    {
+     "row_index": 5,
+     "values": {
+      "R1": "2026-07-16 16:25:11.027491",
+      "R2": "2026-07-16 16:25:11.579464",
+      "R3": "2026-07-16 16:25:12.171056"
+     }
+    }
+   ],
+   "provenance": "CONFIRMED by M4 full-toolset re-audit (m4_reaudit/test_a_mutating_determinism_itsm.py, 2026-07-16) -- was a systematic-DDL-scan placeholder ('empirical confirmation due in M4 full-toolset re-audit'); now backed by a live 3-replica diff."
+  }
+ },
+ "note_systematic_scan": "2026-07-16: all sys_created_on/sys_updated_on columns added by DDL scan across every table; M1-empirical entries preserved untouched.",
+ "m4_reaudit": {
+  "date": "2026-07-16",
+  "script": "m4_reaudit/test_a_mutating_determinism_itsm.py",
+  "brand_new_columns_added": [],
+  "placeholder_columns_upgraded_to_empirical": [
+   "change.updated_on",
+   "change_request_mapping.created_at",
+   "change_request_mapping.updated_at"
+  ],
+  "already_empirical_columns_reconfirmed_untouched": [
+   "configuration_item.updated_on",
+   "incident.updated_at",
+   "notification.created_on",
+   "notification.updated_on"
+  ],
+  "evidence_doc": "docs/M4-reaudit-evidence.md"
+ }
 }

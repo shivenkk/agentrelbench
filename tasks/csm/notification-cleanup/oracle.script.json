@@ -1,0 +1,8 @@
+{
+  "expected": { "outcome": "PASS", "eog_success": true },
+  "script": [
+    { "tool_calls": [ { "name": "find_notifications", "arguments": { "case_id": 29 } } ] },
+    { "tool_calls": [ { "name": "delete_notifications", "arguments": { "case_id": 29, "status": "failed" } } ] },
+    { "content": "Deleted the failed notification (#17) for case 29. Notifications for all other cases are untouched." }
+  ]
+}

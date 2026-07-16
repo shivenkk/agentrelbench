@@ -1,0 +1,8 @@
+{
+  "expected": { "outcome": "PASS", "eog_success": true },
+  "script": [
+    { "tool_calls": [ { "name": "find_incident_by_number", "arguments": { "number": "INC0000011" } } ] },
+    { "tool_calls": [ { "name": "update_incident", "arguments": { "incident_id": "INC_016", "status": "in_progress", "urgency": "high" } } ] },
+    { "content": "Incident INC0000011 updated: status set to in_progress and urgency to high." }
+  ]
+}

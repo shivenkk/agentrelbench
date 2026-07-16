@@ -1,0 +1,42 @@
+{
+  "account_ids_identical_across_replicas": true,
+  "arguments": {
+    "account_type": "customer",
+    "active": true,
+    "name": "M4 CreateID Stability Check Account"
+  },
+  "expected_account_id": 53,
+  "expected_account_id_basis": "SELECT MAX(account_id) FROM account on a throwaway probe seed returned 52 (52 total accounts) -- a fresh AUTOINCREMENT create should yield 53",
+  "matches_expected_value": true,
+  "replicas": {
+    "R1": {
+      "account_id": 53,
+      "db_id": "db_1784219219245_ck98ut7sd",
+      "full_response": {
+        "account_id": 53,
+        "account_type": "customer",
+        "active": 1,
+        "email_domain": null,
+        "name": "M4 CreateID Stability Check Account",
+        "sys_created_on": "2026-07-16 16:26:59",
+        "sys_updated_on": "2026-07-16 16:26:59"
+      }
+    },
+    "R2": {
+      "account_id": 53,
+      "db_id": "db_1784219219705_5fsd10lnj",
+      "full_response": {
+        "account_id": 53,
+        "account_type": "customer",
+        "active": 1,
+        "email_domain": null,
+        "name": "M4 CreateID Stability Check Account",
+        "sys_created_on": "2026-07-16 16:27:00",
+        "sys_updated_on": "2026-07-16 16:27:00"
+      }
+    }
+  },
+  "test": "C_create_id_stability_csm",
+  "tool": "create_new_account",
+  "wall_time_s": 0.87
+}

@@ -1,0 +1,9 @@
+{
+  "expected": { "outcome": "PASS", "eog_success": true },
+  "script": [
+    { "tool_calls": [ { "name": "retrieve_knowledge", "arguments": { "kb_number": "KB-0000184" } } ] },
+    { "tool_calls": [ { "name": "update_knowledge", "arguments": { "knowledge_id": 184, "state": "published" } } ] },
+    { "tool_calls": [ { "name": "link_case_knowledge", "arguments": { "case_id": 20, "knowledge_id": 184, "used_as": "applied" } } ] },
+    { "content": "Published KB-0000184 (Dell PowerEdge R740 runbook) and linked it to case CS-0000020 as an applied reference. No other case was linked." }
+  ]
+}

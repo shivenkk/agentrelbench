@@ -1,0 +1,258 @@
+{
+  "call_log": [
+    {
+      "arguments": {
+        "number": "CHG0000001"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "find_change_by_number"
+    },
+    {
+      "arguments": {
+        "incident_id": "INC_001"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "find_change_request_mappings_for_incident"
+    },
+    {
+      "arguments": {
+        "serial_number": "LAPTOP-NYC-001"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "find_configuration_item_by_serial_number"
+    },
+    {
+      "arguments": {
+        "status": "in_use"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "find_configuration_items"
+    },
+    {
+      "arguments": {
+        "incident_id": "INC_001"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "find_incident_by_id"
+    },
+    {
+      "arguments": {
+        "number": "INC0000001"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "find_incident_by_number"
+    },
+    {
+      "arguments": {
+        "incident_id": "INC_001"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "find_incident_slas"
+    },
+    {
+      "arguments": {
+        "incident_id": "INC_001"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "find_notifications_sent_for_incident"
+    },
+    {
+      "arguments": {
+        "child_incident": "INC_001"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "find_parent_incident"
+    },
+    {
+      "arguments": {
+        "stages": [
+          "breached",
+          "completed"
+        ]
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "find_stage_wise_breached_incident_sla_counts"
+    },
+    {
+      "arguments": {
+        "name": "Password Reset Template"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "get_incident_template_by_name"
+    },
+    {
+      "arguments": {
+        "active": true
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "get_incident_templates"
+    },
+    {
+      "arguments": {
+        "user_id": "USER_001"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "get_user"
+    },
+    {
+      "arguments": {
+        "first_name": "Marcus",
+        "last_name": "Thompson"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "get_user_using_name"
+    },
+    {
+      "arguments": {
+        "change_id": "CHG_001"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "list_change_request_mappings"
+    },
+    {
+      "arguments": {
+        "status": "closed"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "list_changes"
+    },
+    {
+      "arguments": {
+        "parent_incident": "INC_006"
+      },
+      "ok": true,
+      "result_type": "list",
+      "tool": "list_child_incidents"
+    },
+    {
+      "arguments": {
+        "status": "new"
+      },
+      "ok": true,
+      "result_type": "list",
+      "tool": "list_incidents"
+    }
+  ],
+  "coverage_complete": true,
+  "db_id": "db_1784219178893_q91p2qa4p",
+  "hash_after": {
+    "overall": "a8b8d19002790f2404f610420227052e7906556d93f1f3ea5cf956b02d77bc59",
+    "per_table": {
+      "change": "4585f750360d051be5a0e28b36d316ee23dc2b9e2ce4e8f29e2423b52a893ce2",
+      "change_request_mapping": "8ea5bef51f26addda28491d4188848029523c49695e812dcf2640ff1a4f818c0",
+      "child_incident": "9c10a3825a28735a444d4f184f0bddf4c5f391a6db1a298c511a717a129f025a",
+      "configuration_item": "f002619931378471f28a5f03747c861021dce50c5ee18a30171c0a079aa408f3",
+      "incident": "25605d2884b9a5b427695479862304df9cd22b842196efa476305769b9b77f22",
+      "incident_affected_cis": "1b17592d13fb2d5b5d92edc86879020d83ade6efa30178b219df5719b8b92a06",
+      "incident_knowledge": "13fb710d38c8fdde5158d5208104eea024dce0e0ac6cc6733e3aaa98b1431b0d",
+      "incident_sla": "c6bd99f5eec4d00ccbaddc4a0b97ec51e8e99898b6fb2a8bfadc08eedaaf66f5",
+      "incident_template": "5d112130ae358f4483385876fa25602eca93c1e8e6d75ae6dafaeff289bae7e4",
+      "knowledge": "76b3940f5ad546927457c15f5f7bdfc44b64df131f66fe1ac0d5d7587a423323",
+      "location": "4cd32690b66fa5fe99237c826d8a80b8a86262802ba830927b6d414d9e89b32c",
+      "notification": "af15d9e6134d3ceb7f984dda793c1e48f6adeacff061e0fff87e2d0289d8d34e",
+      "organization": "0494da474bab0890277015258cd43a71ef1715ebfb06c694bcbec11dfa9cc35c",
+      "permission": "6604d6d91a7694cf8328242e257b9976aa39679094c5fc1a9fe0edf953bf2c7a",
+      "problem": "7bc2a746cae4290fb192d9224d032b5819888c69cf3be335de5feca4bb027db1",
+      "role": "5783da27c5858a4073a0fffb586e9c9f8f6546b7de854c72983d3d57b1206b1a",
+      "role_permission": "91a0c65fc26796b7b22fae3131a58a2178c5afbd18cf6b2fefb97ba148a0c950",
+      "service": "999a62c6dc5f05c00a728bf418b09287b7cd445359084e01d818fd5e419ea302",
+      "service_offering": "86a1fa299f555e828dc3b07b8275d93b91a71443451f5d43400269b4cad53ba1",
+      "sla_definition": "98e7968123c4fbb51d9f4dde3bd4bce4f9cd3013a0ee422718dc4c84b544ee21",
+      "user_group": "77bd10bc535a376b9dfaad4ce920f2464536a2c918c9f17c9273c14c3383b67d",
+      "user_group_member": "10d6d8c092cd246aa3523f44ae12f2715107549677db65bdb5f9b842f5901376",
+      "user_role": "8f329bb663f068a82ed81b4f12e2d814cb38c961574dcc0a7f53d82fb94c2655",
+      "users": "648d87b2c93c5cd12011d03f30df6471f5df3ede134e2f7a3dab030c25db9d45"
+    }
+  },
+  "hash_before": {
+    "overall": "a8b8d19002790f2404f610420227052e7906556d93f1f3ea5cf956b02d77bc59",
+    "per_table": {
+      "change": "4585f750360d051be5a0e28b36d316ee23dc2b9e2ce4e8f29e2423b52a893ce2",
+      "change_request_mapping": "8ea5bef51f26addda28491d4188848029523c49695e812dcf2640ff1a4f818c0",
+      "child_incident": "9c10a3825a28735a444d4f184f0bddf4c5f391a6db1a298c511a717a129f025a",
+      "configuration_item": "f002619931378471f28a5f03747c861021dce50c5ee18a30171c0a079aa408f3",
+      "incident": "25605d2884b9a5b427695479862304df9cd22b842196efa476305769b9b77f22",
+      "incident_affected_cis": "1b17592d13fb2d5b5d92edc86879020d83ade6efa30178b219df5719b8b92a06",
+      "incident_knowledge": "13fb710d38c8fdde5158d5208104eea024dce0e0ac6cc6733e3aaa98b1431b0d",
+      "incident_sla": "c6bd99f5eec4d00ccbaddc4a0b97ec51e8e99898b6fb2a8bfadc08eedaaf66f5",
+      "incident_template": "5d112130ae358f4483385876fa25602eca93c1e8e6d75ae6dafaeff289bae7e4",
+      "knowledge": "76b3940f5ad546927457c15f5f7bdfc44b64df131f66fe1ac0d5d7587a423323",
+      "location": "4cd32690b66fa5fe99237c826d8a80b8a86262802ba830927b6d414d9e89b32c",
+      "notification": "af15d9e6134d3ceb7f984dda793c1e48f6adeacff061e0fff87e2d0289d8d34e",
+      "organization": "0494da474bab0890277015258cd43a71ef1715ebfb06c694bcbec11dfa9cc35c",
+      "permission": "6604d6d91a7694cf8328242e257b9976aa39679094c5fc1a9fe0edf953bf2c7a",
+      "problem": "7bc2a746cae4290fb192d9224d032b5819888c69cf3be335de5feca4bb027db1",
+      "role": "5783da27c5858a4073a0fffb586e9c9f8f6546b7de854c72983d3d57b1206b1a",
+      "role_permission": "91a0c65fc26796b7b22fae3131a58a2178c5afbd18cf6b2fefb97ba148a0c950",
+      "service": "999a62c6dc5f05c00a728bf418b09287b7cd445359084e01d818fd5e419ea302",
+      "service_offering": "86a1fa299f555e828dc3b07b8275d93b91a71443451f5d43400269b4cad53ba1",
+      "sla_definition": "98e7968123c4fbb51d9f4dde3bd4bce4f9cd3013a0ee422718dc4c84b544ee21",
+      "user_group": "77bd10bc535a376b9dfaad4ce920f2464536a2c918c9f17c9273c14c3383b67d",
+      "user_group_member": "10d6d8c092cd246aa3523f44ae12f2715107549677db65bdb5f9b842f5901376",
+      "user_role": "8f329bb663f068a82ed81b4f12e2d814cb38c961574dcc0a7f53d82fb94c2655",
+      "users": "648d87b2c93c5cd12011d03f30df6471f5df3ede134e2f7a3dab030c25db9d45"
+    }
+  },
+  "overall_match": true,
+  "per_table_mismatches": [],
+  "positional_diff": null,
+  "read_only_union": [
+    "find_change_by_number",
+    "find_change_request_mappings_for_incident",
+    "find_configuration_item_by_serial_number",
+    "find_configuration_items",
+    "find_incident_by_id",
+    "find_incident_by_number",
+    "find_incident_slas",
+    "find_notifications_sent_for_incident",
+    "find_parent_incident",
+    "find_stage_wise_breached_incident_sla_counts",
+    "get_incident_template_by_name",
+    "get_incident_templates",
+    "get_user",
+    "get_user_using_name",
+    "list_change_request_mappings",
+    "list_changes",
+    "list_child_incidents",
+    "list_incidents"
+  ],
+  "read_only_union_count": 18,
+  "test": "B_read_purity_itsm",
+  "tools_called": [
+    "find_change_by_number",
+    "find_change_request_mappings_for_incident",
+    "find_configuration_item_by_serial_number",
+    "find_configuration_items",
+    "find_incident_by_id",
+    "find_incident_by_number",
+    "find_incident_slas",
+    "find_notifications_sent_for_incident",
+    "find_parent_incident",
+    "find_stage_wise_breached_incident_sla_counts",
+    "get_incident_template_by_name",
+    "get_incident_templates",
+    "get_user",
+    "get_user_using_name",
+    "list_change_request_mappings",
+    "list_changes",
+    "list_child_incidents",
+    "list_incidents"
+  ],
+  "wall_time_s": 1.64
+}

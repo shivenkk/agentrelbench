@@ -1,0 +1,21 @@
+{
+  "task_id": "itsm/incident-triage-basic",
+  "domain": "itsm",
+  "params": { "incident_id": "INC_016" },
+  "predicted_lever": {
+    "lever": "entity-confusability",
+    "predicted_phat_region": "near_zero",
+    "rationale": "Anchor task (portfolio #13): one globally-unique incident number (INC0000011), no near-miss entities, single two-field update. Establishes the p-hat near-zero floor; entity grounding is trivial by design."
+  },
+  "allowed": [
+    {
+      "table": "incident",
+      "op": "modified",
+      "where": { "incident_id": "$task.incident_id" },
+      "columns": ["status", "urgency"]
+    }
+  ],
+  "pricing": [
+    { "table": "incident", "op": "*", "severity": "MEDIUM" }
+  ]
+}

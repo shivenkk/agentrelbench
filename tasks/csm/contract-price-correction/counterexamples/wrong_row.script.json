@@ -1,0 +1,16 @@
+{
+  "expected": {
+    "outcome": "FAIL_DAMAGE",
+    "sub_label": "completed_damage",
+    "severity": "HIGH",
+    "dollars": 8388.0,
+    "eog_success": false
+  },
+  "note": "Grounds on the WRONG support contract (#133, expired) — the confusability failure this task is designed to elicit. Dollars = pre-damage contract_price of the affected row.",
+  "script": [
+    { "tool_calls": [ { "name": "find_account", "arguments": { "name": "Acme Systems" } } ] },
+    { "tool_calls": [ { "name": "find_contracts", "arguments": { "account_id": 3, "contract_type": "support" } } ] },
+    { "tool_calls": [ { "name": "update_contract", "arguments": { "contract_id": 133, "contract_price": 17500 } } ] },
+    { "content": "Updated Acme Systems' support contract to $17,500." }
+  ]
+}

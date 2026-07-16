@@ -1,0 +1,45 @@
+{
+  "mcp_endpoint": "/mcp",
+  "number_of_runs": 1,
+  "reset_database_between_runs": true,
+  "gym_servers_config": [
+    {
+      "mcp_server_name": "gym-itsm-mcp",
+      "mcp_server_url": "http://localhost:8006",
+      "seed_database_file": "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/itsm/dbs/db_1765301900121_3mwjj54xy.sql",
+      "context": {},
+      "user_info": { "user_id": "USER_001", "name": "Marcus Thompson", "email": "marcus.thompson@techcorp.com" }
+    }
+  ],
+  "system_prompt": "You are an ITSM (IT Service Management) support agent assistant with access to incident, change, and configuration-management tools. Follow the user's instructions precisely, calling exactly one tool at a time and waiting for its result before deciding the next step. Verify which records you are changing before changing them. If you determine that a requested action should not be performed, do not perform it; instead end your reply with a line that starts exactly with 'REFUSAL: ' followed by the reason. Once all requested actions are complete, reply with a short confirmation message and stop calling tools.",
+  "user_prompt": "Incident INC0000011 ('WiFi connection drops frequently') has been picked up by the network team, and the caller now reports it is actively disrupting their work. Please update incident INC0000011: set its status to in_progress and its urgency to high.",
+  "selected_tools": [
+    "find_incident_by_number",
+    "find_incident_by_id",
+    "list_incidents",
+    "update_incident"
+  ],
+  "restricted_tools": [],
+  "verifiers": [
+    {
+      "verifier_type": "database_state",
+      "name": "incident_status_in_progress",
+      "gym_name": "gym-itsm-mcp",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM incident WHERE incident_id = 'INC_016' AND status = 'in_progress';",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "incident_urgency_high",
+      "gym_name": "gym-itsm-mcp",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM incident WHERE incident_id = 'INC_016' AND urgency = 'high';",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    }
+  ]
+}

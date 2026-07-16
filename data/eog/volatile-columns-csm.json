@@ -1,145 +1,448 @@
 {
-  "captured_new_row_ids": {
-    "case_a": {
-      "R1": 1233,
-      "R2": 1233,
-      "R3": 1233
-    },
-    "case_b": {
-      "R1": 1234,
-      "R2": 1234,
-      "R3": 1234
-    },
-    "notification_a": {
-      "R1": 734,
-      "R2": 734,
-      "R3": 734
-    },
-    "sla_link_a": {
-      "R1": 2465,
-      "R2": 2465,
-      "R3": 2465
-    },
-    "sla_link_b": {
-      "R1": 2466,
-      "R2": 2466,
-      "R3": 2466
-    }
+ "captured_new_row_ids": {
+  "case_a": {
+   "R1": 1233,
+   "R2": 1233,
+   "R3": 1233
   },
-  "distinct_tools_used": [
-    "assign_case_to_user",
-    "create_new_case",
-    "link_new_case_sla",
-    "send_notification",
-    "update_case",
-    "update_case_sla_details"
-  ],
-  "domain": "csm",
-  "identical_modulo_volatile_columns": true,
-  "new_row_pk_identical_across_replays": {
-    "case_a": true,
-    "case_b": true,
-    "notification_a": true,
-    "sla_link_a": true,
-    "sla_link_b": true
+  "case_b": {
+   "R1": 1234,
+   "R2": 1234,
+   "R3": 1234
   },
-  "raw_identical": false,
-  "replicas": {
-    "R1": "db_1784201359702_533ihgfbo",
-    "R2": "db_1784201360342_o0ldby591",
-    "R3": "db_1784201360940_wq39qchuy"
+  "notification_a": {
+   "R1": 734,
+   "R2": 734,
+   "R3": 734
   },
-  "row_count_mismatch": {},
-  "sequence_length": 10,
-  "tables_not_common_to_all": [],
-  "volatile_columns": {
-    "case_sla.start_time": {
-      "behavior": "wall-clock timestamp",
-      "column": "start_time",
-      "diff_count": 2,
-      "examples": [
-        {
-          "row_index": 2464,
-          "values": {
-            "R1": "2026-07-16 11:29:20",
-            "R2": "2026-07-16 11:29:20",
-            "R3": "2026-07-16 11:29:21"
-          }
-        },
-        {
-          "row_index": 2465,
-          "values": {
-            "R1": "2026-07-16 11:29:20",
-            "R2": "2026-07-16 11:29:20",
-            "R3": "2026-07-16 11:29:21"
-          }
-        }
-      ],
-      "table": "case_sla"
-    },
-    "customer_case.sys_created_on": {
-      "behavior": "wall-clock timestamp",
-      "column": "sys_created_on",
-      "diff_count": 2,
-      "examples": [
-        {
-          "row_index": 1232,
-          "values": {
-            "R1": "2026-07-16 11:29:20",
-            "R2": "2026-07-16 11:29:20",
-            "R3": "2026-07-16 11:29:21"
-          }
-        },
-        {
-          "row_index": 1233,
-          "values": {
-            "R1": "2026-07-16 11:29:20",
-            "R2": "2026-07-16 11:29:20",
-            "R3": "2026-07-16 11:29:21"
-          }
-        }
-      ],
-      "table": "customer_case"
-    },
-    "customer_case.sys_updated_on": {
-      "behavior": "wall-clock timestamp",
-      "column": "sys_updated_on",
-      "diff_count": 2,
-      "examples": [
-        {
-          "row_index": 1232,
-          "values": {
-            "R1": "2026-07-16 11:29:20",
-            "R2": "2026-07-16 11:29:20",
-            "R3": "2026-07-16 11:29:21"
-          }
-        },
-        {
-          "row_index": 1233,
-          "values": {
-            "R1": "2026-07-16 11:29:20",
-            "R2": "2026-07-16 11:29:20",
-            "R3": "2026-07-16 11:29:21"
-          }
-        }
-      ],
-      "table": "customer_case"
-    },
-    "notification.sys_created_on": {
-      "behavior": "wall-clock timestamp",
-      "column": "sys_created_on",
-      "diff_count": 1,
-      "examples": [
-        {
-          "row_index": 733,
-          "values": {
-            "R1": "2026-07-16 11:29:20",
-            "R2": "2026-07-16 11:29:20",
-            "R3": "2026-07-16 11:29:21"
-          }
-        }
-      ],
-      "table": "notification"
-    }
+  "sla_link_a": {
+   "R1": 2465,
+   "R2": 2465,
+   "R3": 2465
+  },
+  "sla_link_b": {
+   "R1": 2466,
+   "R2": 2466,
+   "R3": 2466
   }
+ },
+ "distinct_tools_used": [
+  "assign_case_to_user",
+  "create_new_case",
+  "link_new_case_sla",
+  "send_notification",
+  "update_case",
+  "update_case_sla_details"
+ ],
+ "domain": "csm",
+ "identical_modulo_volatile_columns": true,
+ "new_row_pk_identical_across_replays": {
+  "case_a": true,
+  "case_b": true,
+  "notification_a": true,
+  "sla_link_a": true,
+  "sla_link_b": true
+ },
+ "raw_identical": false,
+ "replicas": {
+  "R1": "db_1784201359702_533ihgfbo",
+  "R2": "db_1784201360342_o0ldby591",
+  "R3": "db_1784201360940_wq39qchuy"
+ },
+ "row_count_mismatch": {},
+ "sequence_length": 10,
+ "tables_not_common_to_all": [],
+ "volatile_columns": {
+  "case_sla.start_time": {
+   "behavior": "wall-clock timestamp",
+   "column": "start_time",
+   "diff_count": 2,
+   "examples": [
+    {
+     "row_index": 2464,
+     "values": {
+      "R1": "2026-07-16 11:29:20",
+      "R2": "2026-07-16 11:29:20",
+      "R3": "2026-07-16 11:29:21"
+     }
+    },
+    {
+     "row_index": 2465,
+     "values": {
+      "R1": "2026-07-16 11:29:20",
+      "R2": "2026-07-16 11:29:20",
+      "R3": "2026-07-16 11:29:21"
+     }
+    }
+   ],
+   "table": "case_sla"
+  },
+  "contract.sys_updated_on": {
+   "behavior": "wall-clock timestamp",
+   "column": "sys_updated_on",
+   "diff_count": 2,
+   "examples": [
+    {
+     "row_index": 8,
+     "values": {
+      "pre_write": "2025-12-13 14:58:37",
+      "post_write_run_a": "2026-07-16 14:40:39",
+      "post_write_run_b": "2026-07-16 14:41:19"
+     }
+    }
+   ],
+   "table": "contract",
+   "note": "Not exercised by the original 3-replica (R1/R2/R3) audit sequence above -- distinct_tools_used for that sequence never included a contract-mutating tool (e.g. update_contract). Discovered while validating tasks/csm/contract-price-correction (arb-validate): update_contract bumps contract.sys_updated_on to wall-clock time on every write (contract_id=8, two independent live runs, contract_price legitimately changed each time), same behavior as the other *_updated_on/*_created_on columns already listed here."
+  },
+  "customer_case.sys_created_on": {
+   "behavior": "wall-clock timestamp",
+   "column": "sys_created_on",
+   "diff_count": 2,
+   "examples": [
+    {
+     "row_index": 1232,
+     "values": {
+      "R1": "2026-07-16 11:29:20",
+      "R2": "2026-07-16 11:29:20",
+      "R3": "2026-07-16 11:29:21"
+     }
+    },
+    {
+     "row_index": 1233,
+     "values": {
+      "R1": "2026-07-16 11:29:20",
+      "R2": "2026-07-16 11:29:20",
+      "R3": "2026-07-16 11:29:21"
+     }
+    }
+   ],
+   "table": "customer_case"
+  },
+  "customer_case.sys_updated_on": {
+   "behavior": "wall-clock timestamp",
+   "column": "sys_updated_on",
+   "diff_count": 2,
+   "examples": [
+    {
+     "row_index": 1232,
+     "values": {
+      "R1": "2026-07-16 11:29:20",
+      "R2": "2026-07-16 11:29:20",
+      "R3": "2026-07-16 11:29:21"
+     }
+    },
+    {
+     "row_index": 1233,
+     "values": {
+      "R1": "2026-07-16 11:29:20",
+      "R2": "2026-07-16 11:29:20",
+      "R3": "2026-07-16 11:29:21"
+     }
+    }
+   ],
+   "table": "customer_case"
+  },
+  "notification.sys_created_on": {
+   "behavior": "wall-clock timestamp",
+   "column": "sys_created_on",
+   "diff_count": 1,
+   "examples": [
+    {
+     "row_index": 733,
+     "values": {
+      "R1": "2026-07-16 11:29:20",
+      "R2": "2026-07-16 11:29:20",
+      "R3": "2026-07-16 11:29:21"
+     }
+    }
+   ],
+   "table": "notification"
+  },
+  "location.sys_created_on": {
+   "table": "location",
+   "column": "sys_created_on",
+   "behavior": "schema-convention audit timestamp (sys_* stamped server-side on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "location.sys_updated_on": {
+   "table": "location",
+   "column": "sys_updated_on",
+   "behavior": "schema-convention audit timestamp (sys_* stamped server-side on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "user.sys_created_on": {
+   "table": "user",
+   "column": "sys_created_on",
+   "behavior": "schema-convention audit timestamp (sys_* stamped server-side on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "user.sys_updated_on": {
+   "table": "user",
+   "column": "sys_updated_on",
+   "behavior": "schema-convention audit timestamp (sys_* stamped server-side on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "user_group.sys_created_on": {
+   "table": "user_group",
+   "column": "sys_created_on",
+   "behavior": "schema-convention audit timestamp (sys_* stamped server-side on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "user_group.sys_updated_on": {
+   "table": "user_group",
+   "column": "sys_updated_on",
+   "behavior": "schema-convention audit timestamp (sys_* stamped server-side on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "account.sys_created_on": {
+   "table": "account",
+   "column": "sys_created_on",
+   "behavior": "wall-clock timestamp",
+   "diff_count": 1,
+   "examples": [
+    {
+     "row_index": 52,
+     "values": {
+      "R1": "2026-07-16 16:24:05",
+      "R2": "2026-07-16 16:24:05",
+      "R3": "2026-07-16 16:24:06"
+     }
+    }
+   ],
+   "provenance": "CONFIRMED by M4 full-toolset re-audit (m4_reaudit/test_a_mutating_determinism_csm.py, 2026-07-16) -- was a systematic-DDL-scan placeholder ('empirical confirmation due in M4 full-toolset re-audit'); now backed by a live 3-replica diff."
+  },
+  "account.sys_updated_on": {
+   "table": "account",
+   "column": "sys_updated_on",
+   "behavior": "wall-clock timestamp",
+   "diff_count": 1,
+   "examples": [
+    {
+     "row_index": 52,
+     "values": {
+      "R1": "2026-07-16 16:24:05",
+      "R2": "2026-07-16 16:24:05",
+      "R3": "2026-07-16 16:24:06"
+     }
+    }
+   ],
+   "provenance": "CONFIRMED by M4 full-toolset re-audit (m4_reaudit/test_a_mutating_determinism_csm.py, 2026-07-16) -- was a systematic-DDL-scan placeholder ('empirical confirmation due in M4 full-toolset re-audit'); now backed by a live 3-replica diff."
+  },
+  "product.sys_created_on": {
+   "table": "product",
+   "column": "sys_created_on",
+   "behavior": "schema-convention audit timestamp (sys_* stamped server-side on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "product.sys_updated_on": {
+   "table": "product",
+   "column": "sys_updated_on",
+   "behavior": "wall-clock timestamp",
+   "diff_count": 1,
+   "examples": [
+    {
+     "row_index": 0,
+     "values": {
+      "R1": "2026-07-16 16:24:05",
+      "R2": "2026-07-16 16:24:06",
+      "R3": "2026-07-16 16:24:06"
+     }
+    }
+   ],
+   "provenance": "CONFIRMED by M4 full-toolset re-audit (m4_reaudit/test_a_mutating_determinism_csm.py, 2026-07-16) -- was a systematic-DDL-scan placeholder ('empirical confirmation due in M4 full-toolset re-audit'); now backed by a live 3-replica diff."
+  },
+  "installed_product.sys_created_on": {
+   "table": "installed_product",
+   "column": "sys_created_on",
+   "behavior": "schema-convention audit timestamp (sys_* stamped server-side on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "installed_product.sys_updated_on": {
+   "table": "installed_product",
+   "column": "sys_updated_on",
+   "behavior": "wall-clock timestamp",
+   "diff_count": 1,
+   "examples": [
+    {
+     "row_index": 2,
+     "values": {
+      "R1": "2026-07-16 16:24:05",
+      "R2": "2026-07-16 16:24:05",
+      "R3": "2026-07-16 16:24:06"
+     }
+    }
+   ],
+   "provenance": "CONFIRMED by M4 full-toolset re-audit (m4_reaudit/test_a_mutating_determinism_csm.py, 2026-07-16) -- was a systematic-DDL-scan placeholder ('empirical confirmation due in M4 full-toolset re-audit'); now backed by a live 3-replica diff."
+  },
+  "contact.sys_created_on": {
+   "table": "contact",
+   "column": "sys_created_on",
+   "behavior": "schema-convention audit timestamp (sys_* stamped server-side on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "contact.sys_updated_on": {
+   "table": "contact",
+   "column": "sys_updated_on",
+   "behavior": "schema-convention audit timestamp (sys_* stamped server-side on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "contract.sys_created_on": {
+   "table": "contract",
+   "column": "sys_created_on",
+   "behavior": "wall-clock timestamp",
+   "diff_count": 1,
+   "examples": [
+    {
+     "row_index": 153,
+     "values": {
+      "R1": "2026-07-16 16:24:05",
+      "R2": "2026-07-16 16:24:05",
+      "R3": "2026-07-16 16:24:06"
+     }
+    }
+   ],
+   "provenance": "CONFIRMED by M4 full-toolset re-audit (m4_reaudit/test_a_mutating_determinism_csm.py, 2026-07-16) -- was a systematic-DDL-scan placeholder ('empirical confirmation due in M4 full-toolset re-audit'); now backed by a live 3-replica diff."
+  },
+  "entitlement.sys_created_on": {
+   "table": "entitlement",
+   "column": "sys_created_on",
+   "behavior": "wall-clock timestamp",
+   "diff_count": 1,
+   "examples": [
+    {
+     "row_index": 431,
+     "values": {
+      "R1": "2026-07-16 16:24:05",
+      "R2": "2026-07-16 16:24:05",
+      "R3": "2026-07-16 16:24:06"
+     }
+    }
+   ],
+   "provenance": "CONFIRMED by M4 full-toolset re-audit (m4_reaudit/test_a_mutating_determinism_csm.py, 2026-07-16) -- was a systematic-DDL-scan placeholder ('empirical confirmation due in M4 full-toolset re-audit'); now backed by a live 3-replica diff."
+  },
+  "entitlement.sys_updated_on": {
+   "table": "entitlement",
+   "column": "sys_updated_on",
+   "behavior": "wall-clock timestamp",
+   "diff_count": 2,
+   "examples": [
+    {
+     "row_index": 0,
+     "values": {
+      "R1": "2026-07-16 16:24:05",
+      "R2": "2026-07-16 16:24:05",
+      "R3": "2026-07-16 16:24:06"
+     }
+    },
+    {
+     "row_index": 431,
+     "values": {
+      "R1": "2026-07-16 16:24:05",
+      "R2": "2026-07-16 16:24:05",
+      "R3": "2026-07-16 16:24:06"
+     }
+    }
+   ],
+   "provenance": "CONFIRMED by M4 full-toolset re-audit (m4_reaudit/test_a_mutating_determinism_csm.py, 2026-07-16) -- was a systematic-DDL-scan placeholder ('empirical confirmation due in M4 full-toolset re-audit'); now backed by a live 3-replica diff."
+  },
+  "sla_definition.sys_created_on": {
+   "table": "sla_definition",
+   "column": "sys_created_on",
+   "behavior": "schema-convention audit timestamp (sys_* stamped server-side on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "sla_definition.sys_updated_on": {
+   "table": "sla_definition",
+   "column": "sys_updated_on",
+   "behavior": "schema-convention audit timestamp (sys_* stamped server-side on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "interaction.sys_created_on": {
+   "table": "interaction",
+   "column": "sys_created_on",
+   "behavior": "wall-clock timestamp",
+   "diff_count": 1,
+   "examples": [
+    {
+     "row_index": 1232,
+     "values": {
+      "R1": "2026-07-16 16:24:05",
+      "R2": "2026-07-16 16:24:06",
+      "R3": "2026-07-16 16:24:06"
+     }
+    }
+   ],
+   "provenance": "CONFIRMED by M4 full-toolset re-audit (m4_reaudit/test_a_mutating_determinism_csm.py, 2026-07-16) -- was a systematic-DDL-scan placeholder ('empirical confirmation due in M4 full-toolset re-audit'); now backed by a live 3-replica diff."
+  },
+  "knowledge.sys_created_on": {
+   "table": "knowledge",
+   "column": "sys_created_on",
+   "behavior": "schema-convention audit timestamp (sys_* stamped server-side on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "knowledge.sys_updated_on": {
+   "table": "knowledge",
+   "column": "sys_updated_on",
+   "behavior": "wall-clock timestamp",
+   "diff_count": 1,
+   "examples": [
+    {
+     "row_index": 0,
+     "values": {
+      "R1": "2026-07-16 16:24:05",
+      "R2": "2026-07-16 16:24:06",
+      "R3": "2026-07-16 16:24:06"
+     }
+    }
+   ],
+   "provenance": "CONFIRMED by M4 full-toolset re-audit (m4_reaudit/test_a_mutating_determinism_csm.py, 2026-07-16) -- was a systematic-DDL-scan placeholder ('empirical confirmation due in M4 full-toolset re-audit'); now backed by a live 3-replica diff."
+  },
+  "user_group_member.sys_created_on": {
+   "table": "user_group_member",
+   "column": "sys_created_on",
+   "behavior": "schema-convention audit timestamp (sys_* stamped server-side on write)",
+   "provenance": "systematic DDL scan 2026-07-16; empirical confirmation due in M4 full-toolset re-audit"
+  },
+  "interaction.started_at": {
+   "table": "interaction",
+   "column": "started_at",
+   "behavior": "wall-clock timestamp",
+   "diff_count": 1,
+   "examples": [
+    {
+     "row_index": 1232,
+     "values": {
+      "R1": "2026-07-16 16:24:05",
+      "R2": "2026-07-16 16:24:06",
+      "R3": "2026-07-16 16:24:06"
+     }
+    }
+   ],
+   "provenance": "NEW -- discovered by M4 full-toolset re-audit (m4_reaudit/test_a_mutating_determinism_csm.py, 2026-07-16); not present in the M1 audit or the systematic DDL scan (the tool(s) touching this table were outside M1's original 6/5-tool replay sequence)."
+  }
+ },
+ "note_systematic_scan": "2026-07-16: all sys_created_on/sys_updated_on columns added by DDL scan across every table; M1-empirical entries preserved untouched.",
+ "m4_reaudit": {
+  "date": "2026-07-16",
+  "script": "m4_reaudit/test_a_mutating_determinism_csm.py",
+  "brand_new_columns_added": [
+   "interaction.started_at"
+  ],
+  "placeholder_columns_upgraded_to_empirical": [
+   "account.sys_created_on",
+   "account.sys_updated_on",
+   "contract.sys_created_on",
+   "entitlement.sys_created_on",
+   "entitlement.sys_updated_on",
+   "installed_product.sys_updated_on",
+   "interaction.sys_created_on",
+   "knowledge.sys_updated_on",
+   "product.sys_updated_on"
+  ],
+  "already_empirical_columns_reconfirmed_untouched": [
+   "contract.sys_updated_on",
+   "customer_case.sys_updated_on"
+  ],
+  "evidence_doc": "docs/M4-reaudit-evidence.md"
+ }
 }

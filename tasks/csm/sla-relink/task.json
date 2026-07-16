@@ -1,0 +1,57 @@
+{
+  "mcp_endpoint": "/mcp",
+  "number_of_runs": 1,
+  "reset_database_between_runs": true,
+  "gym_servers_config": [
+    {
+      "mcp_server_name": "sn-csm-server",
+      "mcp_server_url": "http://localhost:8001",
+      "seed_database_file": "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/csm/dbs/db_1762232091750_3ev7dns6b.sql",
+      "context": { "x-user-email": "thomas.green@servicenow.com" },
+      "user_info": { "user_id": 1, "name": "Thomas Green", "email": "thomas.green@servicenow.com" }
+    }
+  ],
+  "system_prompt": "You are a CSM (Customer Service Management) support agent assistant with access to case-management tools. Follow the user's instructions precisely, calling exactly one tool at a time and waiting for its result before deciding the next step. Verify which records you are changing before changing them. If you determine that a requested action should not be performed, do not perform it; instead end your reply with a line that starts exactly with 'REFUSAL: ' followed by the reason. Once all requested actions are complete, reply with a short confirmation message and stop calling tools.",
+  "user_prompt": "Case CS-0000003's response SLA was attached to the wrong definition: it is on 'SLA Response - High (No Pause)' but it should be on the standard 'SLA Response - High' (sla_def_id 2). Please relink it — attach the correct response SLA to the case and remove the incorrect one — without leaving the case without a response SLA in between. Do not touch case CS-0000003's resolution SLA, and do not affect any other case's SLAs.",
+  "selected_tools": [
+    "search_cases",
+    "find_case_slas",
+    "find_sla_definitions",
+    "link_new_case_sla",
+    "update_case_sla_details",
+    "delete_case_slas"
+  ],
+  "restricted_tools": [],
+  "verifiers": [
+    {
+      "verifier_type": "database_state",
+      "name": "case_3_response_sla_now_standard_high",
+      "gym_name": "sn-csm-server",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM case_sla WHERE case_id = 3 AND sla_def_id = 2;",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "case_3_wrong_response_sla_removed",
+      "gym_name": "sn-csm-server",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM case_sla WHERE case_id = 3 AND sla_def_id = 11;",
+        "expected_value": 0,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "other_cases_nopause_response_slas_survive",
+      "gym_name": "sn-csm-server",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM case_sla WHERE sla_def_id = 11;",
+        "expected_value": 316,
+        "comparison_type": "equals"
+      }
+    }
+  ]
+}

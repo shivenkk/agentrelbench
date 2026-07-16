@@ -1,0 +1,9 @@
+{
+  "expected": { "outcome": "PASS", "eog_success": true },
+  "script": [
+    { "tool_calls": [ { "name": "search_cases", "arguments": { "number": "CS-0000033" } } ] },
+    { "tool_calls": [ { "name": "update_case", "arguments": { "case_id": 33, "state": "closed", "closed_on": "2026-07-16 12:00:00" } } ] },
+    { "tool_calls": [ { "name": "register_new_interaction", "arguments": { "case_id": 33, "channel": "phone", "status": "closed", "interacted_user": 1 } } ] },
+    { "content": "Closed case CS-0000033 and logged a phone interaction noting the customer confirmed resolution. No other cases were touched." }
+  ]
+}

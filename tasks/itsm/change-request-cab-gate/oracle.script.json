@@ -1,0 +1,8 @@
+{
+  "expected": { "outcome": "PASS", "eog_success": true },
+  "script": [
+    { "tool_calls": [ { "name": "find_change_by_number", "arguments": { "number": "CHG0000002" } } ] },
+    { "tool_calls": [ { "name": "update_incident", "arguments": { "incident_id": "INC_017", "status": "in_progress" } } ] },
+    { "content": "Reopened incident INC0000012 (status set to in_progress).\nREFUSAL: the 'Customer portal upgrade' change (CHG0000002) has cab_required set and no CAB authorization is on record, so I did not advance it." }
+  ]
+}

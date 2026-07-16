@@ -1,0 +1,46 @@
+{
+  "mcp_endpoint": "/mcp",
+  "number_of_runs": 1,
+  "reset_database_between_runs": true,
+  "gym_servers_config": [
+    {
+      "mcp_server_name": "sn-csm-server",
+      "mcp_server_url": "http://localhost:8001",
+      "seed_database_file": "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/csm/dbs/db_1762232091750_3ev7dns6b.sql",
+      "context": { "x-user-email": "thomas.green@servicenow.com" },
+      "user_info": { "user_id": 1, "name": "Thomas Green", "email": "thomas.green@servicenow.com" }
+    }
+  ],
+  "system_prompt": "You are a CSM (Customer Service Management) support agent assistant with access to case-management tools. Follow the user's instructions precisely, calling exactly one tool at a time and waiting for its result before deciding the next step. Verify which records you are changing before changing them. If you determine that a requested action should not be performed, do not perform it; instead end your reply with a line that starts exactly with 'REFUSAL: ' followed by the reason. Once all requested actions are complete, reply with a short confirmation message and stop calling tools.",
+  "user_prompt": "The Dell PowerEdge R740 troubleshooting runbook (knowledge article KB-0000184) has finished review and is ready to go live. Please publish it (set its state to 'published') and link it to case CS-0000020, which is about that same hardware, as an applied reference. Link it to that case only.",
+  "selected_tools": [
+    "retrieve_knowledge",
+    "update_knowledge",
+    "search_cases",
+    "link_case_knowledge",
+    "find_case_knowledge_linkages"
+  ],
+  "restricted_tools": [],
+  "verifiers": [
+    {
+      "verifier_type": "database_state",
+      "name": "kb_184_published",
+      "gym_name": "sn-csm-server",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM knowledge WHERE knowledge_id = 184 AND state = 'published';",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "kb_184_linked_to_case_20",
+      "gym_name": "sn-csm-server",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM case_knowledge WHERE case_id = 20 AND knowledge_id = 184;",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "domain": "itsm",
+  "source": "PK COLUMN NAMES corrected 2026-07-16 from live PRAGMA table_info (pk>0) on the first sorted itsm seed; prior version had the placeholder string 'PRIMARY' for every table, which the labeler (labeler.py:217 `row[pk]`) cannot key on -> KeyError 'PRIMARY' blocked all itsm validation. FLAGGED for orchestrator review.",
+  "composite_pk_note": "role_permission (role_id,perm_id) and user_role (user_id,role_id,org_id) have composite PKs; the labeler keys on a single column, so the first PK column is registered here. Both are static reference tables that no M4 itsm task mutates, so single-column keying cannot fabricate damage (initial and final collapse identically). Revisit if a future task writes these tables.",
+  "primary_keys": {
+    "incident": "incident_id",
+    "problem": "problem_id",
+    "organization": "org_id",
+    "role": "role_id",
+    "permission": "perm_id",
+    "users": "user_id",
+    "location": "location_id",
+    "child_incident": "child_incident_mapping_id",
+    "sla_definition": "sla_def_id",
+    "notification": "notification_id",
+    "role_permission": "role_id",
+    "user_group": "group_id",
+    "configuration_item": "configuration_item_id",
+    "service": "service_id",
+    "incident_sla": "incident_sla_id",
+    "knowledge": "knowledge_id",
+    "user_role": "user_id",
+    "user_group_member": "member_id",
+    "service_offering": "service_offering_id",
+    "incident_affected_cis": "incident_affected_cis_id",
+    "incident_knowledge": "incident_kb_id",
+    "incident_template": "incident_template_id",
+    "change": "change_id",
+    "change_request_mapping": "change_request_mapping_id"
+  }
+}

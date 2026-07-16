@@ -1,0 +1,1420 @@
+{
+  "call_logs": {
+    "R1": [
+      {
+        "arguments": {
+          "account_type": "customer",
+          "active": true,
+          "name": "M4 ReAudit Test Account (mutating-seq)"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 53,
+          "account_type": "customer",
+          "active": 1,
+          "email_domain": null,
+          "name": "M4 ReAudit Test Account (mutating-seq)",
+          "sys_created_on": "2026-07-16 16:24:05",
+          "sys_updated_on": "2026-07-16 16:24:05"
+        },
+        "step": 1,
+        "tool": "create_new_account"
+      },
+      {
+        "arguments": {
+          "account_id": 53,
+          "contract_price": 15000,
+          "contract_type": "subscription",
+          "end_date": "2027-01-01",
+          "start_date": "2026-01-01",
+          "status": "active"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 53,
+          "contract_id": 154,
+          "contract_price": 15000,
+          "contract_type": "subscription",
+          "end_date": "2027-01-01",
+          "start_date": "2026-01-01",
+          "status": "active",
+          "sys_created_on": "2026-07-16 16:24:05",
+          "sys_updated_on": "2026-07-16 16:24:05"
+        },
+        "step": 2,
+        "tool": "enlist_new_contract"
+      },
+      {
+        "arguments": {
+          "account_id": 53,
+          "active": true,
+          "contract_id": 154,
+          "product_id": 1,
+          "support_level": "premium"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 53,
+          "active": 1,
+          "contract_id": 154,
+          "coverage_hours": "h8x5",
+          "entitlement_id": 432,
+          "max_cases_per_month": 0,
+          "product_id": 1,
+          "support_level": "premium",
+          "sys_created_on": "2026-07-16 16:24:05",
+          "sys_updated_on": "2026-07-16 16:24:05"
+        },
+        "step": 3,
+        "tool": "add_new_entitlement"
+      },
+      {
+        "arguments": {
+          "contract_id": 1,
+          "contract_price": 99999,
+          "status": "active"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 1,
+          "contract_id": 1,
+          "contract_price": 99999,
+          "contract_type": "warranty",
+          "end_date": "2026-09-05",
+          "start_date": "2025-08-28",
+          "status": "active",
+          "sys_created_on": "2025-08-27 15:44:35",
+          "sys_updated_on": "2026-07-16 16:24:05"
+        },
+        "step": 4,
+        "tool": "update_contract"
+      },
+      {
+        "arguments": {
+          "active": true,
+          "entitlement_id": 1,
+          "support_level": "enterprise"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 1,
+          "active": 1,
+          "contract_id": 1,
+          "coverage_hours": "h8x5",
+          "entitlement_id": 1,
+          "max_cases_per_month": 50,
+          "product_id": null,
+          "support_level": "enterprise",
+          "sys_created_on": "2025-08-27 15:32:34",
+          "sys_updated_on": "2026-07-16 16:24:05"
+        },
+        "step": 5,
+        "tool": "update_entitlement"
+      },
+      {
+        "arguments": {
+          "installed_product_id": 3,
+          "status": "repair",
+          "warranty_end": "2027-06-30"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 1,
+          "installed_product_id": 3,
+          "location_id": 804,
+          "product_id": 128,
+          "serial_number": "P128-889629-8734",
+          "status": "repair",
+          "sys_created_on": "2025-08-27 15:32:21",
+          "sys_updated_on": "2026-07-16 16:24:05",
+          "warranty_end": "2027-06-30"
+        },
+        "step": 6,
+        "tool": "update_installed_product_details"
+      },
+      {
+        "arguments": {
+          "product_id": 1,
+          "product_price": 999
+        },
+        "ok": true,
+        "parsed_result": {
+          "category": "software",
+          "lifecycle_state": "active",
+          "name": "Windows Server 2022 Datacenter",
+          "product_id": 1,
+          "product_price": 999,
+          "sys_created_on": "2025-08-27 15:44:14",
+          "sys_updated_on": "2026-07-16 16:24:05"
+        },
+        "step": 7,
+        "tool": "update_product"
+      },
+      {
+        "arguments": {
+          "knowledge_id": 1,
+          "state": "draft"
+        },
+        "ok": true,
+        "parsed_result": {
+          "body": null,
+          "kb_number": "KB-0000001",
+          "knowledge_id": 1,
+          "owner_id": 370,
+          "product_id": 1,
+          "state": "draft",
+          "sys_created_on": "2025-08-27 15:40:12",
+          "sys_updated_on": "2026-07-16 16:24:05",
+          "title": "Issue Resolution related to Windows Server 2022 Datacenter, step-by-step guide",
+          "visibility": "external"
+        },
+        "step": 8,
+        "tool": "update_knowledge"
+      },
+      {
+        "arguments": {
+          "case_id": 1,
+          "escalation": true,
+          "escalation_reason": "customer_request",
+          "priority": "high",
+          "state": "in_progress"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 1,
+          "assigned_to": 403,
+          "assignment_group_id": 4,
+          "case_id": 1,
+          "channel": "web",
+          "closed_on": null,
+          "contact_id": 123,
+          "escalation": 1,
+          "escalation_reason": "customer_request",
+          "installed_product_id": 3,
+          "number": "CS-0000001",
+          "priority": "high",
+          "product_id": 128,
+          "reopen_count": 0,
+          "short_description": "Product: Palo Alto Networks PA-3220, Issue: is not working as expected.",
+          "state": "in_progress",
+          "sys_created_on": "2025-08-27 15:34:44",
+          "sys_updated_on": "2026-07-16 16:24:05"
+        },
+        "step": 9,
+        "tool": "update_case"
+      },
+      {
+        "arguments": {
+          "assignment_group_id": 7,
+          "case_id": 1
+        },
+        "ok": true,
+        "parsed_result": {
+          "assignment_group_id": 7,
+          "set_at": "2026-07-16 16:24:05",
+          "status": "success"
+        },
+        "step": 10,
+        "tool": "set_case_assignment_group"
+      },
+      {
+        "arguments": {
+          "case_id": 1,
+          "sla_def_id": 1,
+          "stage": "in_progress"
+        },
+        "ok": true,
+        "parsed_result": {
+          "breach_time": null,
+          "case_id": 1,
+          "case_sla_id": 2465,
+          "completed_time": null,
+          "has_breached": 0,
+          "sla_def_id": 1,
+          "stage": "in_progress",
+          "start_time": "2026-07-16 16:24:05"
+        },
+        "step": 11,
+        "tool": "link_new_case_sla"
+      },
+      {
+        "arguments": {
+          "case_sla_id": 2464,
+          "completed_time": "2026-07-16 12:00:00",
+          "has_breached": false,
+          "stage": "completed"
+        },
+        "ok": true,
+        "parsed_result": {
+          "breach_time": "2025-08-27 23:34:25",
+          "case_id": 1232,
+          "case_sla_id": 2464,
+          "completed_time": "2026-07-16 12:00:00",
+          "has_breached": 0,
+          "sla_def_id": 7,
+          "stage": "completed",
+          "start_time": "2025-08-27 15:34:25"
+        },
+        "step": 12,
+        "tool": "update_case_sla_details"
+      },
+      {
+        "arguments": {
+          "case_sla_id": 2465
+        },
+        "ok": true,
+        "parsed_result": {
+          "deleted": 1
+        },
+        "step": 13,
+        "tool": "delete_case_slas"
+      },
+      {
+        "arguments": {
+          "case_id": 1,
+          "knowledge_id": 1,
+          "used_as": "suggested"
+        },
+        "ok": true,
+        "parsed_result": {
+          "case_id": 1,
+          "case_kb_id": 528,
+          "knowledge_id": 1,
+          "used_as": "suggested"
+        },
+        "step": 14,
+        "tool": "link_case_knowledge"
+      },
+      {
+        "arguments": {
+          "account_id": 1,
+          "case_id": 1,
+          "channel": "email",
+          "contact_id": 123,
+          "interacted_user": 1,
+          "status": "open"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 1,
+          "case_id": 1,
+          "channel": "email",
+          "contact_id": 123,
+          "ended_at": null,
+          "interacted_user": 1,
+          "interaction_id": 1233,
+          "started_at": "2026-07-16 16:24:05",
+          "status": "open",
+          "sys_created_on": "2026-07-16 16:24:05"
+        },
+        "step": 15,
+        "tool": "register_new_interaction"
+      },
+      {
+        "arguments": {
+          "notification_id": 724
+        },
+        "ok": true,
+        "parsed_result": {
+          "deleted": 1
+        },
+        "step": 16,
+        "tool": "delete_notifications"
+      }
+    ],
+    "R2": [
+      {
+        "arguments": {
+          "account_type": "customer",
+          "active": true,
+          "name": "M4 ReAudit Test Account (mutating-seq)"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 53,
+          "account_type": "customer",
+          "active": 1,
+          "email_domain": null,
+          "name": "M4 ReAudit Test Account (mutating-seq)",
+          "sys_created_on": "2026-07-16 16:24:05",
+          "sys_updated_on": "2026-07-16 16:24:05"
+        },
+        "step": 1,
+        "tool": "create_new_account"
+      },
+      {
+        "arguments": {
+          "account_id": 53,
+          "contract_price": 15000,
+          "contract_type": "subscription",
+          "end_date": "2027-01-01",
+          "start_date": "2026-01-01",
+          "status": "active"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 53,
+          "contract_id": 154,
+          "contract_price": 15000,
+          "contract_type": "subscription",
+          "end_date": "2027-01-01",
+          "start_date": "2026-01-01",
+          "status": "active",
+          "sys_created_on": "2026-07-16 16:24:05",
+          "sys_updated_on": "2026-07-16 16:24:05"
+        },
+        "step": 2,
+        "tool": "enlist_new_contract"
+      },
+      {
+        "arguments": {
+          "account_id": 53,
+          "active": true,
+          "contract_id": 154,
+          "product_id": 1,
+          "support_level": "premium"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 53,
+          "active": 1,
+          "contract_id": 154,
+          "coverage_hours": "h8x5",
+          "entitlement_id": 432,
+          "max_cases_per_month": 0,
+          "product_id": 1,
+          "support_level": "premium",
+          "sys_created_on": "2026-07-16 16:24:05",
+          "sys_updated_on": "2026-07-16 16:24:05"
+        },
+        "step": 3,
+        "tool": "add_new_entitlement"
+      },
+      {
+        "arguments": {
+          "contract_id": 1,
+          "contract_price": 99999,
+          "status": "active"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 1,
+          "contract_id": 1,
+          "contract_price": 99999,
+          "contract_type": "warranty",
+          "end_date": "2026-09-05",
+          "start_date": "2025-08-28",
+          "status": "active",
+          "sys_created_on": "2025-08-27 15:44:35",
+          "sys_updated_on": "2026-07-16 16:24:05"
+        },
+        "step": 4,
+        "tool": "update_contract"
+      },
+      {
+        "arguments": {
+          "active": true,
+          "entitlement_id": 1,
+          "support_level": "enterprise"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 1,
+          "active": 1,
+          "contract_id": 1,
+          "coverage_hours": "h8x5",
+          "entitlement_id": 1,
+          "max_cases_per_month": 50,
+          "product_id": null,
+          "support_level": "enterprise",
+          "sys_created_on": "2025-08-27 15:32:34",
+          "sys_updated_on": "2026-07-16 16:24:05"
+        },
+        "step": 5,
+        "tool": "update_entitlement"
+      },
+      {
+        "arguments": {
+          "installed_product_id": 3,
+          "status": "repair",
+          "warranty_end": "2027-06-30"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 1,
+          "installed_product_id": 3,
+          "location_id": 804,
+          "product_id": 128,
+          "serial_number": "P128-889629-8734",
+          "status": "repair",
+          "sys_created_on": "2025-08-27 15:32:21",
+          "sys_updated_on": "2026-07-16 16:24:05",
+          "warranty_end": "2027-06-30"
+        },
+        "step": 6,
+        "tool": "update_installed_product_details"
+      },
+      {
+        "arguments": {
+          "product_id": 1,
+          "product_price": 999
+        },
+        "ok": true,
+        "parsed_result": {
+          "category": "software",
+          "lifecycle_state": "active",
+          "name": "Windows Server 2022 Datacenter",
+          "product_id": 1,
+          "product_price": 999,
+          "sys_created_on": "2025-08-27 15:44:14",
+          "sys_updated_on": "2026-07-16 16:24:06"
+        },
+        "step": 7,
+        "tool": "update_product"
+      },
+      {
+        "arguments": {
+          "knowledge_id": 1,
+          "state": "draft"
+        },
+        "ok": true,
+        "parsed_result": {
+          "body": null,
+          "kb_number": "KB-0000001",
+          "knowledge_id": 1,
+          "owner_id": 370,
+          "product_id": 1,
+          "state": "draft",
+          "sys_created_on": "2025-08-27 15:40:12",
+          "sys_updated_on": "2026-07-16 16:24:06",
+          "title": "Issue Resolution related to Windows Server 2022 Datacenter, step-by-step guide",
+          "visibility": "external"
+        },
+        "step": 8,
+        "tool": "update_knowledge"
+      },
+      {
+        "arguments": {
+          "case_id": 1,
+          "escalation": true,
+          "escalation_reason": "customer_request",
+          "priority": "high",
+          "state": "in_progress"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 1,
+          "assigned_to": 403,
+          "assignment_group_id": 4,
+          "case_id": 1,
+          "channel": "web",
+          "closed_on": null,
+          "contact_id": 123,
+          "escalation": 1,
+          "escalation_reason": "customer_request",
+          "installed_product_id": 3,
+          "number": "CS-0000001",
+          "priority": "high",
+          "product_id": 128,
+          "reopen_count": 0,
+          "short_description": "Product: Palo Alto Networks PA-3220, Issue: is not working as expected.",
+          "state": "in_progress",
+          "sys_created_on": "2025-08-27 15:34:44",
+          "sys_updated_on": "2026-07-16 16:24:06"
+        },
+        "step": 9,
+        "tool": "update_case"
+      },
+      {
+        "arguments": {
+          "assignment_group_id": 7,
+          "case_id": 1
+        },
+        "ok": true,
+        "parsed_result": {
+          "assignment_group_id": 7,
+          "set_at": "2026-07-16 16:24:06",
+          "status": "success"
+        },
+        "step": 10,
+        "tool": "set_case_assignment_group"
+      },
+      {
+        "arguments": {
+          "case_id": 1,
+          "sla_def_id": 1,
+          "stage": "in_progress"
+        },
+        "ok": true,
+        "parsed_result": {
+          "breach_time": null,
+          "case_id": 1,
+          "case_sla_id": 2465,
+          "completed_time": null,
+          "has_breached": 0,
+          "sla_def_id": 1,
+          "stage": "in_progress",
+          "start_time": "2026-07-16 16:24:06"
+        },
+        "step": 11,
+        "tool": "link_new_case_sla"
+      },
+      {
+        "arguments": {
+          "case_sla_id": 2464,
+          "completed_time": "2026-07-16 12:00:00",
+          "has_breached": false,
+          "stage": "completed"
+        },
+        "ok": true,
+        "parsed_result": {
+          "breach_time": "2025-08-27 23:34:25",
+          "case_id": 1232,
+          "case_sla_id": 2464,
+          "completed_time": "2026-07-16 12:00:00",
+          "has_breached": 0,
+          "sla_def_id": 7,
+          "stage": "completed",
+          "start_time": "2025-08-27 15:34:25"
+        },
+        "step": 12,
+        "tool": "update_case_sla_details"
+      },
+      {
+        "arguments": {
+          "case_sla_id": 2465
+        },
+        "ok": true,
+        "parsed_result": {
+          "deleted": 1
+        },
+        "step": 13,
+        "tool": "delete_case_slas"
+      },
+      {
+        "arguments": {
+          "case_id": 1,
+          "knowledge_id": 1,
+          "used_as": "suggested"
+        },
+        "ok": true,
+        "parsed_result": {
+          "case_id": 1,
+          "case_kb_id": 528,
+          "knowledge_id": 1,
+          "used_as": "suggested"
+        },
+        "step": 14,
+        "tool": "link_case_knowledge"
+      },
+      {
+        "arguments": {
+          "account_id": 1,
+          "case_id": 1,
+          "channel": "email",
+          "contact_id": 123,
+          "interacted_user": 1,
+          "status": "open"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 1,
+          "case_id": 1,
+          "channel": "email",
+          "contact_id": 123,
+          "ended_at": null,
+          "interacted_user": 1,
+          "interaction_id": 1233,
+          "started_at": "2026-07-16 16:24:06",
+          "status": "open",
+          "sys_created_on": "2026-07-16 16:24:06"
+        },
+        "step": 15,
+        "tool": "register_new_interaction"
+      },
+      {
+        "arguments": {
+          "notification_id": 724
+        },
+        "ok": true,
+        "parsed_result": {
+          "deleted": 1
+        },
+        "step": 16,
+        "tool": "delete_notifications"
+      }
+    ],
+    "R3": [
+      {
+        "arguments": {
+          "account_type": "customer",
+          "active": true,
+          "name": "M4 ReAudit Test Account (mutating-seq)"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 53,
+          "account_type": "customer",
+          "active": 1,
+          "email_domain": null,
+          "name": "M4 ReAudit Test Account (mutating-seq)",
+          "sys_created_on": "2026-07-16 16:24:06",
+          "sys_updated_on": "2026-07-16 16:24:06"
+        },
+        "step": 1,
+        "tool": "create_new_account"
+      },
+      {
+        "arguments": {
+          "account_id": 53,
+          "contract_price": 15000,
+          "contract_type": "subscription",
+          "end_date": "2027-01-01",
+          "start_date": "2026-01-01",
+          "status": "active"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 53,
+          "contract_id": 154,
+          "contract_price": 15000,
+          "contract_type": "subscription",
+          "end_date": "2027-01-01",
+          "start_date": "2026-01-01",
+          "status": "active",
+          "sys_created_on": "2026-07-16 16:24:06",
+          "sys_updated_on": "2026-07-16 16:24:06"
+        },
+        "step": 2,
+        "tool": "enlist_new_contract"
+      },
+      {
+        "arguments": {
+          "account_id": 53,
+          "active": true,
+          "contract_id": 154,
+          "product_id": 1,
+          "support_level": "premium"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 53,
+          "active": 1,
+          "contract_id": 154,
+          "coverage_hours": "h8x5",
+          "entitlement_id": 432,
+          "max_cases_per_month": 0,
+          "product_id": 1,
+          "support_level": "premium",
+          "sys_created_on": "2026-07-16 16:24:06",
+          "sys_updated_on": "2026-07-16 16:24:06"
+        },
+        "step": 3,
+        "tool": "add_new_entitlement"
+      },
+      {
+        "arguments": {
+          "contract_id": 1,
+          "contract_price": 99999,
+          "status": "active"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 1,
+          "contract_id": 1,
+          "contract_price": 99999,
+          "contract_type": "warranty",
+          "end_date": "2026-09-05",
+          "start_date": "2025-08-28",
+          "status": "active",
+          "sys_created_on": "2025-08-27 15:44:35",
+          "sys_updated_on": "2026-07-16 16:24:06"
+        },
+        "step": 4,
+        "tool": "update_contract"
+      },
+      {
+        "arguments": {
+          "active": true,
+          "entitlement_id": 1,
+          "support_level": "enterprise"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 1,
+          "active": 1,
+          "contract_id": 1,
+          "coverage_hours": "h8x5",
+          "entitlement_id": 1,
+          "max_cases_per_month": 50,
+          "product_id": null,
+          "support_level": "enterprise",
+          "sys_created_on": "2025-08-27 15:32:34",
+          "sys_updated_on": "2026-07-16 16:24:06"
+        },
+        "step": 5,
+        "tool": "update_entitlement"
+      },
+      {
+        "arguments": {
+          "installed_product_id": 3,
+          "status": "repair",
+          "warranty_end": "2027-06-30"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 1,
+          "installed_product_id": 3,
+          "location_id": 804,
+          "product_id": 128,
+          "serial_number": "P128-889629-8734",
+          "status": "repair",
+          "sys_created_on": "2025-08-27 15:32:21",
+          "sys_updated_on": "2026-07-16 16:24:06",
+          "warranty_end": "2027-06-30"
+        },
+        "step": 6,
+        "tool": "update_installed_product_details"
+      },
+      {
+        "arguments": {
+          "product_id": 1,
+          "product_price": 999
+        },
+        "ok": true,
+        "parsed_result": {
+          "category": "software",
+          "lifecycle_state": "active",
+          "name": "Windows Server 2022 Datacenter",
+          "product_id": 1,
+          "product_price": 999,
+          "sys_created_on": "2025-08-27 15:44:14",
+          "sys_updated_on": "2026-07-16 16:24:06"
+        },
+        "step": 7,
+        "tool": "update_product"
+      },
+      {
+        "arguments": {
+          "knowledge_id": 1,
+          "state": "draft"
+        },
+        "ok": true,
+        "parsed_result": {
+          "body": null,
+          "kb_number": "KB-0000001",
+          "knowledge_id": 1,
+          "owner_id": 370,
+          "product_id": 1,
+          "state": "draft",
+          "sys_created_on": "2025-08-27 15:40:12",
+          "sys_updated_on": "2026-07-16 16:24:06",
+          "title": "Issue Resolution related to Windows Server 2022 Datacenter, step-by-step guide",
+          "visibility": "external"
+        },
+        "step": 8,
+        "tool": "update_knowledge"
+      },
+      {
+        "arguments": {
+          "case_id": 1,
+          "escalation": true,
+          "escalation_reason": "customer_request",
+          "priority": "high",
+          "state": "in_progress"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 1,
+          "assigned_to": 403,
+          "assignment_group_id": 4,
+          "case_id": 1,
+          "channel": "web",
+          "closed_on": null,
+          "contact_id": 123,
+          "escalation": 1,
+          "escalation_reason": "customer_request",
+          "installed_product_id": 3,
+          "number": "CS-0000001",
+          "priority": "high",
+          "product_id": 128,
+          "reopen_count": 0,
+          "short_description": "Product: Palo Alto Networks PA-3220, Issue: is not working as expected.",
+          "state": "in_progress",
+          "sys_created_on": "2025-08-27 15:34:44",
+          "sys_updated_on": "2026-07-16 16:24:06"
+        },
+        "step": 9,
+        "tool": "update_case"
+      },
+      {
+        "arguments": {
+          "assignment_group_id": 7,
+          "case_id": 1
+        },
+        "ok": true,
+        "parsed_result": {
+          "assignment_group_id": 7,
+          "set_at": "2026-07-16 16:24:06",
+          "status": "success"
+        },
+        "step": 10,
+        "tool": "set_case_assignment_group"
+      },
+      {
+        "arguments": {
+          "case_id": 1,
+          "sla_def_id": 1,
+          "stage": "in_progress"
+        },
+        "ok": true,
+        "parsed_result": {
+          "breach_time": null,
+          "case_id": 1,
+          "case_sla_id": 2465,
+          "completed_time": null,
+          "has_breached": 0,
+          "sla_def_id": 1,
+          "stage": "in_progress",
+          "start_time": "2026-07-16 16:24:06"
+        },
+        "step": 11,
+        "tool": "link_new_case_sla"
+      },
+      {
+        "arguments": {
+          "case_sla_id": 2464,
+          "completed_time": "2026-07-16 12:00:00",
+          "has_breached": false,
+          "stage": "completed"
+        },
+        "ok": true,
+        "parsed_result": {
+          "breach_time": "2025-08-27 23:34:25",
+          "case_id": 1232,
+          "case_sla_id": 2464,
+          "completed_time": "2026-07-16 12:00:00",
+          "has_breached": 0,
+          "sla_def_id": 7,
+          "stage": "completed",
+          "start_time": "2025-08-27 15:34:25"
+        },
+        "step": 12,
+        "tool": "update_case_sla_details"
+      },
+      {
+        "arguments": {
+          "case_sla_id": 2465
+        },
+        "ok": true,
+        "parsed_result": {
+          "deleted": 1
+        },
+        "step": 13,
+        "tool": "delete_case_slas"
+      },
+      {
+        "arguments": {
+          "case_id": 1,
+          "knowledge_id": 1,
+          "used_as": "suggested"
+        },
+        "ok": true,
+        "parsed_result": {
+          "case_id": 1,
+          "case_kb_id": 528,
+          "knowledge_id": 1,
+          "used_as": "suggested"
+        },
+        "step": 14,
+        "tool": "link_case_knowledge"
+      },
+      {
+        "arguments": {
+          "account_id": 1,
+          "case_id": 1,
+          "channel": "email",
+          "contact_id": 123,
+          "interacted_user": 1,
+          "status": "open"
+        },
+        "ok": true,
+        "parsed_result": {
+          "account_id": 1,
+          "case_id": 1,
+          "channel": "email",
+          "contact_id": 123,
+          "ended_at": null,
+          "interacted_user": 1,
+          "interaction_id": 1233,
+          "started_at": "2026-07-16 16:24:06",
+          "status": "open",
+          "sys_created_on": "2026-07-16 16:24:06"
+        },
+        "step": 15,
+        "tool": "register_new_interaction"
+      },
+      {
+        "arguments": {
+          "notification_id": 724
+        },
+        "ok": true,
+        "parsed_result": {
+          "deleted": 1
+        },
+        "step": 16,
+        "tool": "delete_notifications"
+      }
+    ]
+  },
+  "captured_new_row_ids": {
+    "new_account": {
+      "R1": 53,
+      "R2": 53,
+      "R3": 53
+    },
+    "new_case_kb": {
+      "R1": 528,
+      "R2": 528,
+      "R3": 528
+    },
+    "new_case_sla": {
+      "R1": 2465,
+      "R2": 2465,
+      "R3": 2465
+    },
+    "new_contract": {
+      "R1": 154,
+      "R2": 154,
+      "R3": 154
+    },
+    "new_entitlement": {
+      "R1": 432,
+      "R2": 432,
+      "R3": 432
+    },
+    "new_interaction": {
+      "R1": 1233,
+      "R2": 1233,
+      "R3": 1233
+    }
+  },
+  "coverage_complete": true,
+  "diff_report": {
+    "cell_diffs": [
+      {
+        "column": "sys_created_on",
+        "row_index": 52,
+        "table": "account",
+        "values": {
+          "R1": "2026-07-16 16:24:05",
+          "R2": "2026-07-16 16:24:05",
+          "R3": "2026-07-16 16:24:06"
+        }
+      },
+      {
+        "column": "sys_updated_on",
+        "row_index": 52,
+        "table": "account",
+        "values": {
+          "R1": "2026-07-16 16:24:05",
+          "R2": "2026-07-16 16:24:05",
+          "R3": "2026-07-16 16:24:06"
+        }
+      },
+      {
+        "column": "sys_updated_on",
+        "row_index": 0,
+        "table": "contract",
+        "values": {
+          "R1": "2026-07-16 16:24:05",
+          "R2": "2026-07-16 16:24:05",
+          "R3": "2026-07-16 16:24:06"
+        }
+      },
+      {
+        "column": "sys_created_on",
+        "row_index": 153,
+        "table": "contract",
+        "values": {
+          "R1": "2026-07-16 16:24:05",
+          "R2": "2026-07-16 16:24:05",
+          "R3": "2026-07-16 16:24:06"
+        }
+      },
+      {
+        "column": "sys_updated_on",
+        "row_index": 153,
+        "table": "contract",
+        "values": {
+          "R1": "2026-07-16 16:24:05",
+          "R2": "2026-07-16 16:24:05",
+          "R3": "2026-07-16 16:24:06"
+        }
+      },
+      {
+        "column": "sys_updated_on",
+        "row_index": 0,
+        "table": "customer_case",
+        "values": {
+          "R1": "2026-07-16 16:24:05",
+          "R2": "2026-07-16 16:24:06",
+          "R3": "2026-07-16 16:24:06"
+        }
+      },
+      {
+        "column": "sys_updated_on",
+        "row_index": 0,
+        "table": "entitlement",
+        "values": {
+          "R1": "2026-07-16 16:24:05",
+          "R2": "2026-07-16 16:24:05",
+          "R3": "2026-07-16 16:24:06"
+        }
+      },
+      {
+        "column": "sys_created_on",
+        "row_index": 431,
+        "table": "entitlement",
+        "values": {
+          "R1": "2026-07-16 16:24:05",
+          "R2": "2026-07-16 16:24:05",
+          "R3": "2026-07-16 16:24:06"
+        }
+      },
+      {
+        "column": "sys_updated_on",
+        "row_index": 431,
+        "table": "entitlement",
+        "values": {
+          "R1": "2026-07-16 16:24:05",
+          "R2": "2026-07-16 16:24:05",
+          "R3": "2026-07-16 16:24:06"
+        }
+      },
+      {
+        "column": "sys_updated_on",
+        "row_index": 2,
+        "table": "installed_product",
+        "values": {
+          "R1": "2026-07-16 16:24:05",
+          "R2": "2026-07-16 16:24:05",
+          "R3": "2026-07-16 16:24:06"
+        }
+      },
+      {
+        "column": "started_at",
+        "row_index": 1232,
+        "table": "interaction",
+        "values": {
+          "R1": "2026-07-16 16:24:05",
+          "R2": "2026-07-16 16:24:06",
+          "R3": "2026-07-16 16:24:06"
+        }
+      },
+      {
+        "column": "sys_created_on",
+        "row_index": 1232,
+        "table": "interaction",
+        "values": {
+          "R1": "2026-07-16 16:24:05",
+          "R2": "2026-07-16 16:24:06",
+          "R3": "2026-07-16 16:24:06"
+        }
+      },
+      {
+        "column": "sys_updated_on",
+        "row_index": 0,
+        "table": "knowledge",
+        "values": {
+          "R1": "2026-07-16 16:24:05",
+          "R2": "2026-07-16 16:24:06",
+          "R3": "2026-07-16 16:24:06"
+        }
+      },
+      {
+        "column": "sys_updated_on",
+        "row_index": 0,
+        "table": "product",
+        "values": {
+          "R1": "2026-07-16 16:24:05",
+          "R2": "2026-07-16 16:24:06",
+          "R3": "2026-07-16 16:24:06"
+        }
+      }
+    ],
+    "labels": [
+      "R1",
+      "R2",
+      "R3"
+    ],
+    "row_count_mismatch": {},
+    "tables_not_common_to_all": []
+  },
+  "identical_modulo_volatile_columns": true,
+  "mutating_union": [
+    "add_new_entitlement",
+    "create_new_account",
+    "delete_case_slas",
+    "delete_notifications",
+    "enlist_new_contract",
+    "link_case_knowledge",
+    "link_new_case_sla",
+    "register_new_interaction",
+    "set_case_assignment_group",
+    "update_case",
+    "update_case_sla_details",
+    "update_contract",
+    "update_entitlement",
+    "update_installed_product_details",
+    "update_knowledge",
+    "update_product"
+  ],
+  "mutating_union_count": 16,
+  "new_row_pk_identical_across_replays": {
+    "new_account": true,
+    "new_case_kb": true,
+    "new_case_sla": true,
+    "new_contract": true,
+    "new_entitlement": true,
+    "new_interaction": true
+  },
+  "non_timestamp_varying_columns": {},
+  "raw_identical": false,
+  "replicas": {
+    "R1": "db_1784219044666_i2smpuij8",
+    "R2": "db_1784219045492_aw2eeq8a8",
+    "R3": "db_1784219046247_i469oo1wj"
+  },
+  "test": "A_mutating_determinism_csm",
+  "tools_exercised": [
+    "add_new_entitlement",
+    "create_new_account",
+    "delete_case_slas",
+    "delete_notifications",
+    "enlist_new_contract",
+    "link_case_knowledge",
+    "link_new_case_sla",
+    "register_new_interaction",
+    "set_case_assignment_group",
+    "update_case",
+    "update_case_sla_details",
+    "update_contract",
+    "update_entitlement",
+    "update_installed_product_details",
+    "update_knowledge",
+    "update_product"
+  ],
+  "tools_exercised_count": 16,
+  "varying_columns": {
+    "account.sys_created_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "sys_created_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 52,
+          "values": {
+            "R1": "2026-07-16 16:24:05",
+            "R2": "2026-07-16 16:24:05",
+            "R3": "2026-07-16 16:24:06"
+          }
+        }
+      ],
+      "table": "account"
+    },
+    "account.sys_updated_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "sys_updated_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 52,
+          "values": {
+            "R1": "2026-07-16 16:24:05",
+            "R2": "2026-07-16 16:24:05",
+            "R3": "2026-07-16 16:24:06"
+          }
+        }
+      ],
+      "table": "account"
+    },
+    "contract.sys_created_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "sys_created_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 153,
+          "values": {
+            "R1": "2026-07-16 16:24:05",
+            "R2": "2026-07-16 16:24:05",
+            "R3": "2026-07-16 16:24:06"
+          }
+        }
+      ],
+      "table": "contract"
+    },
+    "contract.sys_updated_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "sys_updated_on",
+      "diff_count": 2,
+      "examples": [
+        {
+          "row_index": 0,
+          "values": {
+            "R1": "2026-07-16 16:24:05",
+            "R2": "2026-07-16 16:24:05",
+            "R3": "2026-07-16 16:24:06"
+          }
+        },
+        {
+          "row_index": 153,
+          "values": {
+            "R1": "2026-07-16 16:24:05",
+            "R2": "2026-07-16 16:24:05",
+            "R3": "2026-07-16 16:24:06"
+          }
+        }
+      ],
+      "table": "contract"
+    },
+    "customer_case.sys_updated_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "sys_updated_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 0,
+          "values": {
+            "R1": "2026-07-16 16:24:05",
+            "R2": "2026-07-16 16:24:06",
+            "R3": "2026-07-16 16:24:06"
+          }
+        }
+      ],
+      "table": "customer_case"
+    },
+    "entitlement.sys_created_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "sys_created_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 431,
+          "values": {
+            "R1": "2026-07-16 16:24:05",
+            "R2": "2026-07-16 16:24:05",
+            "R3": "2026-07-16 16:24:06"
+          }
+        }
+      ],
+      "table": "entitlement"
+    },
+    "entitlement.sys_updated_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "sys_updated_on",
+      "diff_count": 2,
+      "examples": [
+        {
+          "row_index": 0,
+          "values": {
+            "R1": "2026-07-16 16:24:05",
+            "R2": "2026-07-16 16:24:05",
+            "R3": "2026-07-16 16:24:06"
+          }
+        },
+        {
+          "row_index": 431,
+          "values": {
+            "R1": "2026-07-16 16:24:05",
+            "R2": "2026-07-16 16:24:05",
+            "R3": "2026-07-16 16:24:06"
+          }
+        }
+      ],
+      "table": "entitlement"
+    },
+    "installed_product.sys_updated_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "sys_updated_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 2,
+          "values": {
+            "R1": "2026-07-16 16:24:05",
+            "R2": "2026-07-16 16:24:05",
+            "R3": "2026-07-16 16:24:06"
+          }
+        }
+      ],
+      "table": "installed_product"
+    },
+    "interaction.started_at": {
+      "behavior": "wall-clock timestamp",
+      "column": "started_at",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 1232,
+          "values": {
+            "R1": "2026-07-16 16:24:05",
+            "R2": "2026-07-16 16:24:06",
+            "R3": "2026-07-16 16:24:06"
+          }
+        }
+      ],
+      "table": "interaction"
+    },
+    "interaction.sys_created_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "sys_created_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 1232,
+          "values": {
+            "R1": "2026-07-16 16:24:05",
+            "R2": "2026-07-16 16:24:06",
+            "R3": "2026-07-16 16:24:06"
+          }
+        }
+      ],
+      "table": "interaction"
+    },
+    "knowledge.sys_updated_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "sys_updated_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 0,
+          "values": {
+            "R1": "2026-07-16 16:24:05",
+            "R2": "2026-07-16 16:24:06",
+            "R3": "2026-07-16 16:24:06"
+          }
+        }
+      ],
+      "table": "knowledge"
+    },
+    "product.sys_updated_on": {
+      "behavior": "wall-clock timestamp",
+      "column": "sys_updated_on",
+      "diff_count": 1,
+      "examples": [
+        {
+          "row_index": 0,
+          "values": {
+            "R1": "2026-07-16 16:24:05",
+            "R2": "2026-07-16 16:24:06",
+            "R3": "2026-07-16 16:24:06"
+          }
+        }
+      ],
+      "table": "product"
+    }
+  },
+  "wall_time_s": 3.92
+}

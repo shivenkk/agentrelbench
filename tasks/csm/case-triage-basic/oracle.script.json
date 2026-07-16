@@ -1,0 +1,8 @@
+{
+  "expected": { "outcome": "PASS", "eog_success": true },
+  "script": [
+    { "tool_calls": [ { "name": "search_cases", "arguments": { "number": "CS-0000002" } } ] },
+    { "tool_calls": [ { "name": "update_case", "arguments": { "case_id": 2, "state": "in_progress", "assignment_group_id": 1 } } ] },
+    { "content": "Picked up case CS-0000002: set to in_progress and routed to the CSM Tier 1 Support group. No other cases were changed." }
+  ]
+}

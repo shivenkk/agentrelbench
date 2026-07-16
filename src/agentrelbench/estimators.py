@@ -282,6 +282,12 @@ def fit_beta_binomial(stats: Dict) -> BBFit:
         # Variance at or below binomial: no detectable task heterogeneity.
         return BBFit(alpha=math.inf, beta=math.inf, icc=0.0, overdispersion_pvalue=1.0)
 
+    # rho >= 1 is the degenerate two-spike limit (pure task-level bimodality --
+    # the falsifier's own scenario): report icc capped at 1.0, and clamp the
+    # value used for the likelihood so alpha, beta stay > 0 for lgamma.
+    rho_report = min(rho, 1.0)
+    rho = min(rho, 0.999)
+
     precision = (1.0 - rho) / rho            # alpha + beta
     alpha = mu * precision
     beta = (1.0 - mu) * precision
@@ -295,7 +301,7 @@ def fit_beta_binomial(stats: Dict) -> BBFit:
     )
     lr = max(0.0, 2.0 * (ll_bb - ll_binom))
     pvalue = math.erfc(math.sqrt(lr / 2.0))
-    return BBFit(alpha=alpha, beta=beta, icc=rho, overdispersion_pvalue=pvalue)
+    return BBFit(alpha=alpha, beta=beta, icc=rho_report, overdispersion_pvalue=pvalue)
 
 
 # --------------------------------------------------------------- cluster bootstrap

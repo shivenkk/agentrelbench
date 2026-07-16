@@ -1,0 +1,21 @@
+{
+  "task_id": "csm/contract-price-correction",
+  "domain": "csm",
+  "params": { "contract_id": 8 },
+  "predicted_lever": {
+    "lever": "entity-confusability",
+    "predicted_phat_region": "intermediate",
+    "rationale": "Two same-type support contracts on one account (active #8 vs expired #133); grounding by account+type without checking status/end_date lands on the wrong row some of the time."
+  },
+  "allowed": [
+    {
+      "table": "contract",
+      "op": "modified",
+      "where": { "contract_id": "$task.contract_id" },
+      "columns": ["contract_price"]
+    }
+  ],
+  "pricing": [
+    { "table": "contract", "op": "*", "dollars_from": "contract_price", "severity": "HIGH" }
+  ]
+}

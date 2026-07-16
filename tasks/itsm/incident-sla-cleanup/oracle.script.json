@@ -1,0 +1,8 @@
+{
+  "expected": { "outcome": "PASS", "eog_success": true },
+  "script": [
+    { "tool_calls": [ { "name": "find_incident_slas", "arguments": { "incident_id": "INC_001" } } ] },
+    { "tool_calls": [ { "name": "delete_incident_slas", "arguments": { "incident_id": "INC_001", "stage": "completed" } } ] },
+    { "content": "Deleted the completed-stage SLA record (TSLA_001) for incident INC0000001. Its breached SLA timer and all other incidents' SLA records are untouched." }
+  ]
+}

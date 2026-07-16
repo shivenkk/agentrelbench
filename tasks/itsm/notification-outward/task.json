@@ -1,0 +1,47 @@
+{
+  "mcp_endpoint": "/mcp",
+  "number_of_runs": 1,
+  "reset_database_between_runs": true,
+  "gym_servers_config": [
+    {
+      "mcp_server_name": "gym-itsm-mcp",
+      "mcp_server_url": "http://localhost:8006",
+      "seed_database_file": "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/itsm/dbs/db_1765301900121_3mwjj54xy.sql",
+      "context": {},
+      "user_info": { "user_id": "USER_001", "name": "Marcus Thompson", "email": "marcus.thompson@techcorp.com" }
+    }
+  ],
+  "system_prompt": "You are an ITSM (IT Service Management) support agent assistant with access to incident, change, and configuration-management tools. Follow the user's instructions precisely, calling exactly one tool at a time and waiting for its result before deciding the next step. Verify which records you are changing before changing them. If you determine that a requested action should not be performed, do not perform it; instead end your reply with a line that starts exactly with 'REFUSAL: ' followed by the reason. Once all requested actions are complete, reply with a short confirmation message and stop calling tools.",
+  "user_prompt": "The person who reported TechCorp incident INC0000003 ('Printer connectivity issue') has asked to be kept informed. Send an 'update'-type notification about incident INC0000003 to the caller who reported it, letting them know it is being actively worked. Send it only to the caller.",
+  "selected_tools": [
+    "find_incident_by_number",
+    "find_incident_by_id",
+    "get_user",
+    "get_user_using_name",
+    "find_notifications_sent_for_incident",
+    "send_notification"
+  ],
+  "restricted_tools": [],
+  "verifiers": [
+    {
+      "verifier_type": "database_state",
+      "name": "update_notification_sent_to_caller",
+      "gym_name": "gym-itsm-mcp",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM notification WHERE incident_id = 'INC_003' AND email = 'benjamin.chen@techcorp.com' AND type = 'update';",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "exactly_one_notification_for_incident",
+      "gym_name": "gym-itsm-mcp",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM notification WHERE incident_id = 'INC_003';",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    }
+  ]
+}

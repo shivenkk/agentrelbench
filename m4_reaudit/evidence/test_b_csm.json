@@ -1,0 +1,296 @@
+{
+  "call_log": [
+    {
+      "arguments": {},
+      "ok": true,
+      "result_type": "list",
+      "tool": "count_case_by_state"
+    },
+    {
+      "arguments": {
+        "assignment_group_id": 4
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "count_case_for_assignment_group"
+    },
+    {
+      "arguments": {},
+      "ok": true,
+      "result_type": "list",
+      "tool": "count_contract_by_status"
+    },
+    {
+      "arguments": {},
+      "ok": true,
+      "result_type": "list",
+      "tool": "count_installed_product_by_status"
+    },
+    {
+      "arguments": {
+        "case_id": 1232
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "count_notifications_by_case"
+    },
+    {
+      "arguments": {
+        "status": "success"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "count_notifications_by_status"
+    },
+    {
+      "arguments": {
+        "name": "Acme Systems"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "find_account"
+    },
+    {
+      "arguments": {
+        "case_id": 1232
+      },
+      "ok": true,
+      "result_type": "list",
+      "tool": "find_case_knowledge_linkages"
+    },
+    {
+      "arguments": {
+        "case_id": 1232
+      },
+      "ok": true,
+      "result_type": "list",
+      "tool": "find_case_slas"
+    },
+    {
+      "arguments": {
+        "account_id": 1
+      },
+      "ok": true,
+      "result_type": "list",
+      "tool": "find_contracts"
+    },
+    {
+      "arguments": {
+        "account_id": 1
+      },
+      "ok": true,
+      "result_type": "list",
+      "tool": "find_entitlements"
+    },
+    {
+      "arguments": {
+        "serial_number": "P128-889629-8734"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "find_installed_product_by_serial"
+    },
+    {
+      "arguments": {
+        "case_id": 1
+      },
+      "ok": true,
+      "result_type": "list",
+      "tool": "find_interactions"
+    },
+    {
+      "arguments": {
+        "case_id": 1232
+      },
+      "ok": true,
+      "result_type": "list",
+      "tool": "find_notifications"
+    },
+    {
+      "arguments": {
+        "name": "Windows Server 2022 Datacenter"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "find_product"
+    },
+    {
+      "arguments": {
+        "product_id": 1
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "find_product_by_id"
+    },
+    {
+      "arguments": {
+        "category": "software"
+      },
+      "ok": true,
+      "result_type": "list",
+      "tool": "find_products"
+    },
+    {
+      "arguments": {
+        "sla_def_id": 1
+      },
+      "ok": true,
+      "result_type": "list",
+      "tool": "find_sla_definitions"
+    },
+    {
+      "arguments": {
+        "name": "Case Assignment"
+      },
+      "ok": true,
+      "result_type": "dict",
+      "tool": "find_user_group"
+    },
+    {
+      "arguments": {
+        "account_id": 1
+      },
+      "ok": true,
+      "result_type": "list",
+      "tool": "get_accounts"
+    },
+    {
+      "arguments": {
+        "assignment_group_id": 4
+      },
+      "ok": true,
+      "result_type": "list",
+      "tool": "get_cases_assigned_to"
+    },
+    {
+      "arguments": {
+        "account_id": 1
+      },
+      "ok": true,
+      "result_type": "list",
+      "tool": "retrieve_installed_products"
+    },
+    {
+      "arguments": {
+        "knowledge_id": 1
+      },
+      "ok": true,
+      "result_type": "list",
+      "tool": "retrieve_knowledge"
+    },
+    {
+      "arguments": {
+        "case_id": 1
+      },
+      "ok": true,
+      "result_type": "list",
+      "tool": "search_cases"
+    }
+  ],
+  "coverage_complete": true,
+  "db_id": "db_1784219169799_i9tkmabbb",
+  "hash_after": {
+    "overall": "3ff48380a29ee9f06ad59906d99919ef83df918ee8a5b7623ecf3acf22964fc9",
+    "per_table": {
+      "account": "808e4e5221866c9e262e67b965a499c022a97d2975952d1d7aaa0e1201e381a1",
+      "case_knowledge": "051acc2ea65490b52d42c0174d75ff766b42961ef58805f49dc6c7815ce2a110",
+      "case_sla": "6a5a1723c11fb1243275be1d1792afdbc1fc52d1f63a2bd7d5929aa84a633cde",
+      "contact": "782421ea017dd0fef03343533f7c834b03f0ba36328cede53dca674d7f7f0e7d",
+      "contract": "5fd91789c4ee913b39ddb6d2900ede9cf6d9c829e9b5ee8cd79527fbba4639d2",
+      "customer_case": "1943c1c03918dfbd2c8df65a4d5ecf897cec1db1ff0d1cfb302f06935495b88c",
+      "entitlement": "654b0157a4e6601a41a24e22c04416e927d2b226ae18ce2401eb751a03f3e780",
+      "installed_product": "58b93c58f74f52fedb1ce1132db35b82c935d5384b37d7d2d751865fbe832282",
+      "interaction": "28327c22b31f327d267d1abef02bf6759534fb87fac7b8a8142be4483909bde9",
+      "knowledge": "a222cd64ffcbfd64dadd94474f99e01c44eb8ffdcafde7f8179be3d1c7fba824",
+      "location": "db7e7d8e4dc61b42f4d86a911a26b0ef1c431708a8737fc1cfe63463df917151",
+      "notification": "96f5db7793a8c99ba161707537b5f161164c1ec8a1c3c94781c07db1c9c7d344",
+      "product": "2736068e4b9e390894121094f9d974a048766aa850eac96b4771edd7cda09ab6",
+      "sla_definition": "cc635da6ef0e806c0b608c72ee5d14ac9ae181d1a021219d0914ce5d17432975",
+      "sqlite_sequence": "4fc8634627f138afdde88b2ea874fe5d0118c318a45b14c992b451dedfcb9a30",
+      "user": "b368ef3a03a61b712983c6671c68245c7f45984535da9c864e4a7086d9ced43f",
+      "user_group": "8d9917ec39ec92f648fdfa8a12b0c0bda1a8fd589d0d1d0c90126702ed82cfa6",
+      "user_group_member": "c12458c1d0f93ff372a48a2601962e89f2884ec09e8aeabc5223c000950201a0"
+    }
+  },
+  "hash_before": {
+    "overall": "3ff48380a29ee9f06ad59906d99919ef83df918ee8a5b7623ecf3acf22964fc9",
+    "per_table": {
+      "account": "808e4e5221866c9e262e67b965a499c022a97d2975952d1d7aaa0e1201e381a1",
+      "case_knowledge": "051acc2ea65490b52d42c0174d75ff766b42961ef58805f49dc6c7815ce2a110",
+      "case_sla": "6a5a1723c11fb1243275be1d1792afdbc1fc52d1f63a2bd7d5929aa84a633cde",
+      "contact": "782421ea017dd0fef03343533f7c834b03f0ba36328cede53dca674d7f7f0e7d",
+      "contract": "5fd91789c4ee913b39ddb6d2900ede9cf6d9c829e9b5ee8cd79527fbba4639d2",
+      "customer_case": "1943c1c03918dfbd2c8df65a4d5ecf897cec1db1ff0d1cfb302f06935495b88c",
+      "entitlement": "654b0157a4e6601a41a24e22c04416e927d2b226ae18ce2401eb751a03f3e780",
+      "installed_product": "58b93c58f74f52fedb1ce1132db35b82c935d5384b37d7d2d751865fbe832282",
+      "interaction": "28327c22b31f327d267d1abef02bf6759534fb87fac7b8a8142be4483909bde9",
+      "knowledge": "a222cd64ffcbfd64dadd94474f99e01c44eb8ffdcafde7f8179be3d1c7fba824",
+      "location": "db7e7d8e4dc61b42f4d86a911a26b0ef1c431708a8737fc1cfe63463df917151",
+      "notification": "96f5db7793a8c99ba161707537b5f161164c1ec8a1c3c94781c07db1c9c7d344",
+      "product": "2736068e4b9e390894121094f9d974a048766aa850eac96b4771edd7cda09ab6",
+      "sla_definition": "cc635da6ef0e806c0b608c72ee5d14ac9ae181d1a021219d0914ce5d17432975",
+      "sqlite_sequence": "4fc8634627f138afdde88b2ea874fe5d0118c318a45b14c992b451dedfcb9a30",
+      "user": "b368ef3a03a61b712983c6671c68245c7f45984535da9c864e4a7086d9ced43f",
+      "user_group": "8d9917ec39ec92f648fdfa8a12b0c0bda1a8fd589d0d1d0c90126702ed82cfa6",
+      "user_group_member": "c12458c1d0f93ff372a48a2601962e89f2884ec09e8aeabc5223c000950201a0"
+    }
+  },
+  "overall_match": true,
+  "per_table_mismatches": [],
+  "positional_diff": null,
+  "read_only_union": [
+    "count_case_by_state",
+    "count_case_for_assignment_group",
+    "count_contract_by_status",
+    "count_installed_product_by_status",
+    "count_notifications_by_case",
+    "count_notifications_by_status",
+    "find_account",
+    "find_case_knowledge_linkages",
+    "find_case_slas",
+    "find_contracts",
+    "find_entitlements",
+    "find_installed_product_by_serial",
+    "find_interactions",
+    "find_notifications",
+    "find_product",
+    "find_product_by_id",
+    "find_products",
+    "find_sla_definitions",
+    "find_user_group",
+    "get_accounts",
+    "get_cases_assigned_to",
+    "retrieve_installed_products",
+    "retrieve_knowledge",
+    "search_cases"
+  ],
+  "read_only_union_count": 24,
+  "test": "B_read_purity_csm",
+  "tools_called": [
+    "count_case_by_state",
+    "count_case_for_assignment_group",
+    "count_contract_by_status",
+    "count_installed_product_by_status",
+    "count_notifications_by_case",
+    "count_notifications_by_status",
+    "find_account",
+    "find_case_knowledge_linkages",
+    "find_case_slas",
+    "find_contracts",
+    "find_entitlements",
+    "find_installed_product_by_serial",
+    "find_interactions",
+    "find_notifications",
+    "find_product",
+    "find_product_by_id",
+    "find_products",
+    "find_sla_definitions",
+    "find_user_group",
+    "get_accounts",
+    "get_cases_assigned_to",
+    "retrieve_installed_products",
+    "retrieve_knowledge",
+    "search_cases"
+  ],
+  "wall_time_s": 1.93
+}

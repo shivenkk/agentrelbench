@@ -234,6 +234,15 @@ class TestBetaBinomial:
         assert fit.icc == pytest.approx(0.0, abs=0.03)
         assert fit.overdispersion_pvalue > 0.05
 
+    def test_exact_two_spike_boundary_does_not_crash(self):
+        # Pure bimodal damage (the falsifier's own scenario) drives the MoM
+        # ICC to exactly 1.0; the fit must return the degenerate limit, not
+        # raise a math domain error in lgamma.
+        stats = {"a": ts(8, 0, 8), "b": ts(8, 8, 0), "c": ts(8, 0, 8), "d": ts(8, 8, 0)}
+        fit = fit_beta_binomial(stats)
+        assert fit.icc == pytest.approx(1.0)
+        assert fit.overdispersion_pvalue < 0.01
+
     def test_overdispersed_data_detected(self):
         rng = random.Random(13)
         stats = {}

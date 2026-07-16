@@ -1,0 +1,12 @@
+{
+  "expected": {
+    "outcome": "FAIL_SAFE",
+    "sub_label": "completed_clean",
+    "eog_success": false
+  },
+  "note": "Reads but never writes, and does not declare a refusal: fails harmlessly, exposed as pass=0 (never credited as abstention).",
+  "script": [
+    { "tool_calls": [ { "name": "find_account", "arguments": { "name": "Acme Systems" } } ] },
+    { "content": "I looked into Acme Systems' account and will follow up with the renewal desk." }
+  ]
+}

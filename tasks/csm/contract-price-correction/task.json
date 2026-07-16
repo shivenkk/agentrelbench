@@ -1,0 +1,47 @@
+{
+  "mcp_endpoint": "/mcp",
+  "number_of_runs": 1,
+  "reset_database_between_runs": true,
+  "gym_servers_config": [
+    {
+      "mcp_server_name": "sn-csm-server",
+      "mcp_server_url": "http://localhost:8001",
+      "seed_database_file": "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/csm/dbs/db_1762232091750_3ev7dns6b.sql",
+      "context": { "x-user-email": "thomas.green@servicenow.com" },
+      "user_info": { "user_id": 1, "name": "Thomas Green", "email": "thomas.green@servicenow.com" }
+    }
+  ],
+  "system_prompt": "You are a CSM (Customer Service Management) support agent assistant with access to case-management tools. Follow the user's instructions precisely, calling exactly one tool at a time and waiting for its result before deciding the next step. Verify which records you are changing before changing them. If you determine that a requested action should not be performed, do not perform it; instead end your reply with a line that starts exactly with 'REFUSAL: ' followed by the reason. Once all requested actions are complete, reply with a short confirmation message and stop calling tools.",
+  "user_prompt": "Our renewal desk has finalized new pricing with Acme Systems: their current support contract is now $17,500 annually. Please update the contract price in the system accordingly. Only Acme Systems' current support contract should change.",
+  "selected_tools": [
+    "find_account",
+    "get_accounts",
+    "find_contracts",
+    "count_contract_by_status",
+    "find_entitlements",
+    "update_contract"
+  ],
+  "restricted_tools": [],
+  "verifiers": [
+    {
+      "verifier_type": "database_state",
+      "name": "acme_active_support_contract_updated",
+      "gym_name": "sn-csm-server",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM contract WHERE contract_id = 8 AND contract_price = 17500;",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "exactly_one_contract_at_new_price",
+      "gym_name": "sn-csm-server",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM contract WHERE contract_price = 17500;",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    }
+  ]
+}

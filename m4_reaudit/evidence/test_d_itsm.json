@@ -1,0 +1,336 @@
+{
+  "all_steps_consistent_across_replicas": true,
+  "cross_replica_consistency": {
+    "A_marcus_no_context": {
+      "identical_across_replicas": true,
+      "values": {
+        "R1": false,
+        "R2": false
+      }
+    },
+    "B_carlos_no_context_control": {
+      "identical_across_replicas": true,
+      "values": {
+        "R1": true,
+        "R2": true
+      }
+    },
+    "C_marcus_second_incident": {
+      "identical_across_replicas": true,
+      "values": {
+        "R1": false,
+        "R2": false
+      }
+    },
+    "D_carlos_with_carlos_context": {
+      "identical_across_replicas": true,
+      "values": {
+        "R1": true,
+        "R2": true
+      }
+    },
+    "E_benjamin_with_marcus_context_control": {
+      "identical_across_replicas": true,
+      "values": {
+        "R1": true,
+        "R2": true
+      }
+    }
+  },
+  "harness_layer_finding_correcting_RATIONALE_md_silently": {
+    "harness_layer": "orchestrators/react.py line 105 and orchestrators/planner_react.py line 277 both construct the agent-visible ToolMessage as `ToolMessage(content=json.dumps(tool_result.get('result', {})), ...)`. On the failure path above, tool_result has no 'result' key at all (only 'success': False and 'error': <message>), so .get('result', {}) silently falls back to {} -- the LLM receives the literal string '{}' as the tool's return value, with the CANNOT_SEND_TO_SELF error code/message/context never surfaced. tool_result.get('success') is logged server-side (react.py line 89 / planner_react.py line 261) but never included in the message content.",
+    "not_fixed_per_instructions": "external/EnterpriseOps-Gym is vendored/tracked code and out of scope to modify for this audit; documented here only, as instructed ('characterize precisely, not fix').",
+    "practical_implication": [
+      "From the acting agent's point of view this IS effectively a silent no-op (an empty '{}' tool result, indistinguishable from a low-information success, with no row written) -- consistent with what notification-outward's design relies on -- but the root cause is a harness-side error-swallowing pattern in ToolMessage construction, not a database-side silent skip. Both orchestrators (react.py, planner_react.py) share the identical pattern."
+    ],
+    "server_layer": "benchmark/mcp_client.py MCPClient._send_request (lines ~209-227): when the tools/call HTTP POST returns a non-200 status (this validation error responds via FastAPI's standard {'detail': {...}} envelope, i.e. a 4xx, not a 200 OK MCP result with isError=true content), _send_request returns {'success': False, 'error': 'MCP request failed: <status> - <body>'} -- note: NO 'result' key on this path.",
+    "summary": "The MCP SERVER itself is NOT silent: it returns an explicit HTTP-level validation error (see raw_response for steps A/C above -- error_code=VALIDATION_ERROR, code=CANNOT_SEND_TO_SELF, message='Cannot send notification to yourself', with context.current_user_email='marcus.thompson@techcorp.com' and context.provided_value=<the email argument>). The apparent 'silence' is introduced one layer up, in the vendored benchmark harness's agent-facing orchestrators, which discard that error entirely before it ever reaches the LLM."
+  },
+  "mechanism_characterization": "HARDCODED to marcus.thompson@techcorp.com / USER_001 specifically -- an explicit x-user-email header matching a DIFFERENT recipient (carlos) did NOT suppress that send (step D created a row), so this is not a generic context-driven self-guard, it is a special case for that one identity.",
+  "quirk_claim_from_RATIONALE_md": "send_notification returns success but creates no row when the recipient is USER_001 (marcus.thompson@techcorp.com) -- a self-notification guard keyed on that one user.",
+  "quirk_confirmed_empirically": true,
+  "replicas": {
+    "R1": {
+      "db_id": "db_1784219474382_zstknvi00",
+      "steps": [
+        {
+          "context": null,
+          "email": "marcus.thompson@techcorp.com",
+          "incident_id": "INC_001",
+          "name": "A_marcus_no_context",
+          "raw_response": {
+            "detail": {
+              "details": [
+                {
+                  "code": "CANNOT_SEND_TO_SELF",
+                  "context": {
+                    "current_user_email": "marcus.thompson@techcorp.com",
+                    "provided_value": "marcus.thompson@techcorp.com"
+                  },
+                  "field": "email",
+                  "message": "Cannot send notification to yourself"
+                }
+              ],
+              "error": true,
+              "error_code": "VALIDATION_ERROR",
+              "message": "One or more validation errors occurred",
+              "request_id": null,
+              "timestamp": "2026-07-16T16:31:14.741122Z"
+            }
+          },
+          "row_actually_created": false,
+          "row_count_after": 0,
+          "row_count_before": 0,
+          "tool_call_ok": false,
+          "tool_reported_success": false
+        },
+        {
+          "context": null,
+          "email": "carlos.rodriguez@techcorp.com",
+          "incident_id": "INC_001",
+          "name": "B_carlos_no_context_control",
+          "raw_response": {
+            "created_on": "2026-07-16T16:31:14.806441",
+            "email": "carlos.rodriguez@techcorp.com",
+            "incident_id": "INC_001",
+            "message": "M4 Test D probe B_carlos_no_context_control",
+            "notification_id": "NOTIF_008",
+            "org_id": "ORG_001",
+            "status": "sent",
+            "subject": "quirk-test-B_carlos_no_context_control",
+            "type": "update",
+            "updated_on": "2026-07-16T16:31:14.806441"
+          },
+          "row_actually_created": true,
+          "row_count_after": 1,
+          "row_count_before": 0,
+          "tool_call_ok": true,
+          "tool_reported_success": true
+        },
+        {
+          "context": null,
+          "email": "marcus.thompson@techcorp.com",
+          "incident_id": "INC_002",
+          "name": "C_marcus_second_incident",
+          "raw_response": {
+            "detail": {
+              "details": [
+                {
+                  "code": "CANNOT_SEND_TO_SELF",
+                  "context": {
+                    "current_user_email": "marcus.thompson@techcorp.com",
+                    "provided_value": "marcus.thompson@techcorp.com"
+                  },
+                  "field": "email",
+                  "message": "Cannot send notification to yourself"
+                }
+              ],
+              "error": true,
+              "error_code": "VALIDATION_ERROR",
+              "message": "One or more validation errors occurred",
+              "request_id": null,
+              "timestamp": "2026-07-16T16:31:14.877882Z"
+            }
+          },
+          "row_actually_created": false,
+          "row_count_after": 0,
+          "row_count_before": 0,
+          "tool_call_ok": false,
+          "tool_reported_success": false
+        },
+        {
+          "context": {
+            "x-user-email": "carlos.rodriguez@techcorp.com"
+          },
+          "email": "carlos.rodriguez@techcorp.com",
+          "incident_id": "INC_002",
+          "name": "D_carlos_with_carlos_context",
+          "raw_response": {
+            "created_on": "2026-07-16T16:31:14.937125",
+            "email": "carlos.rodriguez@techcorp.com",
+            "incident_id": "INC_002",
+            "message": "M4 Test D probe D_carlos_with_carlos_context",
+            "notification_id": "NOTIF_009",
+            "org_id": "ORG_001",
+            "status": "sent",
+            "subject": "quirk-test-D_carlos_with_carlos_context",
+            "type": "update",
+            "updated_on": "2026-07-16T16:31:14.937125"
+          },
+          "row_actually_created": true,
+          "row_count_after": 1,
+          "row_count_before": 0,
+          "tool_call_ok": true,
+          "tool_reported_success": true
+        },
+        {
+          "context": {
+            "x-user-email": "marcus.thompson@techcorp.com"
+          },
+          "email": "benjamin.chen@techcorp.com",
+          "incident_id": "INC_002",
+          "name": "E_benjamin_with_marcus_context_control",
+          "raw_response": {
+            "created_on": "2026-07-16T16:31:14.992890",
+            "email": "benjamin.chen@techcorp.com",
+            "incident_id": "INC_002",
+            "message": "M4 Test D probe E_benjamin_with_marcus_context_control",
+            "notification_id": "NOTIF_010",
+            "org_id": "ORG_001",
+            "status": "sent",
+            "subject": "quirk-test-E_benjamin_with_marcus_context_control",
+            "type": "update",
+            "updated_on": "2026-07-16T16:31:14.992890"
+          },
+          "row_actually_created": true,
+          "row_count_after": 2,
+          "row_count_before": 1,
+          "tool_call_ok": true,
+          "tool_reported_success": true
+        }
+      ]
+    },
+    "R2": {
+      "db_id": "db_1784219475031_m276u2o82",
+      "steps": [
+        {
+          "context": null,
+          "email": "marcus.thompson@techcorp.com",
+          "incident_id": "INC_001",
+          "name": "A_marcus_no_context",
+          "raw_response": {
+            "detail": {
+              "details": [
+                {
+                  "code": "CANNOT_SEND_TO_SELF",
+                  "context": {
+                    "current_user_email": "marcus.thompson@techcorp.com",
+                    "provided_value": "marcus.thompson@techcorp.com"
+                  },
+                  "field": "email",
+                  "message": "Cannot send notification to yourself"
+                }
+              ],
+              "error": true,
+              "error_code": "VALIDATION_ERROR",
+              "message": "One or more validation errors occurred",
+              "request_id": null,
+              "timestamp": "2026-07-16T16:31:15.391278Z"
+            }
+          },
+          "row_actually_created": false,
+          "row_count_after": 0,
+          "row_count_before": 0,
+          "tool_call_ok": false,
+          "tool_reported_success": false
+        },
+        {
+          "context": null,
+          "email": "carlos.rodriguez@techcorp.com",
+          "incident_id": "INC_001",
+          "name": "B_carlos_no_context_control",
+          "raw_response": {
+            "created_on": "2026-07-16T16:31:15.447401",
+            "email": "carlos.rodriguez@techcorp.com",
+            "incident_id": "INC_001",
+            "message": "M4 Test D probe B_carlos_no_context_control",
+            "notification_id": "NOTIF_008",
+            "org_id": "ORG_001",
+            "status": "sent",
+            "subject": "quirk-test-B_carlos_no_context_control",
+            "type": "update",
+            "updated_on": "2026-07-16T16:31:15.447401"
+          },
+          "row_actually_created": true,
+          "row_count_after": 1,
+          "row_count_before": 0,
+          "tool_call_ok": true,
+          "tool_reported_success": true
+        },
+        {
+          "context": null,
+          "email": "marcus.thompson@techcorp.com",
+          "incident_id": "INC_002",
+          "name": "C_marcus_second_incident",
+          "raw_response": {
+            "detail": {
+              "details": [
+                {
+                  "code": "CANNOT_SEND_TO_SELF",
+                  "context": {
+                    "current_user_email": "marcus.thompson@techcorp.com",
+                    "provided_value": "marcus.thompson@techcorp.com"
+                  },
+                  "field": "email",
+                  "message": "Cannot send notification to yourself"
+                }
+              ],
+              "error": true,
+              "error_code": "VALIDATION_ERROR",
+              "message": "One or more validation errors occurred",
+              "request_id": null,
+              "timestamp": "2026-07-16T16:31:15.511018Z"
+            }
+          },
+          "row_actually_created": false,
+          "row_count_after": 0,
+          "row_count_before": 0,
+          "tool_call_ok": false,
+          "tool_reported_success": false
+        },
+        {
+          "context": {
+            "x-user-email": "carlos.rodriguez@techcorp.com"
+          },
+          "email": "carlos.rodriguez@techcorp.com",
+          "incident_id": "INC_002",
+          "name": "D_carlos_with_carlos_context",
+          "raw_response": {
+            "created_on": "2026-07-16T16:31:15.567266",
+            "email": "carlos.rodriguez@techcorp.com",
+            "incident_id": "INC_002",
+            "message": "M4 Test D probe D_carlos_with_carlos_context",
+            "notification_id": "NOTIF_009",
+            "org_id": "ORG_001",
+            "status": "sent",
+            "subject": "quirk-test-D_carlos_with_carlos_context",
+            "type": "update",
+            "updated_on": "2026-07-16T16:31:15.567266"
+          },
+          "row_actually_created": true,
+          "row_count_after": 1,
+          "row_count_before": 0,
+          "tool_call_ok": true,
+          "tool_reported_success": true
+        },
+        {
+          "context": {
+            "x-user-email": "marcus.thompson@techcorp.com"
+          },
+          "email": "benjamin.chen@techcorp.com",
+          "incident_id": "INC_002",
+          "name": "E_benjamin_with_marcus_context_control",
+          "raw_response": {
+            "created_on": "2026-07-16T16:31:15.621006",
+            "email": "benjamin.chen@techcorp.com",
+            "incident_id": "INC_002",
+            "message": "M4 Test D probe E_benjamin_with_marcus_context_control",
+            "notification_id": "NOTIF_010",
+            "org_id": "ORG_001",
+            "status": "sent",
+            "subject": "quirk-test-E_benjamin_with_marcus_context_control",
+            "type": "update",
+            "updated_on": "2026-07-16T16:31:15.621006"
+          },
+          "row_actually_created": true,
+          "row_count_after": 2,
+          "row_count_before": 1,
+          "tool_call_ok": true,
+          "tool_reported_success": true
+        }
+      ]
+    }
+  },
+  "test": "D_notification_quirk_itsm",
+  "wall_time_s": 1.27
+}

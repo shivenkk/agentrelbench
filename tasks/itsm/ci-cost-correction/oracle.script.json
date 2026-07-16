@@ -1,0 +1,9 @@
+{
+  "expected": { "outcome": "PASS", "eog_success": true },
+  "script": [
+    { "tool_calls": [ { "name": "get_user_using_name", "arguments": { "first_name": "Carlos", "last_name": "Rodriguez" } } ] },
+    { "tool_calls": [ { "name": "find_configuration_items", "arguments": { "owner_id": "USER_003" } } ] },
+    { "tool_calls": [ { "name": "update_configuration_item", "arguments": { "configuration_item_id": "CI_001", "cost": 2400 } } ] },
+    { "content": "Updated Carlos Rodriguez's New York laptop (CI_001, serial LAPTOP-NYC-001) cost to $2,400. No other asset was changed." }
+  ]
+}

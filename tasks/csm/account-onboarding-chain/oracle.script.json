@@ -1,0 +1,10 @@
+{
+  "expected": { "outcome": "PASS", "eog_success": true },
+  "script": [
+    { "tool_calls": [ { "name": "create_new_account", "arguments": { "name": "Northwind Traders", "account_type": "customer", "active": true, "email_domain": "northwindtraders.com" } } ] },
+    { "tool_calls": [ { "name": "enlist_new_contract", "arguments": { "account_id": 53, "contract_type": "support", "contract_price": 12000, "start_date": "2026-08-01", "end_date": "2027-07-31", "status": "active" } } ] },
+    { "tool_calls": [ { "name": "add_new_entitlement", "arguments": { "account_id": 53, "support_level": "standard", "active": true, "contract_id": 154, "max_cases_per_month": 20, "coverage_hours": "h8x5" } } ] },
+    { "tool_calls": [ { "name": "add_new_entitlement", "arguments": { "account_id": 53, "support_level": "premium", "active": true, "contract_id": 154, "max_cases_per_month": 50, "coverage_hours": "h12x6" } } ] },
+    { "content": "Onboarded Northwind Traders: created the account, enlisted its $12,000 active support contract, and added its standard and premium entitlements. Everything is bound to the new Northwind Traders account." }
+  ]
+}

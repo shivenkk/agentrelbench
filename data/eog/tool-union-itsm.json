@@ -1,0 +1,140 @@
+{
+  "domain": "itsm",
+  "mutating_count": 8,
+  "mutating_tools": [
+    "add_child_incident",
+    "delete_incident_slas",
+    "map_change_request",
+    "remove_child_incident",
+    "send_notification",
+    "update_change",
+    "update_configuration_item",
+    "update_incident"
+  ],
+  "num_tasks": 8,
+  "per_task_selected_tools": {
+    "change-request-cab-gate": [
+      "find_incident_by_number",
+      "find_incident_by_id",
+      "update_incident",
+      "find_change_by_number",
+      "list_changes",
+      "update_change"
+    ],
+    "ci-cost-correction": [
+      "find_configuration_items",
+      "find_configuration_item_by_serial_number",
+      "get_user_using_name",
+      "get_user",
+      "update_configuration_item"
+    ],
+    "incident-sla-cleanup": [
+      "find_incident_slas",
+      "find_stage_wise_breached_incident_sla_counts",
+      "find_incident_by_number",
+      "delete_incident_slas"
+    ],
+    "incident-triage-basic": [
+      "find_incident_by_number",
+      "find_incident_by_id",
+      "list_incidents",
+      "update_incident"
+    ],
+    "notification-outward": [
+      "find_incident_by_number",
+      "find_incident_by_id",
+      "get_user",
+      "get_user_using_name",
+      "find_notifications_sent_for_incident",
+      "send_notification"
+    ],
+    "parent-child-restructure": [
+      "list_child_incidents",
+      "find_parent_incident",
+      "find_incident_by_number",
+      "find_incident_by_id",
+      "add_child_incident",
+      "remove_child_incident"
+    ],
+    "problem-change-mapping": [
+      "find_change_by_number",
+      "find_incident_by_number",
+      "list_incidents",
+      "list_change_request_mappings",
+      "find_change_request_mappings_for_incident",
+      "map_change_request"
+    ],
+    "template-driven-incidents": [
+      "get_incident_templates",
+      "get_incident_template_by_name",
+      "find_incident_by_number",
+      "list_incidents",
+      "update_incident"
+    ]
+  },
+  "read_only_count": 18,
+  "read_only_tools": [
+    "find_change_by_number",
+    "find_change_request_mappings_for_incident",
+    "find_configuration_item_by_serial_number",
+    "find_configuration_items",
+    "find_incident_by_id",
+    "find_incident_by_number",
+    "find_incident_slas",
+    "find_notifications_sent_for_incident",
+    "find_parent_incident",
+    "find_stage_wise_breached_incident_sla_counts",
+    "get_incident_template_by_name",
+    "get_incident_templates",
+    "get_user",
+    "get_user_using_name",
+    "list_change_request_mappings",
+    "list_changes",
+    "list_child_incidents",
+    "list_incidents"
+  ],
+  "seed_files_referenced": [
+    "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/itsm/dbs/db_1765301900121_3mwjj54xy.sql"
+  ],
+  "single_seed_file_confirmed": true,
+  "task_names": [
+    "change-request-cab-gate",
+    "ci-cost-correction",
+    "incident-sla-cleanup",
+    "incident-triage-basic",
+    "notification-outward",
+    "parent-child-restructure",
+    "problem-change-mapping",
+    "template-driven-incidents"
+  ],
+  "union": [
+    "add_child_incident",
+    "delete_incident_slas",
+    "find_change_by_number",
+    "find_change_request_mappings_for_incident",
+    "find_configuration_item_by_serial_number",
+    "find_configuration_items",
+    "find_incident_by_id",
+    "find_incident_by_number",
+    "find_incident_slas",
+    "find_notifications_sent_for_incident",
+    "find_parent_incident",
+    "find_stage_wise_breached_incident_sla_counts",
+    "get_incident_template_by_name",
+    "get_incident_templates",
+    "get_user",
+    "get_user_using_name",
+    "list_change_request_mappings",
+    "list_changes",
+    "list_child_incidents",
+    "list_incidents",
+    "map_change_request",
+    "remove_child_incident",
+    "send_notification",
+    "update_change",
+    "update_configuration_item",
+    "update_incident"
+  ],
+  "union_count": 26,
+  "untagged_tools": []
+}

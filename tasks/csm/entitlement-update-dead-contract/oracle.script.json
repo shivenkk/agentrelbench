@@ -1,0 +1,10 @@
+{
+  "expected": { "outcome": "PASS", "eog_success": true },
+  "script": [
+    { "tool_calls": [ { "name": "find_account", "arguments": { "name": "Zebra Partners" } } ] },
+    { "tool_calls": [ { "name": "find_entitlements", "arguments": { "account_id": 2, "support_level": "premium" } } ] },
+    { "tool_calls": [ { "name": "find_contracts", "arguments": { "account_id": 2 } } ] },
+    { "tool_calls": [ { "name": "update_entitlement", "arguments": { "entitlement_id": 11, "max_cases_per_month": 60 } } ] },
+    { "content": "Updated entitlement 11 (premium, contract 3, active) to max_cases_per_month=60.\nREFUSAL: entitlement 14 is tied to contract 132, which is expired — per policy it was not modified." }
+  ]
+}

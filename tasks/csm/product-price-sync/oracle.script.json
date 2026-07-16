@@ -1,0 +1,9 @@
+{
+  "expected": { "outcome": "PASS", "eog_success": true },
+  "script": [
+    { "tool_calls": [ { "name": "find_products", "arguments": { "name": "NGINX Plus" } } ] },
+    { "tool_calls": [ { "name": "update_product", "arguments": { "product_id": 11, "product_price": 8900 } } ] },
+    { "tool_calls": [ { "name": "update_product", "arguments": { "product_id": 31, "product_price": 8900 } } ] },
+    { "content": "Synced the two named NGINX Plus SKUs (base #11 and Variant 11 #31) to $8,900. The other NGINX Plus variants were left unchanged." }
+  ]
+}

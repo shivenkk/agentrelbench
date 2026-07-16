@@ -1,0 +1,1026 @@
+{
+  "account": [
+    {
+      "account_id": 1,
+      "account_type": "internal",
+      "active": 1,
+      "name": "ServiceNow"
+    },
+    {
+      "account_id": 2,
+      "account_type": "partner",
+      "active": 1,
+      "name": "Zebra Partners"
+    },
+    {
+      "account_id": 3,
+      "account_type": "customer",
+      "active": 1,
+      "name": "Acme Systems"
+    },
+    {
+      "account_id": 4,
+      "account_type": "customer",
+      "active": 1,
+      "name": "Globex"
+    },
+    {
+      "account_id": 5,
+      "account_type": "customer",
+      "active": 1,
+      "name": "Initech"
+    },
+    {
+      "account_id": 6,
+      "account_type": "customer",
+      "active": 1,
+      "name": "Umbrella"
+    },
+    {
+      "account_id": 7,
+      "account_type": "customer",
+      "active": 1,
+      "name": "Wayne Enterprises"
+    },
+    {
+      "account_id": 8,
+      "account_type": "customer",
+      "active": 1,
+      "name": "Stark Industries"
+    },
+    {
+      "account_id": 9,
+      "account_type": "customer",
+      "active": 1,
+      "name": "Wonka Industries"
+    },
+    {
+      "account_id": 10,
+      "account_type": "customer",
+      "active": 1,
+      "name": "Hooli"
+    }
+  ],
+  "case_knowledge": [
+    {
+      "case_id": 1232,
+      "case_kb_id": 527,
+      "knowledge_id": 290,
+      "used_as": "resolution"
+    },
+    {
+      "case_id": 1231,
+      "case_kb_id": 526,
+      "knowledge_id": 41,
+      "used_as": "applied"
+    },
+    {
+      "case_id": 1231,
+      "case_kb_id": 525,
+      "knowledge_id": 42,
+      "used_as": "resolution"
+    },
+    {
+      "case_id": 1230,
+      "case_kb_id": 524,
+      "knowledge_id": 29,
+      "used_as": "resolution"
+    },
+    {
+      "case_id": 1228,
+      "case_kb_id": 523,
+      "knowledge_id": 290,
+      "used_as": "resolution"
+    },
+    {
+      "case_id": 1224,
+      "case_kb_id": 522,
+      "knowledge_id": 180,
+      "used_as": "applied"
+    },
+    {
+      "case_id": 1215,
+      "case_kb_id": 521,
+      "knowledge_id": 306,
+      "used_as": "resolution"
+    },
+    {
+      "case_id": 1214,
+      "case_kb_id": 520,
+      "knowledge_id": 57,
+      "used_as": "resolution"
+    },
+    {
+      "case_id": 1213,
+      "case_kb_id": 519,
+      "knowledge_id": 334,
+      "used_as": "resolution"
+    },
+    {
+      "case_id": 1212,
+      "case_kb_id": 518,
+      "knowledge_id": 201,
+      "used_as": "resolution"
+    }
+  ],
+  "case_sla": [
+    {
+      "case_id": 1232,
+      "case_sla_id": 2464,
+      "has_breached": 0,
+      "sla_def_id": 7,
+      "stage": "completed",
+      "start_time": "2025-08-27 15:34:25"
+    },
+    {
+      "case_id": 1232,
+      "case_sla_id": 2463,
+      "has_breached": 0,
+      "sla_def_id": 11,
+      "stage": "completed",
+      "start_time": "2025-08-27 15:34:25"
+    },
+    {
+      "case_id": 1231,
+      "case_sla_id": 2462,
+      "has_breached": 0,
+      "sla_def_id": 12,
+      "stage": "completed",
+      "start_time": "2025-08-27 15:40:11"
+    },
+    {
+      "case_id": 1231,
+      "case_sla_id": 2461,
+      "has_breached": 0,
+      "sla_def_id": 3,
+      "stage": "completed",
+      "start_time": "2025-08-27 15:40:11"
+    },
+    {
+      "case_id": 1230,
+      "case_sla_id": 2460,
+      "has_breached": 1,
+      "sla_def_id": 12,
+      "stage": "completed",
+      "start_time": "2025-08-27 15:43:30"
+    },
+    {
+      "case_id": 1230,
+      "case_sla_id": 2459,
+      "has_breached": 0,
+      "sla_def_id": 3,
+      "stage": "completed",
+      "start_time": "2025-08-27 15:43:30"
+    },
+    {
+      "case_id": 1229,
+      "case_sla_id": 2458,
+      "has_breached": 0,
+      "sla_def_id": 6,
+      "stage": "paused",
+      "start_time": "2025-08-27 15:36:42"
+    },
+    {
+      "case_id": 1229,
+      "case_sla_id": 2457,
+      "has_breached": 0,
+      "sla_def_id": 1,
+      "stage": "in_progress",
+      "start_time": "2025-08-27 15:36:42"
+    },
+    {
+      "case_id": 1228,
+      "case_sla_id": 2456,
+      "has_breached": 0,
+      "sla_def_id": 6,
+      "stage": "completed",
+      "start_time": "2025-08-27 15:51:52"
+    },
+    {
+      "case_id": 1228,
+      "case_sla_id": 2455,
+      "has_breached": 0,
+      "sla_def_id": 1,
+      "stage": "completed",
+      "start_time": "2025-08-27 15:51:52"
+    }
+  ],
+  "contact": [
+    {
+      "account_id": 3,
+      "contact_id": 1
+    },
+    {
+      "account_id": 4,
+      "contact_id": 2
+    },
+    {
+      "account_id": 4,
+      "contact_id": 3
+    },
+    {
+      "account_id": 4,
+      "contact_id": 4
+    },
+    {
+      "account_id": 5,
+      "contact_id": 5
+    },
+    {
+      "account_id": 5,
+      "contact_id": 6
+    },
+    {
+      "account_id": 6,
+      "contact_id": 7
+    },
+    {
+      "account_id": 6,
+      "contact_id": 8
+    },
+    {
+      "account_id": 7,
+      "contact_id": 9
+    },
+    {
+      "account_id": 8,
+      "contact_id": 10
+    }
+  ],
+  "contract": [
+    {
+      "account_id": 1,
+      "contract_id": 1,
+      "contract_price": 2037,
+      "contract_type": "warranty",
+      "status": "active"
+    },
+    {
+      "account_id": 1,
+      "contract_id": 2,
+      "contract_price": 28618,
+      "contract_type": "subscription",
+      "status": "active"
+    },
+    {
+      "account_id": 2,
+      "contract_id": 3,
+      "contract_price": 19101,
+      "contract_type": "subscription",
+      "status": "active"
+    },
+    {
+      "account_id": 2,
+      "contract_id": 4,
+      "contract_price": 8284,
+      "contract_type": "support",
+      "status": "draft"
+    },
+    {
+      "account_id": 2,
+      "contract_id": 5,
+      "contract_price": 4389,
+      "contract_type": "warranty",
+      "status": "draft"
+    },
+    {
+      "account_id": 3,
+      "contract_id": 6,
+      "contract_price": 59379,
+      "contract_type": "subscription",
+      "status": "active"
+    },
+    {
+      "account_id": 3,
+      "contract_id": 7,
+      "contract_price": 3985,
+      "contract_type": "warranty",
+      "status": "active"
+    },
+    {
+      "account_id": 3,
+      "contract_id": 8,
+      "contract_price": 16823,
+      "contract_type": "support",
+      "status": "active"
+    },
+    {
+      "account_id": 4,
+      "contract_id": 9,
+      "contract_price": 35924,
+      "contract_type": "subscription",
+      "status": "active"
+    },
+    {
+      "account_id": 4,
+      "contract_id": 10,
+      "contract_price": 19195,
+      "contract_type": "support",
+      "status": "active"
+    }
+  ],
+  "customer_case": [
+    {
+      "account_id": 1,
+      "assigned_to": 403,
+      "assignment_group_id": 4,
+      "case_id": 1,
+      "channel": "web",
+      "contact_id": 123,
+      "installed_product_id": 3,
+      "priority": "critical",
+      "product_id": 128,
+      "state": "new"
+    },
+    {
+      "account_id": 1,
+      "assigned_to": null,
+      "assignment_group_id": null,
+      "case_id": 2,
+      "channel": "email",
+      "contact_id": 123,
+      "installed_product_id": 2,
+      "priority": "critical",
+      "product_id": 130,
+      "state": "new"
+    },
+    {
+      "account_id": 1,
+      "assigned_to": 378,
+      "assignment_group_id": 44,
+      "case_id": 3,
+      "channel": "phone",
+      "contact_id": 123,
+      "installed_product_id": null,
+      "priority": "high",
+      "product_id": null,
+      "state": "new"
+    },
+    {
+      "account_id": 1,
+      "assigned_to": 116,
+      "assignment_group_id": null,
+      "case_id": 4,
+      "channel": "chat",
+      "contact_id": 123,
+      "installed_product_id": null,
+      "priority": "high",
+      "product_id": null,
+      "state": "in_progress"
+    },
+    {
+      "account_id": 1,
+      "assigned_to": 62,
+      "assignment_group_id": 18,
+      "case_id": 5,
+      "channel": "social",
+      "contact_id": 123,
+      "installed_product_id": 3,
+      "priority": "moderate",
+      "product_id": 128,
+      "state": "in_progress"
+    },
+    {
+      "account_id": 1,
+      "assigned_to": null,
+      "assignment_group_id": 32,
+      "case_id": 6,
+      "channel": "alert",
+      "contact_id": 123,
+      "installed_product_id": 2,
+      "priority": "moderate",
+      "product_id": 130,
+      "state": "in_progress"
+    },
+    {
+      "account_id": 1,
+      "assigned_to": 738,
+      "assignment_group_id": 60,
+      "case_id": 7,
+      "channel": "community",
+      "contact_id": 123,
+      "installed_product_id": 1,
+      "priority": "low",
+      "product_id": 55,
+      "state": "pending"
+    },
+    {
+      "account_id": 1,
+      "assigned_to": 745,
+      "assignment_group_id": 55,
+      "case_id": 8,
+      "channel": "web",
+      "contact_id": 123,
+      "installed_product_id": 2,
+      "priority": "low",
+      "product_id": 130,
+      "state": "pending"
+    },
+    {
+      "account_id": 1,
+      "assigned_to": 724,
+      "assignment_group_id": null,
+      "case_id": 9,
+      "channel": "email",
+      "contact_id": 123,
+      "installed_product_id": null,
+      "priority": "critical",
+      "product_id": 163,
+      "state": "pending"
+    },
+    {
+      "account_id": 1,
+      "assigned_to": null,
+      "assignment_group_id": 19,
+      "case_id": 10,
+      "channel": "phone",
+      "contact_id": 123,
+      "installed_product_id": 3,
+      "priority": "critical",
+      "product_id": 128,
+      "state": "resolved"
+    }
+  ],
+  "db_id": "db_1784218648158_2ohxhm1ii",
+  "entitlement": [
+    {
+      "account_id": 1,
+      "active": 1,
+      "contract_id": 1,
+      "entitlement_id": 1,
+      "product_id": null,
+      "support_level": "standard"
+    },
+    {
+      "account_id": 1,
+      "active": 1,
+      "contract_id": 1,
+      "entitlement_id": 2,
+      "product_id": 130,
+      "support_level": "premium"
+    },
+    {
+      "account_id": 1,
+      "active": 1,
+      "contract_id": 1,
+      "entitlement_id": 3,
+      "product_id": 55,
+      "support_level": "enterprise"
+    },
+    {
+      "account_id": 1,
+      "active": 1,
+      "contract_id": 1,
+      "entitlement_id": 4,
+      "product_id": 221,
+      "support_level": "standard"
+    },
+    {
+      "account_id": 1,
+      "active": 1,
+      "contract_id": 2,
+      "entitlement_id": 5,
+      "product_id": null,
+      "support_level": "premium"
+    },
+    {
+      "account_id": 1,
+      "active": 1,
+      "contract_id": 2,
+      "entitlement_id": 6,
+      "product_id": 221,
+      "support_level": "enterprise"
+    },
+    {
+      "account_id": 1,
+      "active": 1,
+      "contract_id": 2,
+      "entitlement_id": 7,
+      "product_id": 237,
+      "support_level": "standard"
+    },
+    {
+      "account_id": 1,
+      "active": 0,
+      "contract_id": 131,
+      "entitlement_id": 8,
+      "product_id": null,
+      "support_level": "premium"
+    },
+    {
+      "account_id": 1,
+      "active": 0,
+      "contract_id": 131,
+      "entitlement_id": 9,
+      "product_id": 221,
+      "support_level": "enterprise"
+    },
+    {
+      "account_id": 2,
+      "active": 1,
+      "contract_id": 3,
+      "entitlement_id": 10,
+      "product_id": null,
+      "support_level": "standard"
+    }
+  ],
+  "installed_product": [
+    {
+      "account_id": 1,
+      "installed_product_id": 1,
+      "location_id": 803,
+      "product_id": 55,
+      "serial_number": "P55-940931-6065",
+      "status": "repair"
+    },
+    {
+      "account_id": 1,
+      "installed_product_id": 2,
+      "location_id": 804,
+      "product_id": 130,
+      "serial_number": "P130-588531-9296",
+      "status": "in_use"
+    },
+    {
+      "account_id": 1,
+      "installed_product_id": 3,
+      "location_id": 804,
+      "product_id": 128,
+      "serial_number": "P128-889629-8734",
+      "status": "in_use"
+    },
+    {
+      "account_id": 1,
+      "installed_product_id": 4,
+      "location_id": 804,
+      "product_id": 237,
+      "serial_number": "P237-136518-2272",
+      "status": "in_stock"
+    },
+    {
+      "account_id": 1,
+      "installed_product_id": 5,
+      "location_id": 804,
+      "product_id": 221,
+      "serial_number": "P221-749826-2677",
+      "status": "in_use"
+    },
+    {
+      "account_id": 2,
+      "installed_product_id": 6,
+      "location_id": 806,
+      "product_id": 67,
+      "serial_number": "P67-614716-7334",
+      "status": "repair"
+    },
+    {
+      "account_id": 2,
+      "installed_product_id": 7,
+      "location_id": null,
+      "product_id": 94,
+      "serial_number": "P94-764352-1024",
+      "status": "in_stock"
+    },
+    {
+      "account_id": 2,
+      "installed_product_id": 8,
+      "location_id": 806,
+      "product_id": 128,
+      "serial_number": "P128-546390-6915",
+      "status": "in_use"
+    },
+    {
+      "account_id": 2,
+      "installed_product_id": 9,
+      "location_id": null,
+      "product_id": 151,
+      "serial_number": "P151-676682-2881",
+      "status": "in_use"
+    },
+    {
+      "account_id": 2,
+      "installed_product_id": 10,
+      "location_id": 805,
+      "product_id": 133,
+      "serial_number": "P133-214184-8177",
+      "status": "in_stock"
+    }
+  ],
+  "knowledge": [
+    {
+      "knowledge_id": 1,
+      "owner_id": 370,
+      "product_id": 1,
+      "state": "published",
+      "title": "Issue Resolution related to Windows Server 2022 Datacenter, step-by-step guide",
+      "visibility": "external"
+    },
+    {
+      "knowledge_id": 2,
+      "owner_id": 362,
+      "product_id": 1,
+      "state": "draft",
+      "title": "Issue Resolution related to Windows Server 2022 Datacenter, step-by-step guide",
+      "visibility": "external"
+    },
+    {
+      "knowledge_id": 3,
+      "owner_id": 591,
+      "product_id": 2,
+      "state": "published",
+      "title": "Issue Resolution related to Windows Server 2019 Standard, step-by-step guide",
+      "visibility": "external"
+    },
+    {
+      "knowledge_id": 4,
+      "owner_id": 72,
+      "product_id": 2,
+      "state": "published",
+      "title": "Issue Resolution related to Windows Server 2019 Standard, step-by-step guide",
+      "visibility": "internal"
+    },
+    {
+      "knowledge_id": 5,
+      "owner_id": 370,
+      "product_id": 3,
+      "state": "published",
+      "title": "Issue Resolution related to Red Hat Enterprise Linux 9, step-by-step guide",
+      "visibility": "external"
+    },
+    {
+      "knowledge_id": 6,
+      "owner_id": 177,
+      "product_id": 4,
+      "state": "published",
+      "title": "Issue Resolution related to Ubuntu Server 22.04 LTS, step-by-step guide",
+      "visibility": "internal"
+    },
+    {
+      "knowledge_id": 7,
+      "owner_id": 685,
+      "product_id": 5,
+      "state": "published",
+      "title": "Issue Resolution related to SUSE Linux Enterprise Server 15, step-by-step guide",
+      "visibility": "external"
+    },
+    {
+      "knowledge_id": 8,
+      "owner_id": 217,
+      "product_id": 5,
+      "state": "published",
+      "title": "Issue Resolution related to SUSE Linux Enterprise Server 15, step-by-step guide",
+      "visibility": "external"
+    },
+    {
+      "knowledge_id": 9,
+      "owner_id": 170,
+      "product_id": 6,
+      "state": "published",
+      "title": "Issue Resolution related to Oracle Database 19c, step-by-step guide",
+      "visibility": "internal"
+    },
+    {
+      "knowledge_id": 10,
+      "owner_id": 425,
+      "product_id": 7,
+      "state": "published",
+      "title": "Issue Resolution related to Microsoft SQL Server 2019, step-by-step guide",
+      "visibility": "internal"
+    }
+  ],
+  "notification": [
+    {
+      "case_id": 1232,
+      "email": "nicholas.ferguson49@massivedynamic.com",
+      "notification_id": 733,
+      "status": "success",
+      "type": "update"
+    },
+    {
+      "case_id": 1231,
+      "email": "nicholas.ferguson49@massivedynamic.com",
+      "notification_id": 732,
+      "status": "success",
+      "type": "report"
+    },
+    {
+      "case_id": 1230,
+      "email": "dennis.webb@massivedynamic.com",
+      "notification_id": 731,
+      "status": "success",
+      "type": "update"
+    },
+    {
+      "case_id": 1228,
+      "email": "nicholas.ferguson49@massivedynamic.com",
+      "notification_id": 730,
+      "status": "success",
+      "type": "next_steps"
+    },
+    {
+      "case_id": 1227,
+      "email": "dennis.webb@massivedynamic.com",
+      "notification_id": 729,
+      "status": "success",
+      "type": "other"
+    },
+    {
+      "case_id": 1224,
+      "email": "kara.harris@kleinblackandwood.com",
+      "notification_id": 728,
+      "status": "success",
+      "type": "next_steps"
+    },
+    {
+      "case_id": 1223,
+      "email": "kara.harris@kleinblackandwood.com",
+      "notification_id": 727,
+      "status": "success",
+      "type": "report"
+    },
+    {
+      "case_id": 1222,
+      "email": "alexis.torres15@kleinblackandwood.com",
+      "notification_id": 726,
+      "status": "success",
+      "type": "solution_proposal"
+    },
+    {
+      "case_id": 1218,
+      "email": "amanda.beasley@kleinblackandwood.com",
+      "notification_id": 725,
+      "status": "success",
+      "type": "solution_proposal"
+    },
+    {
+      "case_id": 1217,
+      "email": "kara.harris@kleinblackandwood.com",
+      "notification_id": 724,
+      "status": "success",
+      "type": "alert"
+    }
+  ],
+  "product": [
+    {
+      "category": "software",
+      "lifecycle_state": "active",
+      "name": "Windows Server 2022 Datacenter",
+      "product_id": 1,
+      "product_price": 698
+    },
+    {
+      "category": "software",
+      "lifecycle_state": "active",
+      "name": "Windows Server 2019 Standard",
+      "product_id": 2,
+      "product_price": 2981
+    },
+    {
+      "category": "software",
+      "lifecycle_state": "active",
+      "name": "Red Hat Enterprise Linux 9",
+      "product_id": 3,
+      "product_price": 2851
+    },
+    {
+      "category": "software",
+      "lifecycle_state": "active",
+      "name": "Ubuntu Server 22.04 LTS",
+      "product_id": 4,
+      "product_price": 14827
+    },
+    {
+      "category": "software",
+      "lifecycle_state": "active",
+      "name": "SUSE Linux Enterprise Server 15",
+      "product_id": 5,
+      "product_price": 5267
+    },
+    {
+      "category": "software",
+      "lifecycle_state": "active",
+      "name": "Oracle Database 19c",
+      "product_id": 6,
+      "product_price": 14575
+    },
+    {
+      "category": "software",
+      "lifecycle_state": "retired",
+      "name": "Microsoft SQL Server 2019",
+      "product_id": 7,
+      "product_price": 5930
+    },
+    {
+      "category": "software",
+      "lifecycle_state": "active",
+      "name": "MySQL Enterprise 8.0",
+      "product_id": 8,
+      "product_price": 3043
+    },
+    {
+      "category": "software",
+      "lifecycle_state": "active",
+      "name": "PostgreSQL 14",
+      "product_id": 9,
+      "product_price": 8580
+    },
+    {
+      "category": "software",
+      "lifecycle_state": "active",
+      "name": "Apache HTTP Server",
+      "product_id": 10,
+      "product_price": 11080
+    }
+  ],
+  "sla_definition": [
+    {
+      "name": "SLA Response - Critical",
+      "sla_def_id": 1
+    },
+    {
+      "name": "SLA Response - High",
+      "sla_def_id": 2
+    },
+    {
+      "name": "SLA Response - Moderate",
+      "sla_def_id": 3
+    },
+    {
+      "name": "SLA Response - Low",
+      "sla_def_id": 4
+    },
+    {
+      "name": "SLA Response - Global (Inactive)",
+      "sla_def_id": 5
+    },
+    {
+      "name": "SLA Resolution - Critical",
+      "sla_def_id": 6
+    },
+    {
+      "name": "SLA Resolution - High",
+      "sla_def_id": 7
+    },
+    {
+      "name": "SLA Resolution - Moderate",
+      "sla_def_id": 8
+    },
+    {
+      "name": "SLA Resolution - Low",
+      "sla_def_id": 9
+    },
+    {
+      "name": "SLA Resolution - Global (Inactive)",
+      "sla_def_id": 10
+    }
+  ],
+  "user": [
+    {
+      "email": "thomas.green@servicenow.com",
+      "first_name": "Thomas",
+      "last_name": "Green",
+      "role": "agent",
+      "user_id": 1
+    },
+    {
+      "email": "christina.oliver@carsonllc.com",
+      "first_name": "Christina",
+      "last_name": "Oliver",
+      "role": "customer",
+      "user_id": 2
+    },
+    {
+      "email": "tabitha.bullock@servicenow.com",
+      "first_name": "Tabitha",
+      "last_name": "Bullock",
+      "role": "agent",
+      "user_id": 3
+    },
+    {
+      "email": "joanne.simpson@servicenow.com",
+      "first_name": "Joanne",
+      "last_name": "Simpson",
+      "role": "manager",
+      "user_id": 4
+    },
+    {
+      "email": "mckenzie.mendez@servicenow.com",
+      "first_name": "Mckenzie",
+      "last_name": "Mendez",
+      "role": "agent",
+      "user_id": 5
+    },
+    {
+      "email": "stephanie.todd@servicenow.com",
+      "first_name": "Stephanie",
+      "last_name": "Todd",
+      "role": "agent",
+      "user_id": 6
+    },
+    {
+      "email": "denise.hawkins83@larsonplc.com",
+      "first_name": "Denise",
+      "last_name": "Hawkins",
+      "role": "customer",
+      "user_id": 7
+    },
+    {
+      "email": "james.hill89@wayneenterprises.com",
+      "first_name": "James",
+      "last_name": "Hill",
+      "role": "customer",
+      "user_id": 8
+    },
+    {
+      "email": "steven.hernandez88@servicenow.com",
+      "first_name": "Steven",
+      "last_name": "Hernandez",
+      "role": "agent",
+      "user_id": 9
+    },
+    {
+      "email": "brandon.davis@vehementcap.com",
+      "first_name": "Brandon",
+      "last_name": "Davis",
+      "role": "customer",
+      "user_id": 10
+    },
+    {
+      "email": "travis.wood@servicenow.com",
+      "first_name": "Travis",
+      "last_name": "Wood",
+      "role": "agent",
+      "user_id": 11
+    },
+    {
+      "email": "samantha.stone47@servicenow.com",
+      "first_name": "Samantha",
+      "last_name": "Stone",
+      "role": "agent",
+      "user_id": 12
+    },
+    {
+      "email": "jonathan.martinez67@servicenow.com",
+      "first_name": "Jonathan",
+      "last_name": "Martinez",
+      "role": "agent",
+      "user_id": 13
+    },
+    {
+      "email": "kenneth.scott@starkpetersenandpalmer.com",
+      "first_name": "Kenneth",
+      "last_name": "Scott",
+      "role": "customer",
+      "user_id": 14
+    },
+    {
+      "email": "diana.johnson@servicenow.com",
+      "first_name": "Diana",
+      "last_name": "Johnson",
+      "role": "agent",
+      "user_id": 15
+    }
+  ],
+  "user_group": [
+    {
+      "group_id": 1,
+      "name": "CSM Tier 1 Support"
+    },
+    {
+      "group_id": 2,
+      "name": "CSM Tier 2 Support"
+    },
+    {
+      "group_id": 3,
+      "name": "Case Triage"
+    },
+    {
+      "group_id": 4,
+      "name": "Case Assignment"
+    },
+    {
+      "group_id": 5,
+      "name": "Entitlement Verification"
+    },
+    {
+      "group_id": 6,
+      "name": "Contract & Warranty Desk"
+    },
+    {
+      "group_id": 7,
+      "name": "Account Management"
+    },
+    {
+      "group_id": 8,
+      "name": "Contact Center L1"
+    },
+    {
+      "group_id": 9,
+      "name": "Contact Center L2"
+    },
+    {
+      "group_id": 10,
+      "name": "Installed Base Support"
+    }
+  ]
+}

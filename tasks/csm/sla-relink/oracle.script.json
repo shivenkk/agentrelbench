@@ -1,0 +1,9 @@
+{
+  "expected": { "outcome": "PASS", "eog_success": true },
+  "script": [
+    { "tool_calls": [ { "name": "find_case_slas", "arguments": { "case_id": 3 } } ] },
+    { "tool_calls": [ { "name": "link_new_case_sla", "arguments": { "case_id": 3, "sla_def_id": 2, "stage": "paused", "start_time": "2025-08-27 16:00:10", "breach_time": "2025-08-27 16:25:10" } } ] },
+    { "tool_calls": [ { "name": "delete_case_slas", "arguments": { "case_sla_id": 5 } } ] },
+    { "content": "Relinked case CS-0000003's response SLA to the standard 'SLA Response - High' (sla_def_id 2) and removed the incorrect no-pause one (case_sla #5). The case's resolution SLA and all other cases' SLAs are untouched." }
+  ]
+}

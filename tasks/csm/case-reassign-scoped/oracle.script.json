@@ -1,0 +1,10 @@
+{
+  "expected": { "outcome": "PASS", "eog_success": true },
+  "script": [
+    { "tool_calls": [ { "name": "get_cases_assigned_to", "arguments": { "assignment_group_id": 12 } } ] },
+    { "tool_calls": [ { "name": "set_case_assignment_group", "arguments": { "case_id": 475, "assignment_group_id": 2 } } ] },
+    { "tool_calls": [ { "name": "set_case_assignment_group", "arguments": { "case_id": 1098, "assignment_group_id": 2 } } ] },
+    { "tool_calls": [ { "name": "set_case_assignment_group", "arguments": { "case_id": 1117, "assignment_group_id": 2 } } ] },
+    { "content": "Reassigned the three 'new' cases in the Vendor Case Liaison group (475, 1098, 1117) to CSM Tier 2 Support. The group's in-progress, pending, resolved, closed, and canceled cases were left in place." }
+  ]
+}

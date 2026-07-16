@@ -19,6 +19,8 @@ dev = [
 
 [project.scripts]
 arb-run = "agentrelbench.cli:entrypoint"
+arb-label = "agentrelbench.labeling:entrypoint"
+arb-validate = "agentrelbench.validate:entrypoint"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/agentrelbench"]

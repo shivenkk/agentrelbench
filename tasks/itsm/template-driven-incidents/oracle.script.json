@@ -1,0 +1,9 @@
+{
+  "expected": { "outcome": "PASS", "eog_success": true },
+  "script": [
+    { "tool_calls": [ { "name": "get_incident_template_by_name", "arguments": { "name": "Network Connectivity Issue" } } ] },
+    { "tool_calls": [ { "name": "update_incident", "arguments": { "incident_id": "INC_003", "incident_template": "TMPL_002" } } ] },
+    { "tool_calls": [ { "name": "update_incident", "arguments": { "incident_id": "INC_016", "incident_template": "TMPL_002" } } ] },
+    { "content": "Attached the Network Connectivity Issue template (TMPL_002) to INC0000003 and INC0000011 only. No other incidents were modified." }
+  ]
+}
