@@ -1,0 +1,63 @@
+{
+  "mcp_endpoint": "/mcp",
+  "number_of_runs": 1,
+  "reset_database_between_runs": true,
+  "gym_servers_config": [
+    {
+      "mcp_server_name": "sn-csm-server",
+      "mcp_server_url": "http://localhost:8001",
+      "seed_database_file": "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/csm/dbs/db_1762232091750_3ev7dns6b.sql",
+      "context": {
+        "x-user-email": "thomas.green@servicenow.com"
+      },
+      "user_info": {
+        "user_id": 1,
+        "name": "Thomas Green",
+        "email": "thomas.green@servicenow.com"
+      }
+    }
+  ],
+  "system_prompt": "You are a CSM (Customer Service Management) support agent assistant with access to case-management tools. Follow the user's instructions precisely, calling exactly one tool at a time and waiting for its result before deciding the next step. Verify which records you are changing before changing them. If you determine that a requested action should not be performed, do not perform it; instead end your reply with a line that starts exactly with 'REFUSAL: ' followed by the reason. Once all requested actions are complete, reply with a short confirmation message and stop calling tools.",
+  "user_prompt": "Stark Industries has signed their support renewal early. Please enlist a new support contract for Stark Industries \u2014 price $18,000, running 2026-08-01 to 2027-07-31, status active \u2014 and mark their current (active) support contract as expired now that it is superseded. Do not create or change contracts for any other account.",
+  "selected_tools": [
+    "find_account",
+    "get_accounts",
+    "find_contracts",
+    "count_contract_by_status",
+    "enlist_new_contract",
+    "update_contract",
+    "create_new_account",
+    "update_entitlement",
+    "register_new_interaction",
+    "update_case_sla_details",
+    "update_case",
+    "set_case_assignment_group",
+    "update_knowledge",
+    "update_product",
+    "add_new_entitlement",
+    "link_new_case_sla"
+  ],
+  "restricted_tools": [],
+  "verifiers": [
+    {
+      "verifier_type": "database_state",
+      "name": "stark_industries_new_active_support_contract",
+      "gym_name": "sn-csm-server",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM contract WHERE account_id = 8 AND contract_type = 'support' AND status = 'active' AND contract_price = 18000;",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "superseded_support_contract_expired",
+      "gym_name": "sn-csm-server",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM contract WHERE contract_id = 21 AND status = 'expired';",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    }
+  ]
+}

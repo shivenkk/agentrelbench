@@ -245,6 +245,17 @@ def validate_and_collect_runs(batch_dir: Path, tasks: Dict[str, List[Path]]) -> 
     return collected
 
 
+def assert_run_counts(tasks: Dict[str, List[Path]], expected_k: int) -> None:
+    """Silent-discard audit item #2: a task whose run-dir count != k means runs
+    vanished upstream (e.g. a swallowed execute_sample exception) -- fail loudly
+    rather than letting a short task shrink its n silently."""
+    bad = {task_id: len(run_dirs) for task_id, run_dirs in tasks.items() if len(run_dirs) != expected_k}
+    if bad:
+        raise InvalidMissingDumpError(
+            f"run-count violation (expected k={expected_k}): {bad} -- runs vanished upstream"
+        )
+
+
 def build_manifest(
     *,
     batch_dir: Path,
@@ -265,6 +276,7 @@ def build_manifest(
     raises before touching the previously-written manifest.json.
     """
     tasks = discover_batch(batch_dir)
+    assert_run_counts(tasks, expected_k=k)
     collected = validate_and_collect_runs(batch_dir, tasks)
 
     llm_config = json.loads(Path(llm_config_path).read_text())

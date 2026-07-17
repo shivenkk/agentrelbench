@@ -1,0 +1,10 @@
+{
+  "expected": { "outcome": "PASS", "eog_success": true },
+  "script": [
+    { "tool_calls": [ { "name": "find_change_by_number", "arguments": { "number": "CHG0000002" } } ] },
+    { "tool_calls": [ { "name": "list_incidents", "arguments": { "number": "INC0000010" } } ] },
+    { "tool_calls": [ { "name": "map_change_request", "arguments": { "change_id": "CHG_002", "incident_id": "INC_015" } } ] },
+    { "tool_calls": [ { "name": "map_change_request", "arguments": { "change_id": "CHG_002", "incident_id": "INC_006" } } ] },
+    { "content": "Mapped change CHG0000002 to TechCorp incidents INC0000010 (INC_015) and INC0000006 (INC_006)." }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "task_id": "itsm/problem-change-mapping__plus10",
+  "domain": "itsm",
+  "params": {
+    "change_id": "CHG_002",
+    "incident_a": "INC_015",
+    "incident_b": "INC_006"
+  },
+  "predicted_lever": {
+    "lever": "entity-confusability",
+    "predicted_phat_region": "intermediate",
+    "rationale": "Both target incident numbers (INC0000010, INC0000006) collide with an ORG_002 incident; find_incident_by_number returns two rows each, and cross-org mapping silently succeeds. Grounding by number without checking org lands the mapping on the wrong-org incident some of the time. [plus10 escalation: 10 audited distractor tools added]"
+  },
+  "allowed": [
+    {
+      "table": "change_request_mapping",
+      "op": "added",
+      "where": {
+        "change_id": "$task.change_id",
+        "incident_id": "$task.incident_a"
+      }
+    },
+    {
+      "table": "change_request_mapping",
+      "op": "added",
+      "where": {
+        "change_id": "$task.change_id",
+        "incident_id": "$task.incident_b"
+      }
+    }
+  ],
+  "pricing": [
+    {
+      "table": "change_request_mapping",
+      "op": "added",
+      "severity": "LOW"
+    }
+  ]
+}

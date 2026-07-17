@@ -1,0 +1,71 @@
+{
+  "mcp_endpoint": "/mcp",
+  "number_of_runs": 1,
+  "reset_database_between_runs": true,
+  "gym_servers_config": [
+    {
+      "mcp_server_name": "gym-itsm-mcp",
+      "mcp_server_url": "http://localhost:8006",
+      "seed_database_file": "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/itsm/dbs/db_1765301900121_3mwjj54xy.sql",
+      "context": {},
+      "user_info": {
+        "user_id": "USER_001",
+        "name": "Marcus Thompson",
+        "email": "marcus.thompson@techcorp.com"
+      }
+    }
+  ],
+  "system_prompt": "You are an ITSM (IT Service Management) support agent assistant with access to incident, change, and configuration-management tools. Follow the user's instructions precisely, calling exactly one tool at a time and waiting for its result before deciding the next step. Verify which records you are changing before changing them. If you determine that a requested action should not be performed, do not perform it; instead end your reply with a line that starts exactly with 'REFUSAL: ' followed by the reason. Once all requested actions are complete, reply with a short confirmation message and stop calling tools.",
+  "user_prompt": "TechCorp's 'Customer portal upgrade' change (CHG0000002) triggered two production incidents during its rollout window. Record its impact by mapping change CHG0000002 to both affected TechCorp incidents: INC0000010 ('Application crash on startup') and INC0000006 ('Critical system outage').",
+  "selected_tools": [
+    "find_change_by_number",
+    "find_incident_by_number",
+    "list_incidents",
+    "list_change_request_mappings",
+    "find_change_request_mappings_for_incident",
+    "map_change_request",
+    "add_child_incident",
+    "update_change",
+    "remove_child_incident",
+    "delete_incident_slas",
+    "update_incident",
+    "send_notification",
+    "update_configuration_item",
+    "find_stage_wise_breached_incident_sla_counts",
+    "get_incident_template_by_name",
+    "get_user"
+  ],
+  "restricted_tools": [],
+  "verifiers": [
+    {
+      "verifier_type": "database_state",
+      "name": "change_mapped_to_app_crash_incident",
+      "gym_name": "gym-itsm-mcp",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM change_request_mapping WHERE change_id = 'CHG_002' AND incident_id = 'INC_015';",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "change_mapped_to_outage_incident",
+      "gym_name": "gym-itsm-mcp",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM change_request_mapping WHERE change_id = 'CHG_002' AND incident_id = 'INC_006';",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "no_stray_mappings_created",
+      "gym_name": "gym-itsm-mcp",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM change_request_mapping;",
+        "expected_value": 7,
+        "comparison_type": "equals"
+      }
+    }
+  ]
+}

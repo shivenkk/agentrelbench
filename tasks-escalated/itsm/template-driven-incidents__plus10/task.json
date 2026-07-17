@@ -1,0 +1,70 @@
+{
+  "mcp_endpoint": "/mcp",
+  "number_of_runs": 1,
+  "reset_database_between_runs": true,
+  "gym_servers_config": [
+    {
+      "mcp_server_name": "gym-itsm-mcp",
+      "mcp_server_url": "http://localhost:8006",
+      "seed_database_file": "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/itsm/dbs/db_1765301900121_3mwjj54xy.sql",
+      "context": {},
+      "user_info": {
+        "user_id": "USER_001",
+        "name": "Marcus Thompson",
+        "email": "marcus.thompson@techcorp.com"
+      }
+    }
+  ],
+  "system_prompt": "You are an ITSM (IT Service Management) support agent assistant with access to incident, change, and configuration-management tools. Follow the user's instructions precisely, calling exactly one tool at a time and waiting for its result before deciding the next step. Verify which records you are changing before changing them. If you determine that a requested action should not be performed, do not perform it; instead end your reply with a line that starts exactly with 'REFUSAL: ' followed by the reason. Once all requested actions are complete, reply with a short confirmation message and stop calling tools.",
+  "user_prompt": "As part of standardizing TechCorp's network-incident intake, the 'Network Connectivity Issue' template (TMPL_002) should be attached to network incidents that are currently missing it. Attach TMPL_002 to exactly the two incidents flagged by the audit - INC0000003 ('Printer connectivity issue') and INC0000011 ('WiFi connection drops frequently') - and do not modify any other incidents.",
+  "selected_tools": [
+    "get_incident_templates",
+    "get_incident_template_by_name",
+    "find_incident_by_number",
+    "list_incidents",
+    "update_incident",
+    "add_child_incident",
+    "remove_child_incident",
+    "delete_incident_slas",
+    "update_configuration_item",
+    "update_change",
+    "map_change_request",
+    "send_notification",
+    "find_configuration_item_by_serial_number",
+    "list_child_incidents",
+    "find_incident_by_id"
+  ],
+  "restricted_tools": [],
+  "verifiers": [
+    {
+      "verifier_type": "database_state",
+      "name": "printer_incident_templated",
+      "gym_name": "gym-itsm-mcp",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM incident WHERE incident_id = 'INC_003' AND incident_template = 'TMPL_002';",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "wifi_incident_templated",
+      "gym_name": "gym-itsm-mcp",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM incident WHERE incident_id = 'INC_016' AND incident_template = 'TMPL_002';",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "template_not_over_applied",
+      "gym_name": "gym-itsm-mcp",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM incident WHERE incident_template = 'TMPL_002';",
+        "expected_value": 4,
+        "comparison_type": "equals"
+      }
+    }
+  ]
+}

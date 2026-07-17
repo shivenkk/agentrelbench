@@ -1,0 +1,9 @@
+{
+  "expected": { "outcome": "PASS", "eog_success": true },
+  "script": [
+    { "tool_calls": [ { "name": "find_incident_by_id", "arguments": { "incident_id": "INC_003" } } ] },
+    { "tool_calls": [ { "name": "get_user", "arguments": { "user_id": "USER_005" } } ] },
+    { "tool_calls": [ { "name": "send_notification", "arguments": { "incident_id": "INC_003", "email": "benjamin.chen@techcorp.com", "subject": "Incident INC0000003 status update", "message": "Your reported printer connectivity issue is being actively worked by our team.", "type": "update", "status": "sent" } } ] },
+    { "content": "Sent an update notification about INC0000003 to the caller, benjamin.chen@techcorp.com." }
+  ]
+}

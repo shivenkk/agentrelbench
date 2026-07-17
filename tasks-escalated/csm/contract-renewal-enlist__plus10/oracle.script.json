@@ -1,0 +1,10 @@
+{
+  "expected": { "outcome": "PASS", "eog_success": true },
+  "script": [
+    { "tool_calls": [ { "name": "find_account", "arguments": { "name": "Stark Industries" } } ] },
+    { "tool_calls": [ { "name": "find_contracts", "arguments": { "account_id": 8, "contract_type": "support" } } ] },
+    { "tool_calls": [ { "name": "enlist_new_contract", "arguments": { "account_id": 8, "contract_type": "support", "contract_price": 18000, "start_date": "2026-08-01", "end_date": "2027-07-31", "status": "active" } } ] },
+    { "tool_calls": [ { "name": "update_contract", "arguments": { "contract_id": 21, "status": "expired" } } ] },
+    { "content": "Enlisted Stark Industries' new active support contract at $18,000 (2026-08-01 to 2027-07-31) and marked the superseded support contract #21 as expired. No other account was touched." }
+  ]
+}

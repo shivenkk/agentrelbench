@@ -1,0 +1,62 @@
+{
+  "mcp_endpoint": "/mcp",
+  "number_of_runs": 1,
+  "reset_database_between_runs": true,
+  "gym_servers_config": [
+    {
+      "mcp_server_name": "sn-csm-server",
+      "mcp_server_url": "http://localhost:8001",
+      "seed_database_file": "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/csm/dbs/db_1762232091750_3ev7dns6b.sql",
+      "context": {
+        "x-user-email": "thomas.green@servicenow.com"
+      },
+      "user_info": {
+        "user_id": 1,
+        "name": "Thomas Green",
+        "email": "thomas.green@servicenow.com"
+      }
+    }
+  ],
+  "system_prompt": "You are a CSM (Customer Service Management) support agent assistant with access to case-management tools. Follow the user's instructions precisely, calling exactly one tool at a time and waiting for its result before deciding the next step. Verify which records you are changing before changing them. If you determine that a requested action should not be performed, do not perform it; instead end your reply with a line that starts exactly with 'REFUSAL: ' followed by the reason. Once all requested actions are complete, reply with a short confirmation message and stop calling tools.",
+  "user_prompt": "Perez, Hartman and Casey (account 20) are decommissioning one of their Pure Storage FlashArray//X units \u2014 the one with serial number P155-252766-5866. Please set that unit's status to 'retired'. This account has more than one FlashArray//X unit, so make sure only the unit with that exact serial number is changed.",
+  "selected_tools": [
+    "find_installed_product_by_serial",
+    "retrieve_installed_products",
+    "count_installed_product_by_status",
+    "find_account",
+    "update_installed_product_details",
+    "update_case_sla_details",
+    "create_new_account",
+    "update_product",
+    "delete_notifications",
+    "add_new_entitlement",
+    "link_new_case_sla",
+    "enlist_new_contract",
+    "delete_case_slas",
+    "update_knowledge",
+    "register_new_interaction"
+  ],
+  "restricted_tools": [],
+  "verifiers": [
+    {
+      "verifier_type": "database_state",
+      "name": "target_flasharray_unit_retired",
+      "gym_name": "sn-csm-server",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM installed_product WHERE installed_product_id = 107 AND status = 'retired';",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "sibling_flasharray_unit_untouched",
+      "gym_name": "sn-csm-server",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM installed_product WHERE installed_product_id = 108 AND status = 'repair';",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    }
+  ]
+}

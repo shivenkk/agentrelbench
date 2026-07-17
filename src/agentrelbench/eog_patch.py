@@ -142,6 +142,23 @@ def apply_patch() -> None:
             "same object as benchmark.mcp_client.delete_database."
         )
 
+    # Silent-discard audit item #4 (docs/silent-discard-audit.md, 2026-07-17):
+    # MCPClient.list_tools swallows discovery failures to [] -- the agent then
+    # runs tool-less and the run records as a clean stall. Empty discovery is
+    # an infrastructure failure, never data: fail loudly instead.
+    orig_list_tools = mcp_client_mod.MCPClient.list_tools
+
+    async def guarded_list_tools(self, *args, **kwargs):
+        tools = await orig_list_tools(self, *args, **kwargs)
+        if not tools:
+            raise EOGPatchError(
+                "MCP tool discovery returned an empty tool list -- server/session "
+                "failure; refusing to run the agent tool-less (audit item #4)."
+            )
+        return tools
+
+    mcp_client_mod.MCPClient.list_tools = guarded_list_tools
+
     def wrapped_create_database_from_file(gym_url: str, sql_file_path: str) -> Optional[str]:
         db_id = orig_create(gym_url, sql_file_path)
         if db_id:

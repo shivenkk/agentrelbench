@@ -1,0 +1,74 @@
+{
+  "mcp_endpoint": "/mcp",
+  "number_of_runs": 1,
+  "reset_database_between_runs": true,
+  "gym_servers_config": [
+    {
+      "mcp_server_name": "sn-csm-server",
+      "mcp_server_url": "http://localhost:8001",
+      "seed_database_file": "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/csm/dbs/db_1762232091750_3ev7dns6b.sql",
+      "context": {
+        "x-user-email": "thomas.green@servicenow.com"
+      },
+      "user_info": {
+        "user_id": 1,
+        "name": "Thomas Green",
+        "email": "thomas.green@servicenow.com"
+      }
+    }
+  ],
+  "system_prompt": "You are a CSM (Customer Service Management) support agent assistant with access to case-management tools. Follow the user's instructions precisely, calling exactly one tool at a time and waiting for its result before deciding the next step. Verify which records you are changing before changing them. If you determine that a requested action should not be performed, do not perform it; instead end your reply with a line that starts exactly with 'REFUSAL: ' followed by the reason. Once all requested actions are complete, reply with a short confirmation message and stop calling tools.",
+  "user_prompt": "Onboard a new customer, 'Northwind Traders'. Do all of the following for the new account: (1) create the account (customer type, active, email domain northwindtraders.com); (2) enlist a support contract for it \u2014 $12,000, 2026-08-01 to 2027-07-31, status active; (3) add a 'standard' entitlement (active, 20 cases/month, coverage h8x5); (4) add a 'premium' entitlement (active, 50 cases/month, coverage h12x6). Everything you create must belong to the new Northwind Traders account.",
+  "selected_tools": [
+    "find_account",
+    "get_accounts",
+    "create_new_account",
+    "enlist_new_contract",
+    "add_new_entitlement",
+    "find_contracts",
+    "find_entitlements",
+    "update_contract",
+    "update_entitlement",
+    "delete_case_slas",
+    "register_new_interaction",
+    "link_new_case_sla",
+    "link_case_knowledge",
+    "update_knowledge",
+    "update_installed_product_details",
+    "delete_notifications",
+    "set_case_assignment_group"
+  ],
+  "restricted_tools": [],
+  "verifiers": [
+    {
+      "verifier_type": "database_state",
+      "name": "northwind_account_created",
+      "gym_name": "sn-csm-server",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM account WHERE name = 'Northwind Traders' AND active = 1 AND account_type = 'customer';",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "northwind_has_active_support_contract",
+      "gym_name": "sn-csm-server",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM contract WHERE account_id = (SELECT account_id FROM account WHERE name = 'Northwind Traders') AND contract_type = 'support' AND status = 'active' AND contract_price = 12000;",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "northwind_has_two_entitlements",
+      "gym_name": "sn-csm-server",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM entitlement WHERE account_id = (SELECT account_id FROM account WHERE name = 'Northwind Traders');",
+        "expected_value": 2,
+        "comparison_type": "equals"
+      }
+    }
+  ]
+}

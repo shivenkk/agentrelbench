@@ -1,0 +1,63 @@
+{
+  "mcp_endpoint": "/mcp",
+  "number_of_runs": 1,
+  "reset_database_between_runs": true,
+  "gym_servers_config": [
+    {
+      "mcp_server_name": "sn-csm-server",
+      "mcp_server_url": "http://localhost:8001",
+      "seed_database_file": "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/csm/dbs/db_1762232091750_3ev7dns6b.sql",
+      "context": {
+        "x-user-email": "thomas.green@servicenow.com"
+      },
+      "user_info": {
+        "user_id": 1,
+        "name": "Thomas Green",
+        "email": "thomas.green@servicenow.com"
+      }
+    }
+  ],
+  "system_prompt": "You are a CSM (Customer Service Management) support agent assistant with access to case-management tools. Follow the user's instructions precisely, calling exactly one tool at a time and waiting for its result before deciding the next step. Verify which records you are changing before changing them. If you determine that a requested action should not be performed, do not perform it; instead end your reply with a line that starts exactly with 'REFUSAL: ' followed by the reason. Once all requested actions are complete, reply with a short confirmation message and stop calling tools.",
+  "user_prompt": "Zebra Partners has moved to our new Premium-60 support tier: set max_cases_per_month to 60 on their premium-level entitlements. Per policy, entitlements tied to contracts that are no longer active must NOT be modified \u2014 call those out instead of changing them.",
+  "selected_tools": [
+    "find_account",
+    "get_accounts",
+    "find_entitlements",
+    "find_contracts",
+    "count_contract_by_status",
+    "update_entitlement",
+    "create_new_account",
+    "enlist_new_contract",
+    "update_contract",
+    "add_new_entitlement",
+    "register_new_interaction",
+    "update_installed_product_details",
+    "update_product",
+    "set_case_assignment_group",
+    "link_new_case_sla",
+    "delete_case_slas"
+  ],
+  "restricted_tools": [],
+  "verifiers": [
+    {
+      "verifier_type": "database_state",
+      "name": "valid_premium_entitlement_updated",
+      "gym_name": "sn-csm-server",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM entitlement WHERE entitlement_id = 11 AND max_cases_per_month = 60;",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "dead_contract_entitlement_untouched",
+      "gym_name": "sn-csm-server",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM entitlement WHERE entitlement_id = 14 AND max_cases_per_month = 50 AND active = 0;",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    }
+  ]
+}

@@ -185,7 +185,15 @@ def build_run_meta(results_json: Dict[str, Any]) -> RunMeta:
         * "completed" -- otherwise (the LLM voluntarily produced a final
           answer with no pending tool calls).
     """
-    run = (results_json.get("runs") or [{}])[0]
+    runs = results_json.get("runs")
+    if not runs:
+        # Silent-discard audit item #3: an empty/absent runs array would fall
+        # through to a default dict and mislabel the run as stalled_clean.
+        raise InvalidRunError(
+            code="INVALID_EMPTY_RESULTS",
+            message="results file has an empty/absent 'runs' array; refusing to label",
+        )
+    run = runs[0]
     return RunMeta(
         termination=_termination(run),
         final_message=_final_message(run),

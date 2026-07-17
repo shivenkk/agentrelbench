@@ -48,7 +48,56 @@ def main(argv: list = None) -> int:
     # CWD-relative one (technical map §B).
     os.chdir(clone_root)
 
+    # Provider pinning (added 2026-07-17, post provider-decomposition): when
+    # ARB_PIN_PROVIDER is set, every OpenRouter request carries
+    # provider={"order": [pin], "allow_fallbacks": false}, making the serving
+    # stack a designed constant instead of per-request routing luck. EOG's
+    # llm_client does `from langchain_openai import ChatOpenAI` inside the
+    # constructor branch, which resolves the module attribute at call time --
+    # so rebinding langchain_openai.ChatOpenAI here reaches it.
+    pin = os.environ.get("ARB_PIN_PROVIDER")
+    if pin:
+        import langchain_openai
+
+        _OrigChatOpenAI = langchain_openai.ChatOpenAI
+
+        class _PinnedChatOpenAI(_OrigChatOpenAI):
+            def __init__(self, **kwargs):
+                mk = dict(kwargs.get("model_kwargs") or {})
+                eb = dict(mk.get("extra_body") or {})
+                eb["provider"] = {"order": [pin], "allow_fallbacks": False}
+                mk["extra_body"] = eb
+                kwargs["model_kwargs"] = mk
+                super().__init__(**kwargs)
+
+        langchain_openai.ChatOpenAI = _PinnedChatOpenAI
+        print(f"[agentrelbench] provider pinned: {pin} (allow_fallbacks=false)")
+
     import evaluate  # the clone's top-level evaluate.py, now import-patchable
+
+    # Force single-attempt semantics (added 2026-07-17 after two live failures).
+    # EOG's evaluate.execute_sample retries the WHOLE sample (max_num_attempts=5,
+    # fresh DB seed per attempt) whenever any run records an error. That is a
+    # leaderboard convenience, and for us it is wrong twice over: (1) hidden
+    # retries make a "run" a best-of-N sample, corrupting k-run iid semantics --
+    # a failed attempt is DATA (labeled errored_*, feeds p-hat_upper); (2) the
+    # extra per-attempt DB seeds break eog_patch's one-create-per-run
+    # correlation, which then fails loudly (INVALID_MISSING_DUMP) -- the two
+    # quarantined runs of 2026-07-16/17 were exactly this path firing.
+    # Bare-name call sites resolve through module globals, so rebinding works
+    # just like the create/delete patch.
+    import inspect
+    assert "max_num_attempts" in inspect.signature(evaluate.execute_sample).parameters, (
+        "EOG drifted: evaluate.execute_sample no longer takes max_num_attempts; "
+        "re-verify retry semantics before running"
+    )
+    _orig_execute_sample = evaluate.execute_sample
+
+    async def _single_attempt_execute_sample(*args, **kwargs):
+        kwargs["max_num_attempts"] = 1
+        return await _orig_execute_sample(*args, **kwargs)
+
+    evaluate.execute_sample = _single_attempt_execute_sample
 
     sys.argv = [
         "evaluate.py",

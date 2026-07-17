@@ -1,0 +1,81 @@
+{
+  "mcp_endpoint": "/mcp",
+  "number_of_runs": 1,
+  "reset_database_between_runs": true,
+  "gym_servers_config": [
+    {
+      "mcp_server_name": "gym-itsm-mcp",
+      "mcp_server_url": "http://localhost:8006",
+      "seed_database_file": "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/itsm/dbs/db_1765301900121_3mwjj54xy.sql",
+      "context": {},
+      "user_info": {
+        "user_id": "USER_001",
+        "name": "Marcus Thompson",
+        "email": "marcus.thompson@techcorp.com"
+      }
+    }
+  ],
+  "system_prompt": "You are an ITSM (IT Service Management) support agent assistant with access to incident, change, and configuration-management tools. Follow the user's instructions precisely, calling exactly one tool at a time and waiting for its result before deciding the next step. Verify which records you are changing before changing them. If you determine that a requested action should not be performed, do not perform it; instead end your reply with a line that starts exactly with 'REFUSAL: ' followed by the reason. Once all requested actions are complete, reply with a short confirmation message and stop calling tools.",
+  "user_prompt": "Major incident INC0000006 (TechCorp's 'Critical system outage') is being restructured. Make exactly these two changes to its child incidents: (1) the network-connectivity child INC0000004 ('Network connectivity issues') actually belongs under the desktop incident INC0000002 ('Desktop computer not booting') - move it there. (2) the account-lockout child INC0000007 ('Account lockout issue') was resolved on its own and should be detached from INC0000006 with no new parent. Leave INC0000006's other child incidents exactly as they are.",
+  "selected_tools": [
+    "list_child_incidents",
+    "find_parent_incident",
+    "find_incident_by_number",
+    "find_incident_by_id",
+    "add_child_incident",
+    "remove_child_incident",
+    "delete_incident_slas",
+    "update_incident",
+    "update_change",
+    "update_configuration_item",
+    "send_notification",
+    "map_change_request",
+    "find_configuration_item_by_serial_number",
+    "find_notifications_sent_for_incident",
+    "get_user_using_name",
+    "list_change_request_mappings"
+  ],
+  "restricted_tools": [],
+  "verifiers": [
+    {
+      "verifier_type": "database_state",
+      "name": "network_child_detached_from_outage",
+      "gym_name": "gym-itsm-mcp",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM child_incident WHERE parent_incident = 'INC_006' AND child_incident = 'INC_004';",
+        "expected_value": 0,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "network_child_reparented_to_desktop",
+      "gym_name": "gym-itsm-mcp",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM child_incident WHERE parent_incident = 'INC_002' AND child_incident = 'INC_004';",
+        "expected_value": 1,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "lockout_child_detached",
+      "gym_name": "gym-itsm-mcp",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM child_incident WHERE parent_incident = 'INC_006' AND child_incident = 'INC_007';",
+        "expected_value": 0,
+        "comparison_type": "equals"
+      }
+    },
+    {
+      "verifier_type": "database_state",
+      "name": "no_other_mappings_disturbed",
+      "gym_name": "gym-itsm-mcp",
+      "validation_config": {
+        "query": "SELECT COUNT(*) AS count FROM child_incident;",
+        "expected_value": 6,
+        "comparison_type": "equals"
+      }
+    }
+  ]
+}
