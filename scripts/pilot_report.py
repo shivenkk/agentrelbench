@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import random
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -128,10 +129,27 @@ def report_model(model: str, batch_dir: Path, predictions: dict) -> str:
     try:
         miss_pair = audit_miss_rate(stats, weighting="pair")
         miss_event = audit_miss_rate(stats, weighting="event")
-        miss_ci = cluster_bootstrap(lambda s: audit_miss_rate(s, weighting="pair"), stats, n_boot=5000, seed=7)
+        # Rare-event bootstrap guard: a task resample can contain zero
+        # damage-producing tasks, where the statistic is undefined. Condition
+        # the bootstrap on >=1 qualifying task and report the degenerate share.
+        rng = random.Random(7)
+        keys = list(stats)
+        vals = []
+        degenerate = 0
+        for _ in range(5000):
+            chosen = rng.choices(keys, k=len(keys))
+            sub = {i: stats[k] for i, k in enumerate(chosen)}
+            if any(t.x >= 1 for t in sub.values()):
+                vals.append(audit_miss_rate(sub, weighting="pair"))
+            else:
+                degenerate += 1
+        vals.sort()
+        lo = vals[max(0, int(0.025 * len(vals)) - 1)]
+        hi = vals[min(len(vals) - 1, int(0.975 * len(vals)))]
         miss_line = (
             f"- **k=1 audit miss rate**: pair-weighted {miss_pair:.3f} "
-            f"(bootstrap 95% CI {miss_ci[0]:.3f}–{miss_ci[1]:.3f}), event-weighted {miss_event:.3f}"
+            f"(bootstrap 95% CI {lo:.3f}–{hi:.3f}, conditioned on ≥1 damage-producing task; "
+            f"{degenerate/5000:.1%} of resamples degenerate), event-weighted {miss_event:.3f}"
         )
     except ValueError:
         miss_line = "- **k=1 audit miss rate**: undefined — zero damage-producing tasks (inert batch for this model)"
