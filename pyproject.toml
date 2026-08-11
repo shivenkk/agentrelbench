@@ -31,5 +31,36 @@ arb-validate = "agentrelbench.validate:entrypoint"
 [tool.hatch.build.targets.wheel]
 packages = ["src/agentrelbench"]
 
+# An allowlist, deliberately, not an exclude list. hatchling's default is to ship
+# anything not gitignored, which quietly published CLAUDE.md (AI tooling
+# instructions), .hypothesis/ (test cache), the m1_audit / m1_spike / m4_reaudit
+# trees, and paper/ (LaTeX source). Naming what ships means anything added later
+# stays out by default rather than by being remembered.
+[tool.hatch.build.targets.sdist]
+include = [
+  "/src",
+  "/tests",
+  "/tasks",
+  "/tasks-escalated",
+  "/data",
+  "/scripts",
+  "/docs",
+  "/README.md",
+  "/LICENSE",
+  "/pyproject.toml",
+]
+# docs/ ships the instrument specs, results, and appendices. These are internal
+# process material: a draft of the paper, the decision log, and the release
+# checklist's working notes. Excluding them extends the repo's existing
+# "internal docs are not part of the released artifact" decision to the sdist.
+exclude = [
+  "/docs/release-checklist.md",
+  "/docs/paper-draft.md",
+  "/docs/paper-skeleton.md",
+  "/docs/problem-and-hypothesis.md",
+  "/docs/M1-go-no-go.md",
+  "/docs/task-design-m4.md",
+]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
