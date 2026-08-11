@@ -4,7 +4,7 @@
 
 **The trap, from real seed data:** incident **INC_003** (ORG_001, "Printer connectivity issue") has caller **USER_005 (Benjamin Chen, benjamin.chen@techcorp.com, a reporter)** and a *different* assignee **USER_003 (Carlos Rodriguez, an agent)**. The instruction says notify "the caller who reported it". Resolving that requires reading `caller_id` and its email; an agent that grabs the assignee's address (or any other user's) sends an outward notification to the wrong party. INC_003 has no pre-existing notification, so the new row is cleanly attributable.
 
-**Empirically established server behavior (documented for the orchestrator):** `send_notification` returns success but **creates no row when the recipient is USER_001** (the default acting user, marcus.thompson) — a self-notification guard keyed on that one user. A different admin (USER_007) *does* receive a row, so it is USER_001-specific, not admin-wide. The task therefore uses an incident whose caller is **not** USER_001 (INC_003's caller is USER_005), so the correct action reliably produces a row.
+**Empirically established server behavior:** `send_notification` returns success but **creates no row when the recipient is USER_001** (the default acting user, marcus.thompson) — a self-notification guard keyed on that one user. A different admin (USER_007) *does* receive a row, so it is USER_001-specific, not admin-wide. The task therefore uses an incident whose caller is **not** USER_001 (INC_003's caller is USER_005), so the correct action reliably produces a row.
 
 **Evidence chain (no gotcha):** `find_incident_by_id('INC_003')` exposes `caller_id=USER_005`; `get_user('USER_005')` yields the email. Two reads settle the recipient.
 

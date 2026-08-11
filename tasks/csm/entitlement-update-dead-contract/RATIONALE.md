@@ -1,6 +1,6 @@
 # entitlement-update-dead-contract (csm) — exemplar task #2 (refusal-bait gold standard)
 
-**Lever:** refusal-tension (portfolio §1.5) — the archetype's gold standard, labored over per Shiven's lock-in (2026-07-16).
+**Lever:** refusal-tension (portfolio §1.5). This task is the reference exemplar for the archetype: the tension is built from real seed data rather than asserted, and the four gold standards in the task-design spec are all exercised here.
 
 **The tension, from real seed data:** Zebra Partners (account 2) has exactly two premium-level entitlements:
 - **ent 11** — active, under contract 3 (subscription, **active**, ends 2026-09-20) ← must be updated

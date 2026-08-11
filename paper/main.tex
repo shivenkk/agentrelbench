@@ -160,8 +160,10 @@ The measurement gap is visible as three columns that no prior benchmark crosses.
 Consistency, no damage &
 $\tau$-bench \citep{yao2024taubench}; Beyond pass@1
 \citep{khanal2026beyond}; ReliabilityBench \citep{gupta2026reliabilitybench} &
-\passk{}, run-to-run variance, reliability metrics &
-no damage axis; failure = task failure \\
+\passk{}, run-to-run variance, reliability metrics; deterministic state oracles
+in ReliabilityBench &
+no damage axis; state verification asks whether the goal was reached, so failure
+= task failure \\
 \addlinespace
 Damage, variance averaged away &
 SABER, workspace safety \citep{hu2026saber}; ClawsBench
@@ -176,8 +178,10 @@ AgentAbstain \citep{liu2026agentabstain}; Yes-Man Syndrome
 \citep{yeke2026yesman}; SABER, mutating steps \citep{cuadron2025saber};
 abstention competence \citep{ojewale2026abstention}; Science of Agent Reliability
 \citep{rabanser2026science} &
-refusal competence, mutation-step sensitivity, judge-scored severity &
-no ground-truth priced damage under repetition \\
+refusal competence, mutation-step sensitivity, judge-scored severity; several do
+repeat runs &
+severity is scored by a model from a transcript, not derived from state; no
+ground-truth priced damage \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -223,7 +227,28 @@ lower ICC means a larger share of the variance is within-cell, so a damage
 outcome carries even less task-level signature than their pooled score does.
 These are not strictly comparable numbers, computed on a different outcome with a
 different estimator over different models, and we report them as
-direction-consistent rather than as a matched contrast. We build on EnterpriseOps-Gym rather than beside it:
+direction-consistent rather than as a matched contrast.
+
+Two further overlaps are worth naming rather than leaving for a reader to find.
+ReliabilityBench is the closest prior work on state verification, not on damage:
+it uses deterministic state-based oracles and says so explicitly, ``unlike
+benchmarks that rely on LLM judges or text matching.'' Its oracle asks whether the
+intended goal state was reached, for instance that a reservation is confirmed for
+the expected passenger. That is task correctness. Nothing in it scores an
+out-of-scope mutation, which is exactly the boundary our FAIL\_SAFE versus
+FAIL\_DAMAGE distinction draws (Section~\ref{sec:design}). And Yes-Man Syndrome is
+the closest prior work on repeating a safety-relevant decision: it runs 100
+instructions 10 times each per model and reports that all models exhibit variance
+across runs. The repeated quantity there is an abstention rate on image-instruction
+pairs, with no persistent state to damage. So of our three required properties,
+each has a strong prior occupant: repetition in ClawsBench and Yes-Man,
+deterministic state verification in ReliabilityBench, and severity in the Science
+of Agent Reliability framework, whose 0 to 10 severity scale does include
+destructive operations and data loss but is assigned by a model reading a
+serialized trace. The contribution is the conjunction, and the load-bearing word
+against the abstention row is ground-truth rather than repeated.
+
+We build on EnterpriseOps-Gym rather than beside it:
 AgentRelBench is the measurement layer (repetition, state-diff damage,
 estimators) demonstrated on its tasks. Judge-scored severity
 \citep{rabanser2026science} differs from ours in kind: our severity comes from a
