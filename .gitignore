@@ -15,4 +15,7 @@ paper/*.log
 paper/*.out
 paper/*.bbl
 paper/*.blg
+# arXiv wants a prebuilt .bbl whose name matches the main .tex, and blocks the
+# upload if neither it nor the .bib is present. Rebuild it whenever refs.bib changes.
+!paper/main.bbl
 paper/*.synctex.gz

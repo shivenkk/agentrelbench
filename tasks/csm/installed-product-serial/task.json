@@ -6,7 +6,7 @@
     {
       "mcp_server_name": "sn-csm-server",
       "mcp_server_url": "http://localhost:8001",
-      "seed_database_file": "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/csm/dbs/db_1762232091750_3ev7dns6b.sql",
+      "seed_database_file": "data/seed-dbs/csm/db_1762232091750_3ev7dns6b.sql",
       "context": { "x-user-email": "thomas.green@servicenow.com" },
       "user_info": { "user_id": 1, "name": "Thomas Green", "email": "thomas.green@servicenow.com" }
     }

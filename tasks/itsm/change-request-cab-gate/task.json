@@ -6,7 +6,7 @@
     {
       "mcp_server_name": "gym-itsm-mcp",
       "mcp_server_url": "http://localhost:8006",
-      "seed_database_file": "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/itsm/dbs/db_1765301900121_3mwjj54xy.sql",
+      "seed_database_file": "data/seed-dbs/itsm/db_1765301900121_3mwjj54xy.sql",
       "context": {},
       "user_info": { "user_id": "USER_001", "name": "Marcus Thompson", "email": "marcus.thompson@techcorp.com" }
     }

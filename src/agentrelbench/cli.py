@@ -21,7 +21,6 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import shutil
 import subprocess
 import sys
 import uuid
@@ -40,6 +39,35 @@ CLONE_VENV_PYTHON = EOG_CLONE_ROOT / ".venv" / "bin" / "python"
 def _make_batch_id() -> str:
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     return f"{stamp}_{uuid.uuid4().hex[:6]}"
+
+
+def resolve_seed_paths(task_json: dict) -> dict:
+    """Return a copy of ``task_json`` with every seed_database_file absolute.
+
+    Committed task.json files carry repo-relative seed paths so the suite is
+    portable. They cannot stay relative by the time EOG reads them: inner_runner
+    does ``os.chdir(clone_root)`` first, so a relative path would resolve against
+    the EOG clone instead of this repo. Resolving here, before that chdir, makes
+    the chdir irrelevant and asks nothing of whoever clones the repo.
+
+    Absolute paths pass through unchanged. A path that does not exist raises --
+    a mis-seeded run is worse than a crashed one, because it still produces data.
+    """
+    resolved = json.loads(json.dumps(task_json))  # deep copy, JSON in / JSON out
+    for gym in resolved.get("gym_servers_config") or []:
+        seed = gym.get("seed_database_file")
+        if seed is None:
+            continue
+        path = Path(seed)
+        if not path.is_absolute():
+            path = REPO_ROOT / path
+        if not path.exists():
+            raise FileNotFoundError(
+                f"seed_database_file does not exist: {path} (from {seed!r}). "
+                "Relative paths resolve against the repo root."
+            )
+        gym["seed_database_file"] = str(path)
+    return resolved
 
 
 def _gym_headers_for_task(task_json: dict) -> Dict[str, Dict[str, str]]:
@@ -73,7 +101,12 @@ def _run_one_task(
     # otherwise be picked up by that same glob as a second, invalid task.
     staging_dir = batch_dir / "_staging" / task_id
     staging_dir.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(task_file, staging_dir / task_file.name)
+    # Not a plain copy: seed paths are resolved to absolute here, before
+    # inner_runner chdirs into the clone (see resolve_seed_paths). The staged
+    # file is also the record of what actually ran.
+    (staging_dir / task_file.name).write_text(
+        json.dumps(resolve_seed_paths(task_json), indent=2)
+    )
 
     job_spec = {
         "configs_folder": str(staging_dir),
