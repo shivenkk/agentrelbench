@@ -9,3 +9,10 @@ results/
 runs/
 scratch/
 conf-local/
+paper/*.pdf
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.synctex.gz
