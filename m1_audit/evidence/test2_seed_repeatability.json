@@ -50,7 +50,7 @@
   "overall_match": true,
   "per_table_mismatches": [],
   "positional_diff": null,
-  "seed_file": "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/csm/dbs/db_1762232091750_3ev7dns6b.sql",
+  "seed_file": "scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/csm/dbs/db_1762232091750_3ev7dns6b.sql",
   "tables": [
     "account",
     "case_knowledge",

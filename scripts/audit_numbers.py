@@ -54,6 +54,9 @@ SOURCES = [
     "paper/appendix.tex",
     "docs/paper-draft.md",
     "docs/appendices.md",
+    # The README is a public artifact that quotes headline numbers, so it gets
+    # the same drift gate as the paper.
+    "README.md",
 ]
 
 DECIMAL = re.compile(r"(?<![\d.])(0?\.\d{2,4})(?![\d])")

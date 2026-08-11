@@ -94,7 +94,7 @@
     "list_incidents"
   ],
   "seed_files_referenced": [
-    "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/itsm/dbs/db_1765301900121_3mwjj54xy.sql"
+    "scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/itsm/dbs/db_1765301900121_3mwjj54xy.sql"
   ],
   "single_seed_file_confirmed": true,
   "task_names": [

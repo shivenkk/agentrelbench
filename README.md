@@ -1,118 +1,173 @@
 # AgentRelBench
 
-**A reliability instrument for action-taking LLM agents: ground-truth, severity-priced damage measured across repeated runs.**
+**Agent safety does not repeat. We measured it.**
 
-When an agent has write access, a wrong action is not a bad sample to regenerate. It is a state
-change someone has to detect, price, and unwind. AgentRelBench computes damage from database state
-diffs (severity-priced, deterministic, no LLM anywhere in the measurement path), measures it across
-repeated runs (pass^k and safe^k), and answers a question that decides whether pre-deployment audits
-mean anything: **is an agent's damage risk a stable property of a task, or a per-run coin flip?**
+[![CI](https://github.com/shivenkk/agentrelbench/actions/workflows/ci.yml/badge.svg)](https://github.com/shivenkk/agentrelbench/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/agentrelbench)](https://pypi.org/project/agentrelbench/)
+[![Python](https://img.shields.io/badge/python-3.11%2B-blue)](https://pypi.org/project/agentrelbench/)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
+[![Tests](https://img.shields.io/badge/tests-156-brightgreen)](https://github.com/shivenkk/agentrelbench/actions/workflows/ci.yml)
 
-In our data it is a coin flip. Damage is universal across the nine models and six families we
-measured, stochastic within every damage-producing cell, and never concentrated in an always-fail
-task. Zero always-fail cells across 48 held-out damage events. A single clean run misses a
-damage-producing (model, task) pair 0.80 of the time.
+When an LLM agent holds write access, a wrong action is not a bad sample you regenerate. It is a state
+change someone has to detect, price, and unwind. So the question that decides whether pre-deployment
+testing means anything is not *does this agent cause damage* but **does it cause damage repeatably.**
 
-Several agent benchmarks do run each task more than once. The distinction here is what repetition is
-*for*: they repeat to stabilize a point estimate, so run-to-run variance is a nuisance parameter to
-average away. We treat that variance as the result, and report the per-cell damage distribution.
+Across 2,128 evaluation runs on nine models in six families, the answer is no. Damage happens in every
+model family we measured, it is stochastic inside every damage-producing cell, and **not one task
+damaged on every run.** Zero always-fail cells across 48 held-out damage events. There is no dangerous
+task a one-shot audit can find, because there is no dangerous task, only dangerous runs.
+
+**A single clean run misses a damage-producing (model, task) pair 80% of the time.** Repeat that audit
+and the miss probability decays geometrically, which is the entire problem: the audit you can afford is
+the audit that tells you least.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/shivenkk/agentrelbench/main/docs/figs/fig4-audit-decay.png"
+       alt="Probability that k independent audit runs all look clean, for each demonstrably-stochastic held-out cell" width="560">
+</p>
+
+This does not go away with capability. The most capable model we measured damages on only one task out
+of twenty, but that residual is still a per-run coin flip: it fails at p-hat = 0.16, and a single audit
+run misses it 84% of the time.
+
+## Results
+
+Every number below is recomputed from the released run data by `scripts/audit_numbers.py`, which fails
+loudly on drift. Held-out models were chosen and their criteria frozen before any of them ran.
+
+| Pool | Model | Runs | Damaging tasks | Damage events | Stochastic cells | Always-fail cells |
+|---|---|---:|---:|---:|---:|---:|
+| Held-out | mistral-small-24b | 208 | 3 / 20 | 26 | 3 | **0** |
+| Held-out | gpt-oss-120b | 224 | 1 / 20 | 12 | 1 | **0** |
+| Held-out | deepseek-v3.2 | 224 | 1 / 20 | 4 | 0 | **0** |
+| Frontier | claude-opus-4.6 | 224 | 1 / 20 | 5 | 1 | **0** |
+| Frontier | claude-haiku-4.5 | 208 | 1 / 20 | 1 | 0 | **0** |
+| Development | llama-3.1-8b | 160 | 7 / 20 | 11 | 0 | **0** |
+| Development | llama-3.3-70b | 160 | 2 / 20 | 4 | 0 | **0** |
+| Development | qwen3-32b | 160 | 2 / 20 | 4 | 0 | **0** |
+| Development | qwen3-14b | 160 | 2 / 20 | 2 | 0 | **0** |
+
+"Stochastic" means the cell's exact 95% Clopper-Pearson interval lies strictly inside (0.05, 0.95),
+a criterion fixed in advance. The k=1 audit miss rate is 0.80 over the 13 development pairs (the
+pre-registered primary) and 0.665 over 7 held-out pairs, which is below our pre-registered power floor
+of 8 and is therefore reported as underpowered rather than as confirmation.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/shivenkk/agentrelbench/main/docs/figs/fig2-universality-stochasticity.png"
+       alt="Damage probability on the flagship commit-gated task across all model families, with exact confidence intervals against the pre-registered stochastic band" width="820">
+</p>
+
+Two further results worth naming. One model family committed the gated irreversible change **while
+declaring that it had refused**, which transcript grading and LLM-judge grading both score as a safe
+refusal. Only state-diff verification catches it. And our own initially favoured headline was demoted
+by a pre-registered criterion that fired against it; that demotion is reported in the paper rather than
+quietly dropped.
 
 ## Supported substrate: EnterpriseOps-Gym
 
 **Read this before installing.** The measurement core is genuinely substrate-independent:
-`src/agentrelbench/estimators.py` is 338 lines with no reference to any gym. But state export and
-the harness patching are coupled to
-[EnterpriseOps-Gym](https://github.com/ServiceNow/EnterpriseOps-Gym) (ServiceNow AI Research + Mila,
-Apache-2.0), and **EnterpriseOps-Gym is the only supported substrate.**
+`src/agentrelbench/estimators.py` has no reference to any environment. But state export and harness
+patching are coupled to [EnterpriseOps-Gym](https://github.com/ServiceNow/EnterpriseOps-Gym)
+(ServiceNow AI Research and Mila, Apache-2.0), and **EnterpriseOps-Gym is the only supported
+substrate.**
 
-If you came here to point this at your own database, you would need to write an adapter first, on the
-order of 500 lines. That is planned work, not shipped work. What this package supports today is:
-bring your own model, run it against the published task suite in the published environment.
+If you came to point this at your own database, you would need to write an adapter first, on the order
+of 500 lines. That is planned work, not shipped work. What this package supports today is: bring your
+own model, run it against the published task suite in the published environment.
 
-The use case it serves well is the one it was built for. The one it does not serve is a drop-in
-reliability harness for arbitrary environments.
+## Quickstart
 
-## Install
-
-```
+```bash
 pip install agentrelbench
 ```
 
-Three commands are installed:
+The 20-task suite and its seed databases ship inside the package. Locate them, run a model k times per
+task, then label the runs into verdicts:
 
-| Command | What it does |
-|---|---|
-| `arb-run` | Runs a task suite k times per task, archiving per-run DB state exports plus a batch manifest |
-| `arb-label` | Labels archived runs into verdicts (state-diff damage labeler) |
-| `arb-validate` | Proves a task's oracle and counterexample scripts produce their declared verdicts |
-
-Running the instrument end to end additionally needs the EnterpriseOps-Gym containers and provider
-credentials. Reproducing the paper's analysis does not (see below).
-
-## Reproduce the paper's numbers
-
-One command, no credentials and no containers. This runs **from a clone of the repository**, not from
-the pip package: the released run data lives in the repo and is deliberately not shipped inside the
-wheel or sdist.
-
+```bash
+SUITE=$(python -c "import agentrelbench,pathlib;print(pathlib.Path(agentrelbench.__file__).parent/'suite')")
+arb-run   --tasks "$SUITE/tasks/csm" --llm-config my-model.json --k 8 --out runs/
+arb-label --tasks "$SUITE/tasks/csm" runs/<batch_id>
 ```
+
+Running the instrument needs the EnterpriseOps-Gym containers up and a provider credential in your LLM
+config. Reproducing the paper's analysis needs neither.
+
+## Reproduce the paper
+
+One command, no credentials and no containers, from a clone of this repository. The released run data
+lives in the repo and is deliberately not shipped inside the installable package, so reproduction is a
+clone-only path; the pip package gives you the instrument and the task suite, not the campaign data:
+
+```bash
 git clone https://github.com/shivenkk/agentrelbench && cd agentrelbench && scripts/reproduce.sh
 ```
 
-It builds a fresh venv, checks every released verdicts file against its manifest sha256 and row
-count, runs the estimator and audit test suites, regenerates all four figures and the Appendix E
-tables under assertions, and re-derives every headline number from the released run data. It exits
-nonzero on any drift. Proven in a `python:3.12-slim` container; transcript in
-`docs/cleanroom-transcript.txt`.
+It builds a fresh virtualenv, checks all 12 released verdicts files against their recorded sha256 and
+row counts, runs the estimator and audit suites, regenerates every figure and the Appendix E tables
+under assertions, and re-derives every headline number from the run data. It exits nonzero on any
+drift. Proven in a `python:3.12-slim` container; the transcript is in `docs/cleanroom-transcript.txt`.
 
-Scope: this reproduces the *analysis*, from released verdicts through estimators to figures and
-numbers. It does not re-run the agents. The campaign numbers are records of runs that already
-happened, and by this paper's own finding those runs are stochastic, so re-running would not
-reproduce them and must not be used to "regenerate" them.
+This reproduces the *analysis*, not the agent runs. The campaign numbers are records of runs that
+already happened, and by this paper's own finding those runs are stochastic, so re-running them would
+not reproduce them and must not be used to regenerate them.
 
 ## What ships
 
 ```
-tasks/              20 base tasks (csm, itsm), each with task.json, damage.json,
-                    oracle.script.json, counterexamples/
-tasks-escalated/    13 distractor variants (plus10 arm)
-data/seed-dbs/      the 2 seed databases the task suite runs against (1.3 MB)
-runs/               12 released verdicts files plus a provenance manifest for each
-src/agentrelbench/  instrument: k-run wrapper, state export, damage labeler, estimators
+tasks/              20 tasks (csm, itsm), each with task.json, damage.json,
+                    oracle.script.json, counterexamples/, RATIONALE.md
+tasks-escalated/    13 distractor variants
+data/seed-dbs/      the 2 seed databases the suite runs against
+runs/               12 released verdicts files, each with a provenance manifest
+src/agentrelbench/  k-run wrapper, state export, damage labeler, estimators
 scripts/            figures, Appendix E tables, number audit, reproduce, manifests
-docs/               specs, campaign and frontier results, appendices
+docs/               specs, campaign and frontier results, appendices, pre-registration
 ```
 
 Every released verdicts file has a `.manifest.json` sidecar recording model id, provider, sampling
-parameters, per-task k, run window, harness and substrate commits, MCP image digests, source
-batches, and sha256. Three of the twelve are marked `provenance: partial` and list exactly which
-fields were never recorded; see the Limitations section of the paper.
-
-Pinned substrate digests:
+parameters, per-task k, run window, harness and substrate commits, MCP image digests, source batches,
+and sha256. Three of the twelve are marked `provenance: partial` and list exactly which fields were
+never recorded. The substrate is pinned by digest:
 
 ```
 enterpriseops-gym-mcp-csm@sha256:eaa456ac9aa85728426e7d3813a0bbca0949d6a8695be30e26f03894e6e6b189
 enterpriseops-gym-mcp-itsm@sha256:a234ae3fb7cee196ba25e6b9957969dea829919b6e8271dddae128f065aaf39f
 ```
 
+## How damage is measured
+
+No LLM appears anywhere in the measurement path. A verdict is a deterministic diff of the database
+before and after a run, matched by primary key against a closed-world per-task whitelist, with
+severity and dollar pricing attached to out-of-scope mutations. Refusal detection is a regex over a
+declared token, so a stall can never be scored as an abstention.
+
+The boundary that makes the damage axis crisp: a wrong-but-authorized outcome is a task *failure*, not
+damage. Damage requires an out-of-scope irreversible mutation. Every task ships an oracle script and
+counterexample scripts that pin both sides of that boundary, and `arb-validate` proves they still
+produce their declared verdicts.
+
 ## Tests
 
-```
+```bash
 pytest
 ```
 
-150 tests. All pass with the EnterpriseOps-Gym csm container up on `:8001`; one acceptance test
-needs it, since that test stubs only the LLM.
+156 tests. One acceptance test drives the real EnterpriseOps-Gym containers over HTTP and is marked
+`needs_containers`; CI runs `pytest -m "not needs_containers"`. The estimators, the damage labeler,
+and the manuscript number audit are all covered offline.
 
-## How it drives EnterpriseOps-Gym without modifying the clone
+## Citation
 
-`arb-run` runs in its own lightweight environment (httpx plus stdlib) and never imports
-EnterpriseOps-Gym. Per task it execs `agentrelbench.inner_runner` under the clone's own venv Python,
-with `PYTHONPATH` extended to this package's `src/`, so that process can import
-`agentrelbench.eog_patch` without agentrelbench being installed into the clone. The patch wraps
-EnterpriseOps-Gym's per-run database create and delete call sites with dump-then-continue, so each
-run's post-seed and pre-cleanup state is captured through `/api/sql-runner`. No tracked file under
-the clone is ever modified.
+```bibtex
+@misc{khurdi2026agentrelbench,
+  title  = {Safety Doesn't Repeat: Universal, Stochastic, Trap-Free Damage in Action-Taking LLM Agents},
+  author = {Shiven Khurdi},
+  year   = {2026},
+  eprint = {arXiv:TBD},
+}
+```
 
-Seed database paths in `task.json` are repo-relative and resolved to absolute at config-staging time,
-before the harness changes directory into the clone. Nothing needs to be configured for this.
+## License
+
+Apache-2.0. The substrate, EnterpriseOps-Gym, is independently Apache-2.0 and is not vendored here.

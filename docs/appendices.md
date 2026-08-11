@@ -1,6 +1,6 @@
 # Appendices
 
-Companion to `docs/paper-draft.md`. Appendix E is machine-generated into
+Companion to the paper (`docs/paper-draft.md`, or `paper/` for the LaTeX source). Appendix E is machine-generated into
 `docs/appendix-e-tables.md` by `scripts/make_appendix_e.py` and is not
 hand-edited. Every number below traces to a committed evidence document or to
 run data; the source is named at the head of each appendix.

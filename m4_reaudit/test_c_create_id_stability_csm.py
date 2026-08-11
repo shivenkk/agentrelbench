@@ -20,10 +20,14 @@ import json
 import sys
 import time
 
-sys.path.insert(0, "/Users/shiven/Documents/Projects/agentrelbench/m1_audit")
+sys.path.insert(0, str(_REPO / "m1_audit"))
 import gym_client as gc
+from pathlib import Path
 
-EVIDENCE_DIR = "/Users/shiven/Documents/Projects/agentrelbench/m4_reaudit/evidence"
+# Repo root, derived rather than hardcoded so the script runs from any checkout.
+_REPO = Path(__file__).resolve().parent.parent
+
+EVIDENCE_DIR = str(_REPO / "m4_reaudit/evidence")
 ACTOR_EMAIL = "thomas.green@servicenow.com"
 EXPECTED_ACCOUNT_ID = 53
 ARGS = {"name": "M4 CreateID Stability Check Account", "account_type": "customer", "active": True}

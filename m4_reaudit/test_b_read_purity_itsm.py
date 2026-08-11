@@ -12,12 +12,16 @@ import json
 import sys
 import time
 
-sys.path.insert(0, "/Users/shiven/Documents/Projects/agentrelbench/m1_audit")
+sys.path.insert(0, str(_REPO / "m1_audit"))
 import gym_client as gc
 import db_diff as dd
+from pathlib import Path
 
-EVIDENCE_DIR = "/Users/shiven/Documents/Projects/agentrelbench/m4_reaudit/evidence"
-DATA_DIR = "/Users/shiven/Documents/Projects/agentrelbench/data/eog"
+# Repo root, derived rather than hardcoded so the script runs from any checkout.
+_REPO = Path(__file__).resolve().parent.parent
+
+EVIDENCE_DIR = str(_REPO / "m4_reaudit/evidence")
+DATA_DIR = str(_REPO / "data/eog")
 
 READ_ONLY_UNION = json.load(open(f"{DATA_DIR}/tool-union-itsm.json"))["read_only_tools"]
 

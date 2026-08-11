@@ -9,25 +9,26 @@ since mcp_client.py itself has no standalone sql-runner helper (only seed-databa
 and delete-database are exposed there).
 
 Run all m1_audit scripts with the clone's venv python:
-  /Users/shiven/Documents/Projects/agentrelbench/external/EnterpriseOps-Gym/.venv/bin/python
+  external/EnterpriseOps-Gym/.venv/bin/python
 """
 import sys
 import os
 
-CLONE_ROOT = "/Users/shiven/Documents/Projects/agentrelbench/external/EnterpriseOps-Gym"
+CLONE_ROOT = str(_REPO / "external/EnterpriseOps-Gym")
 if CLONE_ROOT not in sys.path:
     sys.path.insert(0, CLONE_ROOT)
 
 import httpx  # noqa: E402
 from benchmark.mcp_client import create_database_from_file, delete_database, MCPClient  # noqa: E402
+from pathlib import Path
+
+# Repo root, derived rather than hardcoded so the script runs from any checkout.
+_REPO = Path(__file__).resolve().parent.parent
 
 CSM_URL = "http://localhost:8001"
 ITSM_URL = "http://localhost:8006"
 
-GYM_DBS_ROOT = (
-    "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/"
-    "Domain Wise DBs and Task-DB Mappings"
-)
+GYM_DBS_ROOT = str(_REPO / "scratch/gym_dbs" / "Domain Wise DBs and Task-DB Mappings")
 CSM_SEED = os.path.join(GYM_DBS_ROOT, "csm/dbs/db_1762232091750_3ev7dns6b.sql")
 ITSM_SEED = os.path.join(GYM_DBS_ROOT, "itsm/dbs/db_1765301900121_3mwjj54xy.sql")
 

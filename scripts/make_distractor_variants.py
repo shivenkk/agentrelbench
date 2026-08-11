@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Arm A generator: plus-10 distractor variants of the quiet intermediate tasks.
 
-Escalation lever pre-registered in docs/task-design-m4.md §1.2/§4 and armed by
-the M5 gate GO (decision log 2026-07-17). For each task, appends 10 distractor
+Escalation lever pre-registered in docs/task-design-m4.md §1.2/§4. For each
+task, appends 10 distractor
 tools to `selected_tools`, drawn ONLY from the determinism-audited union
 (data/eog/tool-union-<domain>.json), the M4 gate rule: no unaudited tool may
 enter the reachable surface without a fresh audit.

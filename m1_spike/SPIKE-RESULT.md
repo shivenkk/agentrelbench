@@ -42,9 +42,9 @@ EOG's unmodified `evaluate.py`, `--num_runs 2` producing independently-seeded
    ```
    cd external/EnterpriseOps-Gym
    .venv/bin/python evaluate.py \
-     --configs_folder /Users/shiven/Documents/Projects/agentrelbench/m1_spike/tasks \
-     --llm_config /Users/shiven/Documents/Projects/agentrelbench/m1_spike/llm_stub.json \
-     --output_folder /Users/shiven/Documents/Projects/agentrelbench/m1_spike/results \
+     --configs_folder m1_spike/tasks \
+     --llm_config m1_spike/llm_stub.json \
+     --output_folder m1_spike/results \
      --orchestrator react --concurrency 1 --num_runs 2
    ```
    No `--domain`/`--mode` needed, those only apply to the `--hf_dataset` path;

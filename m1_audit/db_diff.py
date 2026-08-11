@@ -15,8 +15,12 @@ import json
 import re
 import sys
 
-sys.path.insert(0, "/Users/shiven/Documents/Projects/agentrelbench/m1_audit")
+sys.path.insert(0, str(_REPO / "m1_audit"))
 import gym_client as gc
+from pathlib import Path
+
+# Repo root, derived rather than hardcoded so the script runs from any checkout.
+_REPO = Path(__file__).resolve().parent.parent
 
 BIG_LIMIT = 1_000_000
 

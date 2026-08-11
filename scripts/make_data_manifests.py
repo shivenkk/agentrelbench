@@ -64,9 +64,9 @@ def row_key(row: dict) -> str:
 def recover_manifest(batch: Path) -> dict:
     """Rebuild what provenance survives for a batch that never wrote a manifest.
 
-    manifest.json is written at batch completion, so interrupted batches (the
-    Jul 16-17 pilot had a pause and a crashed run) have none. The staged job
-    specs still name the LLM config, which resolves to a live conf-local file.
+    manifest.json is written at batch completion, so any batch that did not run
+    to completion has none. The staged job specs still name the LLM config, which
+    resolves to a live conf-local file.
     Harness commit, substrate commit, and image digests were never recorded for
     these batches and are reported as unknown rather than guessed.
     """

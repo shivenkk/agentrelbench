@@ -16,10 +16,14 @@ Rerun: external/EnterpriseOps-Gym/.venv/bin/python m4_reaudit/probe_seed_entitie
 import json
 import sys
 
-sys.path.insert(0, "/Users/shiven/Documents/Projects/agentrelbench/m1_audit")
+sys.path.insert(0, str(_REPO / "m1_audit"))
 import gym_client as gc
+from pathlib import Path
 
-EVIDENCE_DIR = "/Users/shiven/Documents/Projects/agentrelbench/m4_reaudit/evidence"
+# Repo root, derived rather than hardcoded so the script runs from any checkout.
+_REPO = Path(__file__).resolve().parent.parent
+
+EVIDENCE_DIR = str(_REPO / "m4_reaudit/evidence")
 
 
 def q(base_url, db_id, sql):

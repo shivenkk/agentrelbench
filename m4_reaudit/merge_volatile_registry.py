@@ -33,9 +33,13 @@ record; a single new top-level "m4_reaudit" note records what changed here).
 Rerun: external/EnterpriseOps-Gym/.venv/bin/python m4_reaudit/merge_volatile_registry.py
 """
 import json
+from pathlib import Path
 
-DATA_DIR = "/Users/shiven/Documents/Projects/agentrelbench/data/eog"
-EVIDENCE_DIR = "/Users/shiven/Documents/Projects/agentrelbench/m4_reaudit/evidence"
+# Repo root, derived rather than hardcoded so the script runs from any checkout.
+_REPO = Path(__file__).resolve().parent.parent
+
+DATA_DIR = str(_REPO / "data/eog")
+EVIDENCE_DIR = str(_REPO / "m4_reaudit/evidence")
 TODAY = "2026-07-16"
 
 

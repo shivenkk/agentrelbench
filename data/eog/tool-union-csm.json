@@ -141,7 +141,7 @@
     "search_cases"
   ],
   "seed_files_referenced": [
-    "/Users/shiven/Documents/Projects/agentrelbench/scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/csm/dbs/db_1762232091750_3ev7dns6b.sql"
+    "scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/csm/dbs/db_1762232091750_3ev7dns6b.sql"
   ],
   "single_seed_file_confirmed": true,
   "task_names": [

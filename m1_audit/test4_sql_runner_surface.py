@@ -12,11 +12,15 @@ import json
 import sys
 import time
 
-sys.path.insert(0, "/Users/shiven/Documents/Projects/agentrelbench/m1_audit")
+sys.path.insert(0, str(_REPO / "m1_audit"))
 import gym_client as gc
 import db_diff as dd
+from pathlib import Path
 
-EVIDENCE = "/Users/shiven/Documents/Projects/agentrelbench/m1_audit/evidence/test4_sql_runner_surface.json"
+# Repo root, derived rather than hardcoded so the script runs from any checkout.
+_REPO = Path(__file__).resolve().parent.parent
+
+EVIDENCE = str(_REPO / "m1_audit/evidence/test4_sql_runner_surface.json")
 
 
 def main():

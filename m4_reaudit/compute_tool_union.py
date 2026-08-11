@@ -17,8 +17,12 @@ Rerun: external/EnterpriseOps-Gym/.venv/bin/python m4_reaudit/compute_tool_union
 import json
 import glob
 import os
+from pathlib import Path
 
-ROOT = "/Users/shiven/Documents/Projects/agentrelbench"
+# Repo root, derived rather than hardcoded so the script runs from any checkout.
+_REPO = Path(__file__).resolve().parent.parent
+
+ROOT = str(_REPO)
 DATA_DIR = f"{ROOT}/data/eog"
 
 

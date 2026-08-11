@@ -143,7 +143,7 @@ def apply_patch() -> None:
             "same object as benchmark.mcp_client.delete_database."
         )
 
-    # Silent-discard audit item #4 (docs/silent-discard-audit.md, 2026-07-17):
+    # Silent-discard audit item #4 (docs/silent-discard-audit.md):
     # MCPClient.list_tools swallows discovery failures to [] -- the agent then
     # runs tool-less and the run records as a clean stall. Empty discovery is
     # an infrastructure failure, never data: fail loudly instead.

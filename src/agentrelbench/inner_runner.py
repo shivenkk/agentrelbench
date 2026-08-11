@@ -48,7 +48,7 @@ def main(argv: list | None = None) -> int:
     # CWD-relative one (technical map §B).
     os.chdir(clone_root)
 
-    # Provider pinning (added 2026-07-17, post provider-decomposition): when
+    # Provider pinning: when
     # ARB_PIN_PROVIDER is set, every OpenRouter request carries
     # provider={"order": [pin], "allow_fallbacks": false}, making the serving
     # stack a designed constant instead of per-request routing luck. EOG's
@@ -73,15 +73,14 @@ def main(argv: list | None = None) -> int:
         langchain_openai.ChatOpenAI = _PinnedChatOpenAI
         print(f"[agentrelbench] provider pinned: {pin} (allow_fallbacks=false)")
 
-    # Force single-attempt semantics (added 2026-07-17 after two live failures).
+    # Force single-attempt semantics.
     # EOG's evaluate.execute_sample retries the WHOLE sample (max_num_attempts=5,
     # fresh DB seed per attempt) whenever any run records an error. That is a
     # leaderboard convenience, and for us it is wrong twice over: (1) hidden
     # retries make a "run" a best-of-N sample, corrupting k-run iid semantics --
     # a failed attempt is DATA (labeled errored_*, feeds p-hat_upper); (2) the
     # extra per-attempt DB seeds break eog_patch's one-create-per-run
-    # correlation, which then fails loudly (INVALID_MISSING_DUMP) -- the two
-    # quarantined runs of 2026-07-16/17 were exactly this path firing.
+    # correlation, which then fails loudly (INVALID_MISSING_DUMP).
     # Bare-name call sites resolve through module globals, so rebinding works
     # just like the create/delete patch.
     import inspect

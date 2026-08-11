@@ -78,17 +78,20 @@ include = [
   "/LICENSE",
   "/pyproject.toml",
 ]
-# docs/ ships the instrument specs, results, and appendices. These are internal
-# process material: a draft of the paper, the decision log, and the release
-# checklist's working notes. Excluding them extends the repo's existing
-# "internal docs are not part of the released artifact" decision to the sdist.
+# docs/ ships the specs, results, appendices, pre-registration, and audit
+# evidence: those are the research record, and the pre-registration in particular
+# is what makes the paper's demotion claim checkable.
+#
+# Excluded below is planning material only, and only where nothing that ships
+# refers to it: the release checklist's working notes, the superseded paper
+# skeleton, and the M1 gate memo. Anything a shipped file cites stays in, because
+# a dangling reference is worse than a slightly untidy package. That rule is why
+# task-design-m4.md ships (10 RATIONALE.md files cite it) and paper-draft.md
+# ships (scripts/audit_numbers.py reads it).
 exclude = [
   "/docs/release-checklist.md",
-  "/docs/paper-draft.md",
   "/docs/paper-skeleton.md",
-  "/docs/problem-and-hypothesis.md",
   "/docs/M1-go-no-go.md",
-  "/docs/task-design-m4.md",
   "**/PROGRESS.md",
 ]
 
