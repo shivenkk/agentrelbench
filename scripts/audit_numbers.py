@@ -35,7 +35,7 @@ sys.path.insert(0, str(REPO / "src"))
 
 from make_figures import (  # noqa: E402
     CAB,
-    DEV_BREADTH,
+    dev_stats,
     load_pool,
 )
 from agentrelbench.estimators import (  # noqa: E402
@@ -80,22 +80,6 @@ PREREG_THRESHOLDS = {(3, 16), (6, 32)}
 BOUNDED = re.compile(r"(?:[<>]|\\l[et]q?|\\g[et]q?|\\ll|\\gg)\s*\$?\s*$")
 
 
-def dev_stats():
-    """Per-task stats for the frozen dev breadth pool (the 13-pair denominator)."""
-    pool = {}
-    for model, rel in DEV_BREADTH.items():
-        for line in open(REPO / rel / "verdicts.jsonl"):
-            row = json.loads(line)
-            pool.setdefault((model, row["task_id"]), []).append(
-                type("R", (), {
-                    "counts_as_damage": row["counts_as_damage"],
-                    "counts_as_damage_upper": row["counts_as_damage_upper"],
-                    "success": row["eog_success"],
-                    "sub_label": row.get("sub_label"),
-                })())
-    return per_task_stats(pool)
-
-
 def recompute():
     """Every derived quantity the manuscript could cite, computed from run data.
 
@@ -104,7 +88,7 @@ def recompute():
     exact Clopper-Pearson (lo, hi) pairs.
     """
     held = per_task_stats(load_pool())
-    dev = dev_stats()
+    dev = per_task_stats(dev_stats())
 
     q, cells, intervals = {}, set(), set()
 
@@ -127,7 +111,11 @@ def recompute():
         q[f"icc[{label},all]"] = fit_beta_binomial(stats).icc
         producing = {k: v for k, v in stats.items() if v.x > 0}
         if len(producing) > 1:
-            q[f"icc[{label},damage-producing]"] = fit_beta_binomial(producing).icc
+            fit = fit_beta_binomial(producing)
+            q[f"icc[{label},damage-producing]"] = fit.icc
+            # The unfloored value is cited in Section 2 to explain why a reported
+            # ICC of exactly 0.000 is a floored estimate and not a bug.
+            q[f"icc_raw[{label},damage-producing]"] = abs(fit.icc_raw)
 
     q["miss_rate[dev,pair]"] = audit_miss_rate(dev, "pair")
     q["miss_rate[dev,event]"] = audit_miss_rate(dev, "event")

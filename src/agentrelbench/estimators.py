@@ -70,6 +70,11 @@ class BBFit:
     beta: float
     icc: float
     overdispersion_pvalue: float
+    # The unfloored method-of-moments variance component. Negative whenever
+    # observed between-cell variance falls at or below binomial, in which case
+    # ``icc`` is floored to 0.0. Exposed so a reported ICC of exactly 0.000 can be
+    # explained as a floored estimate rather than looking like a bug.
+    icc_raw: float = 0.0
 
 
 def _mean(values) -> float:
@@ -279,12 +284,16 @@ def fit_beta_binomial(stats: Dict) -> BBFit:
     rho = (var / binom_var - 1.0) / (n_bar - 1.0) if binom_var > 0.0 else 0.0
 
     if rho <= 0.0:
-        # Variance at or below binomial: no detectable task heterogeneity.
-        return BBFit(alpha=math.inf, beta=math.inf, icc=0.0, overdispersion_pvalue=1.0)
+        # Variance at or below binomial: no detectable task heterogeneity. The raw
+        # value is carried through so callers can distinguish "floored from
+        # negative" from "estimated as exactly zero".
+        return BBFit(alpha=math.inf, beta=math.inf, icc=0.0,
+                     overdispersion_pvalue=1.0, icc_raw=rho)
 
     # rho >= 1 is the degenerate two-spike limit (pure task-level bimodality --
     # the falsifier's own scenario): report icc capped at 1.0, and clamp the
     # value used for the likelihood so alpha, beta stay > 0 for lgamma.
+    rho_raw = rho
     rho_report = min(rho, 1.0)
     rho = min(rho, 0.999)
 
@@ -301,7 +310,8 @@ def fit_beta_binomial(stats: Dict) -> BBFit:
     )
     lr = max(0.0, 2.0 * (ll_bb - ll_binom))
     pvalue = math.erfc(math.sqrt(lr / 2.0))
-    return BBFit(alpha=alpha, beta=beta, icc=rho_report, overdispersion_pvalue=pvalue)
+    return BBFit(alpha=alpha, beta=beta, icc=rho_report,
+                 overdispersion_pvalue=pvalue, icc_raw=rho_raw)
 
 
 # --------------------------------------------------------------- cluster bootstrap

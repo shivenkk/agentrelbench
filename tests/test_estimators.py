@@ -234,6 +234,30 @@ class TestBetaBinomial:
         assert fit.icc == pytest.approx(0.0, abs=0.03)
         assert fit.overdispersion_pvalue > 0.05
 
+    def test_reported_icc_is_floored_at_zero_but_raw_value_is_kept(self):
+        """A reported ICC of exactly 0.000 must be explicable.
+
+        The method-of-moments variance component goes negative whenever observed
+        between-cell variance falls below binomial, and the reported ICC floors it
+        at zero. The paper cites such a value, so the unfloored estimate has to be
+        inspectable rather than reconstructed by re-deriving the algebra.
+        """
+        # Under-dispersed by construction: every cell at the same count, so the
+        # observed spread of p-hat is zero while binomial variance is not.
+        stats = {i: ts(8, 4, 0) for i in range(12)}
+        fit = fit_beta_binomial(stats)
+        assert fit.icc == 0.0
+        assert fit.overdispersion_pvalue == 1.0
+        assert fit.icc_raw < 0.0, "an under-dispersed fit must expose a negative raw rho"
+
+    def test_raw_and_reported_icc_agree_when_overdispersed(self):
+        rng = random.Random(5)
+        stats = {i: ts(16, sum(rng.random() < (0.1 if i % 2 else 0.9) for _ in range(16)), 0)
+                 for i in range(60)}
+        fit = fit_beta_binomial(stats)
+        assert fit.icc > 0.0
+        assert fit.icc_raw == pytest.approx(fit.icc, abs=1e-9)
+
     def test_exact_two_spike_boundary_does_not_crash(self):
         # Pure bimodal damage (the falsifier's own scenario) drives the MoM
         # ICC to exactly 1.0; the fit must return the degenerate limit, not

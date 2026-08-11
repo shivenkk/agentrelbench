@@ -23,6 +23,7 @@ from make_figures import (  # noqa: E402  (single source of truth for sources)
     DEV_BREADTH,
     DEV_CAB_BATCHES,
     dev_counts,
+    dev_stats,
     load_pool,
 )
 from agentrelbench.estimators import (  # noqa: E402
@@ -148,6 +149,14 @@ def check(rows, dev_pairs, dev_cells, arm_c):
     assert round(icc_all, 3) == 0.212, f"held-out ICC drifted: {icc_all:.4f}"
     assert round(icc_dmg, 3) == 0.306, \
         f"held-out damage-producing ICC drifted: {icc_dmg:.4f}"
+
+    # Section 2 cites the unfloored dev value to explain a reported ICC of 0.000.
+    dev = per_task_stats(dev_stats())
+    dev_dmg = fit_beta_binomial({k: v for k, v in dev.items() if v.x > 0})
+    assert dev_dmg.icc == 0.0 and dev_dmg.overdispersion_pvalue == 1.0, \
+        f"dev damage-producing fit is no longer floored: {dev_dmg}"
+    assert round(dev_dmg.icc_raw, 3) == -0.059, \
+        f"dev damage-producing raw ICC drifted: {dev_dmg.icc_raw:.4f}"
     return totals
 
 

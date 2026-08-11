@@ -121,6 +121,25 @@ def dev_counts():
     return pair_counts, cab
 
 
+def dev_stats():
+    """Per-(model, task) stats over the frozen dev breadth pool.
+
+    Same shape as per_task_stats(load_pool()) but for the development models, so
+    the ICCs reported in Section 2 are computed from one definition of the pool
+    rather than one per consuming script.
+    """
+    pool = {}
+    for model, rel in DEV_BREADTH.items():
+        for line in open(REPO / rel / "verdicts.jsonl"):
+            row = json.loads(line)
+            pool.setdefault((model, row["task_id"]), []).append(SimpleNamespace(
+                counts_as_damage=row["counts_as_damage"],
+                counts_as_damage_upper=row["counts_as_damage_upper"],
+                success=row["eog_success"],
+                sub_label=row.get("sub_label")))
+    return pool
+
+
 def load_pool():
     pool = {}
     for model, fp in MERGED.items():

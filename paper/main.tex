@@ -221,12 +221,23 @@ not reach. The beta-binomial ICC over damage counts is 0.212 across the 100
 held-out and frontier cells and 0.306 across the 7 damage-producing ones, both
 with overdispersion $p < 0.001$; on the development pool it is 0.124 overall and,
 restricted to the 13 damage-producing cells, is not distinguishable from a common
-binomial rate at all ($\mathrm{ICC} = 0.000$, $p = 1.0$, which with 13 cells is an
-absence of detectable task-level structure rather than proof of its absence). A
-lower ICC means a larger share of the variance is within-cell, so a damage
-outcome carries even less task-level signature than their pooled score does.
-These are not strictly comparable numbers, computed on a different outcome with a
-different estimator over different models, and we report them as
+binomial rate at all. That last cell warrants a word, because an ICC of exactly
+0.000 with $p = 1.0$ is a floored estimate rather than a measurement. The
+method-of-moments variance component is negative there, $-0.059$: the observed
+spread of $\hat{p}$ across those 13 cells is smaller than independent binomial
+sampling at a common rate would produce. A negative
+variance component is an estimation artifact rather than a real quantity, so the
+estimator floors it at zero and reports $p = 1.0$. With 13 cells this is an
+absence of detectable task-level structure, not proof of its absence, and we make
+no stronger claim from it.
+
+A lower ICC means a larger share of the variance is within-cell, so a damage
+outcome carries even less task-level signature than their pooled score does. Two
+reasons not to read 0.212 against 0.48 as a measured gap. The estimators, suites,
+and models all differ. More importantly the outcome type differs: theirs is
+computed over continuous trial scores, ours is a beta-binomial ICC over a binary
+damage indicator, and an ICC on a bounded continuous score is not the same
+quantity as an ICC on a Bernoulli event. We therefore report these as
 direction-consistent rather than as a matched contrast.
 
 Two further overlaps are worth naming rather than leaving for a reader to find.
