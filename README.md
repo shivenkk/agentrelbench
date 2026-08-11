@@ -56,7 +56,7 @@ the pip package: the released run data lives in the repo and is deliberately not
 wheel or sdist.
 
 ```
-git clone <repo> && cd agentrelbench && scripts/reproduce.sh
+git clone https://github.com/shivenkk/agentrelbench && cd agentrelbench && scripts/reproduce.sh
 ```
 
 It builds a fresh venv, checks every released verdicts file against its manifest sha256 and row

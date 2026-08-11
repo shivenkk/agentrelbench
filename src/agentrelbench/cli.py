@@ -42,15 +42,23 @@ def _make_batch_id() -> str:
 
 
 def find_repo_root(start: Path) -> Path:
-    """Nearest ancestor of ``start`` holding pyproject.toml, else ``REPO_ROOT``.
+    """Nearest ancestor of ``start`` that anchors relative seed paths.
 
     Anchoring on the task file rather than on this module is what makes seed
     resolution work when agentrelbench is pip-installed: ``REPO_ROOT`` is derived
     from ``__file__``, so for an installed package it points into site-packages,
     where no seed database has ever lived.
+
+    Two anchors, because there are two valid layouts. In a checkout the anchor is
+    ``pyproject.toml`` at the repo root. In an installed wheel the suite ships
+    under ``agentrelbench/suite/``, which has no pyproject.toml above it, so the
+    anchor is the presence of ``data/seed-dbs``. In a checkout both sit at the
+    repo root and agree.
     """
     for candidate in [start, *start.parents]:
         if (candidate / "pyproject.toml").exists():
+            return candidate
+        if (candidate / "data" / "seed-dbs").is_dir():
             return candidate
     return REPO_ROOT
 

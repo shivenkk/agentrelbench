@@ -141,6 +141,31 @@ class TestAnchoringSurvivesInstallation:
         orphan.mkdir()
         assert find_repo_root(orphan) == REPO_ROOT
 
+    def test_packaged_suite_layout_resolves_without_a_pyproject(self, tmp_path):
+        """The wheel ships the suite under agentrelbench/suite/, where there is no
+        pyproject.toml to anchor on. Without a second anchor the packaged tasks
+        would install fine and then fail to find their seed database."""
+        suite = tmp_path / "site-packages" / "agentrelbench" / "suite"
+        seed = suite / "data" / "seed-dbs" / "csm" / "db.sql"
+        seed.parent.mkdir(parents=True)
+        seed.write_text("-- seed\n")
+        task_file = suite / "tasks" / "csm" / "sla-relink" / "task.json"
+        task_file.parent.mkdir(parents=True)
+        task_file.write_text("{}")
+
+        assert find_repo_root(task_file.parent) == suite
+        out = resolve_seed_paths(config("data/seed-dbs/csm/db.sql"), task_file)
+        assert out["gym_servers_config"][0]["seed_database_file"] == str(seed)
+
+    def test_pyproject_anchor_wins_when_both_markers_are_present(self, tmp_path):
+        """In the repo both markers sit at the root, so the answer must agree."""
+        repo = tmp_path / "repo"
+        (repo / "data" / "seed-dbs").mkdir(parents=True)
+        (repo / "pyproject.toml").write_text("[project]\nname='x'\n")
+        deep = repo / "tasks" / "csm" / "t"
+        deep.mkdir(parents=True)
+        assert find_repo_root(deep) == repo
+
     def test_this_checkout_is_still_found_from_a_real_task_file(self):
         """End-to-end on the committed suite, independent of how it is installed."""
         task_file = REPO_ROOT / "tasks" / "csm" / "sla-relink" / "task.json"

@@ -7,9 +7,21 @@ name = "agentrelbench"
 version = "0.1.0"
 description = "k-run wrapper for the EnterpriseOps-Gym benchmark: drives evaluate.py k times per task, archiving per-run DB state exports plus a batch manifest."
 requires-python = ">=3.11"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Shiven Khurdi", email = "khurdi.s@northeastern.edu" },
+]
+keywords = ["llm-agents", "benchmark", "reliability", "agent-safety", "evaluation"]
 dependencies = [
     "httpx>=0.24",
 ]
+
+[project.urls]
+Homepage = "https://github.com/shivenkk/agentrelbench"
+Repository = "https://github.com/shivenkk/agentrelbench"
+Issues = "https://github.com/shivenkk/agentrelbench/issues"
 
 [project.optional-dependencies]
 dev = [
@@ -30,6 +42,23 @@ arb-validate = "agentrelbench.validate:entrypoint"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/agentrelbench"]
+# PROGRESS.md files are internal task-authoring scaffolding ("M4 csm batch, build
+# progress, delegated"). RATIONALE.md files stay: they document each task's damage
+# lever and the seed data the tension is built from, which a user of the suite wants.
+exclude = ["**/PROGRESS.md"]
+
+# The published task suite and its seed databases ship inside the wheel, not just
+# the sdist. Without this, `pip install agentrelbench` gives the code but none of
+# the tasks, which is the one use case this package exists to serve: bring your
+# own model, run it against the published suite. Locate them after install with
+#   python -c "import agentrelbench,pathlib;print(pathlib.Path(agentrelbench.__file__).parent/'suite')"
+[tool.hatch.build.targets.wheel.force-include]
+"tasks" = "agentrelbench/suite/tasks"
+"tasks-escalated" = "agentrelbench/suite/tasks-escalated"
+# Mapped to suite/data/seed-dbs, not suite/seed-dbs: the task JSONs carry the
+# repo-relative path "data/seed-dbs/...", and find_repo_root anchors on that
+# directory existing. Flatten it and every packaged task ships unrunnable.
+"data/seed-dbs" = "agentrelbench/suite/data/seed-dbs"
 
 # An allowlist, deliberately, not an exclude list. hatchling's default is to ship
 # anything not gitignored, which quietly published CLAUDE.md (AI tooling
@@ -60,6 +89,7 @@ exclude = [
   "/docs/problem-and-hypothesis.md",
   "/docs/M1-go-no-go.md",
   "/docs/task-design-m4.md",
+  "**/PROGRESS.md",
 ]
 
 [tool.pytest.ini_options]
