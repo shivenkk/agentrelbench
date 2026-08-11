@@ -87,9 +87,10 @@ finding, and we report that demotion. We release the instrument and task suite.
 
 \section{Introduction}
 
-Benchmarks for LLM agents largely inherit the framing of text generation: run the
-task once, score the output, and report an average. Action-taking agents break
-that framing in two ways. First, the failure model changes. When an agent holds
+Benchmarks for LLM agents largely inherit the framing of text generation: score
+the output and report an average, treating any spread across runs as noise to be
+averaged down rather than as the result. Action-taking agents break that framing
+in two ways. First, the failure model changes. When an agent holds
 write access to a production system, a wrong action is not a low-quality sample
 to be regenerated; it is a state change that someone must detect, price, and
 unwind. Second, the unit of evidence changes. A single observed run, safe or
@@ -105,9 +106,13 @@ passed safety test is a coin-flip observation, not a property of the model.
 
 Existing evaluations do not measure this, because measuring it requires three
 properties at once: \textbf{damage severity} (not just task failure),
-\textbf{repeated runs} (not single-shot scoring), and \textbf{ground-truth state
-verification} (not transcript or judge grading). Section~\ref{sec:related} maps
-the landscape; each axis exists somewhere, and no benchmark crosses all three.
+\textbf{repetition treated as the measurand} (not repeated in order to average
+variance away), and \textbf{ground-truth state verification} (not transcript or
+judge grading). The middle property is the one most easily mistaken for solved.
+Several benchmarks do run each task more than once, but they do so to stabilize a
+point estimate; none reports the per-cell damage distribution that decides whether
+a finite audit can certify an agent. Section~\ref{sec:related} maps the landscape;
+each axis exists somewhere, and no benchmark crosses all three.
 
 \paragraph{Contributions.}
 \begin{enumerate}
@@ -154,11 +159,13 @@ $\tau$-bench \citep{yao2024taubench}; Beyond pass@1
 \passk{}, run-to-run variance, reliability metrics &
 no damage axis; failure = task failure \\
 \addlinespace
-Damage, single run &
+Damage, variance averaged away &
 SABER, workspace safety \citep{hu2026saber}; ClawsBench
 \citep{li2026clawsbench}; EnterpriseOps-Gym \citep{malay2026enterpriseops} &
-end-state safety or unsafe-action rates at $k=1$ &
-one run per cell; no distributional claim \\
+end-state safety, unsafe-action rates, or side-effect verifiers; 1 to 5 runs
+per cell &
+run-to-run variance is a nuisance parameter, not the measurand; no per-cell
+damage distribution \\
 \addlinespace
 Abstention / mechanism &
 AgentAbstain \citep{liu2026agentabstain}; Yes-Man Syndrome
@@ -172,9 +179,17 @@ no ground-truth priced damage under repetition \\
 \end{table}
 
 EnterpriseOps-Gym is the closest substrate: a containerized enterprise sandbox
-with SQL verifiers on final state. It scores single-run binary success and
-one-shot infeasible-task refusal; it has no damage pricing, no repeated-run
-protocol, and no abstention mechanic. We build on it rather than beside it:
+whose hand-written SQL verifiers check goal completion, state integrity, policy
+compliance, and unintended side effects, plus one-shot infeasible-task refusal.
+It does repeat runs, and the reason is instructive: it reports ``the average of
+pass@1 across three runs (to reduce variance)'' as its primary metric. Repetition
+is used there to suppress the quantity we measure. Its side-effect checks also
+fold into an all-or-nothing pass@1 rather than a severity-priced damage rate, and
+it has no abstention mechanic. ClawsBench goes furthest on repetition, at 5
+repeats per task with a task-level cluster bootstrap and a reported within-task
+ICC of 0.48, but that ICC is a correction to interval width rather than a claim
+about damage recurrence, and its harm scores are task-authored rather than
+derived from a state diff. We build on EnterpriseOps-Gym rather than beside it:
 AgentRelBench is the measurement layer (repetition, state-diff damage,
 estimators) demonstrated on its tasks. Judge-scored severity
 \citep{rabanser2026science} differs from ours in kind: our severity comes from a
