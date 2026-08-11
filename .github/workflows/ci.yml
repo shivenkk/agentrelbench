@@ -41,10 +41,20 @@ jobs:
           python scripts/make_appendix_e.py
           python scripts/audit_numbers.py
 
-      - name: Confirm regeneration is byte-reproducible
-        # Figures and generated tables must come out identical to what is
-        # committed. A diff here means the artifact and the paper have drifted.
-        run: git diff --exit-code -- docs/figs docs/appendix-e-tables.md paper/appendix-e.tex
+      - name: Confirm the generated tables are byte-reproducible
+        # The generated tables carry every number the paper cites, and they are
+        # plain text, so they must come out byte-identical anywhere. A diff here
+        # means the artifact and the paper have drifted.
+        #
+        # The rendered figures are deliberately NOT byte-compared. Their bytes
+        # depend on CPU architecture: regenerating on linux/amd64 with the same
+        # matplotlib (3.11.1) and freetype (2.14.3) as the arm64 machine that
+        # produced them yields different PNGs and two different PDFs, because
+        # rasterization rounds differently. Figure *content* is gated instead, by
+        # the assertions inside make_figures.py that ran in the previous step
+        # (7 damage pairs, 5 stochastic cells across 3 models, 48 events, 0
+        # always-fail cells, and the frozen 13-pair development pool).
+        run: git diff --exit-code -- docs/appendix-e-tables.md paper/appendix-e.tex
 
       - name: Build distributions
         run: |
