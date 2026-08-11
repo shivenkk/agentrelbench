@@ -32,6 +32,12 @@
 
 \graphicspath{{../docs/figs/}}
 
+% Long \texttt task identifiers (change-request-cab-gate, case-reassign-scoped)
+% do not hyphenate and pushed several paragraphs past the right margin. This is
+% the minimal fix: it only affects paragraphs TeX would otherwise set overfull,
+% and unlike [htt]{hyphenat} it never hyphenates a code identifier.
+\setlength{\emergencystretch}{3em}
+
 \newcommand{\passk}{\ensuremath{\mathrm{pass}^{k}}}
 \newcommand{\safek}{\ensuremath{\mathrm{safe}^{k}}}
 \newcommand{\phat}{\ensuremath{\hat{p}}}

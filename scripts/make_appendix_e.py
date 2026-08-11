@@ -236,10 +236,14 @@ def emit_tex(rows, dev_pairs, dev_cab, dev_cells, arm_c, totals):
     for model in EXPECT_MERGED_TOTALS:
         rs = sorted((r for r in rows if r["model"] == model),
                     key=lambda r: (-r["x"], r["task"]))
+        # \footnotesize + a wrapping Status column: at \small with an l column
+        # these tables ran up to 67pt (nearly an inch) past the right margin.
         t += [r"\paragraph{" + tex_escape(model) + ".} "
               + f"{totals[model]} runs, {len(rs)} cells, "
               + f"{sum(1 for r in rs if r['x'] > 0)} damage-producing.", "",
-              r"\begin{longtable}{@{}lrrcrrl@{}}", r"\toprule",
+              r"\footnotesize",
+              r"\begin{longtable}{@{}lrrcrr>{\raggedright\arraybackslash}"
+              r"p{0.17\linewidth}@{}}", r"\toprule",
               r"Task & $x/n$ & $\hat{p}$ & 95\% CI & upper & PASS & Status \\",
               r"\midrule", r"\endhead"]
         for r in rs:
