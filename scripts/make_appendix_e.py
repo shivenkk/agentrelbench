@@ -21,11 +21,11 @@ sys.path.insert(0, str(REPO / "src"))
 from make_figures import (  # noqa: E402  (single source of truth for sources)
     CAB,
     DEV_BREADTH,
-    DEV_CAB_BATCHES,
     dev_counts,
     dev_stats,
     load_pool,
 )
+
 from agentrelbench.estimators import (  # noqa: E402
     clopper_pearson,
     demonstrably_stochastic,

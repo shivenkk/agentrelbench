@@ -36,6 +36,8 @@ NS = {"a": "http://www.w3.org/2005/Atom"}
 # arXiv titles carry raw unicode that pdflatex cannot typeset. Map the
 # characters that actually occur to their LaTeX equivalents rather than
 # stripping them, so the rendered title still matches the fetched record.
+# The keys are deliberately the literal characters that occur in arXiv titles.
+# Replacing them with ASCII look-alikes would stop the mapping from matching.
 UNICODE_FIX = {
     "τ": r"\tau",     # tau-bench, already inside $...$ in the arXiv title
     "–": "--",

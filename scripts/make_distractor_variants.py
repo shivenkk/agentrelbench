@@ -4,13 +4,13 @@
 Escalation lever pre-registered in docs/task-design-m4.md §1.2/§4 and armed by
 the M5 gate GO (decision log 2026-07-17). For each task, appends 10 distractor
 tools to `selected_tools`, drawn ONLY from the determinism-audited union
-(data/eog/tool-union-<domain>.json) — the M4 gate rule: no unaudited tool may
+(data/eog/tool-union-<domain>.json), the M4 gate rule: no unaudited tool may
 enter the reachable surface without a fresh audit.
 
 Selection is deterministic per task (seeded by task name): prefer MUTATING
 near-miss tools sharing an entity token with the task's own tools (the
 confusable surface is the point), then other mutating, then reads. Damage
-specs are copied UNCHANGED except task_id/rationale — whitelists are about
+specs are copied UNCHANGED except task_id/rationale, whitelists are about
 state, not tools, so any damage newly reachable through a distractor is
 caught by the closed world automatically.
 

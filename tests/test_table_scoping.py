@@ -1,6 +1,6 @@
 """Pins the table-scoping contract in labeling glue (measurement path):
 SQLite internal bookkeeping tables (reserved ``sqlite_`` prefix) are excluded
-silently; ANY other table absent from the primary-keys registry fails loudly —
+silently; ANY other table absent from the primary-keys registry fails loudly.
 a table the diff can't see is a blind spot in the damage axis, never a skip.
 """
 

@@ -1,4 +1,4 @@
-# Estimators & Statistics — Spec v0 (Phase 2 measurement core)
+# Estimators & Statistics, Spec v0 (Phase 2 measurement core)
 
 Test-first, same discipline as the labeler: `tests/test_estimators.py` is written and reviewed before `src/agentrelbench/estimators.py` exists. Every headline number in the paper traces to a function here.
 
@@ -7,7 +7,7 @@ Test-first, same discipline as the labeler: `tests/test_estimators.py` is writte
 Input: labeler verdicts grouped per (model m, task t): n_t runs, of which
 `x_t` = damage runs (`counts_as_damage`), `s_t` = success runs, plus `x_t^upper` (damage + errored_clean).
 
-**IID assumption:** runs within (m, t) are independent draws — justified by M1 (per-run re-seeding; env-side determinism byte-identical modulo timestamps), so all run-to-run variance is model-side sampling. Threats logged in manifests (provider drift over time, rate-limit throttling changing behavior); batches interleave runs across tasks to avoid time confounds. Stated in paper's limitations.
+**IID assumption:** runs within (m, t) are independent draws; justified by M1 (per-run re-seeding; env-side determinism byte-identical modulo timestamps), so all run-to-run variance is model-side sampling. Threats logged in manifests (provider drift over time, rate-limit throttling changing behavior); batches interleave runs across tasks to avoid time confounds. Stated in paper's limitations.
 
 ## 1. pass^k and safe^k (unbiased, τ-bench convention)
 
@@ -29,7 +29,7 @@ Aggregate: unweighted mean over tasks. **Always co-reported** (lock-in: do-nothi
 
 Primary claims lead with exact/nonparametric statements; model-based structure is secondary support:
 
-- **Beta-binomial decomposition** per model: fit x_t ~ BB(n_t, α, β) (method-of-moments, implemented 2026-07-16); report overdispersion vs. binomial (LR test; plain χ²(1) p-value, which is *conservative* at the ρ=0 boundary — the honest direction for an overdispersion claim) and ICC ρ = 1/(α+β+1). Bimodal-vs-intermediate comparison via parametric bootstrap of a {p≈0/p≈1} two-spike mixture against BB — flagged as secondary, small-T caveats stated.
+- **Beta-binomial decomposition** per model: fit x_t ~ BB(n_t, α, β) (method-of-moments, implemented 2026-07-16); report overdispersion vs. binomial (LR test; plain χ²(1) p-value, which is *conservative* at the ρ=0 boundary (the honest direction for an overdispersion claim) and ICC ρ = 1/(α+β+1). Bimodal-vs-intermediate comparison via parametric bootstrap of a {p≈0/p≈1} two-spike mixture against BB), flagged as secondary, small-T caveats stated.
 - Ratified conventions (post-implementation review): `damage_mass_share`/`demonstrably_stochastic` return 0.0 when zero damage events exist; BB fit on variance ≤ binomial clamps to (α=β=∞, ICC=0, p=1); BB fit with a single task fails loudly (variance undefined) rather than guessing.
 
 ## 3. Uncertainty
@@ -51,7 +51,7 @@ fit_beta_binomial(stats) -> BBFit(alpha, beta, icc, overdispersion_pvalue)
 cluster_bootstrap(stat_fn, stats, n_boot, seed) -> Estimate
 ```
 
-Pure functions, stdlib + `math` only where feasible (bootstrap needs `random`; BB fit may use scipy — if so, scipy is an optional extra `[stats]`, and the nonparametric path never depends on it).
+Pure functions, stdlib + `math` only where feasible (bootstrap needs `random`; BB fit may use scipy, if so, scipy is an optional extra `[stats]`, and the nonparametric path never depends on it).
 
 ## 5. Test plan (written first)
 

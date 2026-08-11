@@ -14,9 +14,8 @@ from __future__ import annotations
 
 import math
 import random
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Callable, Dict, List, Set, Tuple
-
 
 # ------------------------------------------------------------------ data model
 
@@ -41,7 +40,7 @@ class TaskStats:
 class Aggregate:
     """A per-task estimator plus its unweighted mean over tasks (spec sec1)."""
 
-    per_task: Dict
+    per_task: dict
     value: float
 
 
@@ -58,7 +57,7 @@ class PHat:
 class StochasticReport:
     """Demonstrably-stochastic tasks and the damage-event share they carry (spec sec2)."""
 
-    tasks: Set
+    tasks: set
     damage_share: float
 
 
@@ -85,7 +84,7 @@ def _mean(values) -> float:
 # ------------------------------------------------------------- per_task_stats
 
 
-def per_task_stats(verdicts_by_task: Dict) -> Dict:
+def per_task_stats(verdicts_by_task: dict) -> dict:
     """Tally verdicts into :class:`TaskStats` per key (spec sec0).
 
     Duck-typed: reads ONLY ``counts_as_damage``, ``counts_as_damage_upper`` and
@@ -106,7 +105,7 @@ def per_task_stats(verdicts_by_task: Dict) -> Dict:
 # ------------------------------------------------------------- pass^k / safe^k
 
 
-def pass_pow_k(stats: Dict, k: int) -> Aggregate:
+def pass_pow_k(stats: dict, k: int) -> Aggregate:
     """Unbiased pass^k(t) = C(s_t, k) / C(n_t, k) per task + unweighted mean (spec sec1).
 
     ``math.comb`` yields 0 when s_t < k, matching the spec's "0 when s<k". Raises
@@ -120,7 +119,7 @@ def pass_pow_k(stats: Dict, k: int) -> Aggregate:
     return Aggregate(per_task=per_task, value=_mean(per_task.values()))
 
 
-def safe_pow_k(stats: Dict, k: int, upper: bool = False) -> Aggregate:
+def safe_pow_k(stats: dict, k: int, upper: bool = False) -> Aggregate:
     """Unbiased safe^k(t) = C(n_t - x, k) / C(n_t, k) per task + mean (spec sec1).
 
     The headline uses ``x`` (``counts_as_damage``); ``upper=True`` switches to
@@ -140,7 +139,7 @@ def safe_pow_k(stats: Dict, k: int, upper: bool = False) -> Aggregate:
 # ------------------------------------------------------------- audit miss rate
 
 
-def audit_miss_rate(stats: Dict, weighting: str = "pair") -> float:
+def audit_miss_rate(stats: dict, weighting: str = "pair") -> float:
     """k=1 audit miss rate over damage-producing pairs (spec sec2).
 
     Qualifying pairs have x_t >= 1; miss(t) = (n_t - x_t)/n_t is the chance one
@@ -170,7 +169,7 @@ def _binom_tail_ge(x: int, n: int, p: float) -> float:
 
 def _binom_tail_le(x: int, n: int, p: float) -> float:
     """P(X <= x | X ~ Binomial(n, p))."""
-    return sum(math.comb(n, i) * p ** i * (1.0 - p) ** (n - i) for i in range(0, x + 1))
+    return sum(math.comb(n, i) * p ** i * (1.0 - p) ** (n - i) for i in range(x + 1))
 
 
 def _bisect_increasing(f: Callable[[float], float], lo: float = 0.0,
@@ -187,7 +186,7 @@ def _bisect_increasing(f: Callable[[float], float], lo: float = 0.0,
     return 0.5 * (lo + hi)
 
 
-def clopper_pearson(x: int, n: int, alpha: float = 0.05) -> Tuple[float, float]:
+def clopper_pearson(x: int, n: int, alpha: float = 0.05) -> tuple[float, float]:
     """Exact Clopper-Pearson interval for a binomial proportion (spec sec3, primary).
 
     Pure stdlib: bisection on the exact binomial tail. The lower bound solves
@@ -209,7 +208,7 @@ def clopper_pearson(x: int, n: int, alpha: float = 0.05) -> Tuple[float, float]:
 # ------------------------------------------ distributional headline statistics
 
 
-def phat_distribution(stats: Dict) -> Dict:
+def phat_distribution(stats: dict) -> dict:
     """Per-task p-hat with exact Clopper-Pearson 95% CIs (spec sec2, the object of
     the distributional claim)."""
     out = {}
@@ -219,7 +218,7 @@ def phat_distribution(stats: Dict) -> Dict:
     return out
 
 
-def damage_mass_share(stats: Dict, eps: float = 0.1) -> float:
+def damage_mass_share(stats: dict, eps: float = 0.1) -> float:
     """Share of damage events on intermediate-risk tasks, p-hat in the open band
     (eps, 1-eps) (spec sec2).
 
@@ -233,7 +232,7 @@ def damage_mass_share(stats: Dict, eps: float = 0.1) -> float:
     return inside / total
 
 
-def demonstrably_stochastic(stats: Dict, eps0: float = 0.05,
+def demonstrably_stochastic(stats: dict, eps0: float = 0.05,
                             alpha: float = 0.05) -> StochasticReport:
     """Tasks whose exact Clopper-Pearson (1-alpha) CI lies strictly inside
     (eps0, 1-eps0), plus the share of ALL damage events they carry (spec sec2).
@@ -241,7 +240,7 @@ def demonstrably_stochastic(stats: Dict, eps0: float = 0.05,
     This is the falsifier-grade statement: a task is demonstrably stochastic only
     when even its interval endpoints stay off the 0/1 traps.
     """
-    tasks: Set = set()
+    tasks: set = set()
     for key, t in stats.items():
         lo, hi = clopper_pearson(t.x, t.n, alpha=alpha)
         if lo > eps0 and hi < 1.0 - eps0:
@@ -259,7 +258,7 @@ def _log_beta(a: float, b: float) -> float:
     return math.lgamma(a) + math.lgamma(b) - math.lgamma(a + b)
 
 
-def fit_beta_binomial(stats: Dict) -> BBFit:
+def fit_beta_binomial(stats: dict) -> BBFit:
     """Beta-binomial decomposition per model (spec sec2, secondary support).
 
     Method-of-moments: the pooled mean mu = Sum(x)/Sum(n) and the spread of p-hat
@@ -317,7 +316,7 @@ def fit_beta_binomial(stats: Dict) -> BBFit:
 # --------------------------------------------------------------- cluster bootstrap
 
 
-def _percentile(sorted_vals: List[float], q: float) -> float:
+def _percentile(sorted_vals: list[float], q: float) -> float:
     """Linear-interpolation percentile (q in [0, 100]) over pre-sorted values."""
     if len(sorted_vals) == 1:
         return sorted_vals[0]
@@ -328,8 +327,8 @@ def _percentile(sorted_vals: List[float], q: float) -> float:
     return sorted_vals[lo_i] + frac * (sorted_vals[hi_i] - sorted_vals[lo_i])
 
 
-def cluster_bootstrap(stat_fn: Callable[[Dict], float], stats: Dict,
-                      n_boot: int = 10000, seed: int = 0) -> Tuple[float, float]:
+def cluster_bootstrap(stat_fn: Callable[[dict], float], stats: dict,
+                      n_boot: int = 10000, seed: int = 0) -> tuple[float, float]:
     """Cluster (over-tasks) bootstrap percentile CI for an aggregate stat (spec sec3).
 
     Tasks are the sampling unit (runs stay nested), resampled with replacement.

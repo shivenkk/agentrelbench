@@ -1,5 +1,5 @@
 """
-M4 STEP 0b — SEED ENTITY RECONNAISSANCE
+M4 STEP 0b, SEED ENTITY RECONNAISSANCE
 
 Seeds ONE throwaway database per domain (from the exact seed files the
 finalized 20-task portfolio references -- gc.CSM_SEED / gc.ITSM_SEED, confirmed

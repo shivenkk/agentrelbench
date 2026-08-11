@@ -22,7 +22,7 @@ import sys
 from pathlib import Path
 
 
-def main(argv: list = None) -> int:
+def main(argv: list | None = None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
     if len(argv) != 1:
         print("usage: python -m agentrelbench.inner_runner <job_spec.json>", file=sys.stderr)
@@ -73,8 +73,6 @@ def main(argv: list = None) -> int:
         langchain_openai.ChatOpenAI = _PinnedChatOpenAI
         print(f"[agentrelbench] provider pinned: {pin} (allow_fallbacks=false)")
 
-    import evaluate  # the clone's top-level evaluate.py, now import-patchable
-
     # Force single-attempt semantics (added 2026-07-17 after two live failures).
     # EOG's evaluate.execute_sample retries the WHOLE sample (max_num_attempts=5,
     # fresh DB seed per attempt) whenever any run records an error. That is a
@@ -87,6 +85,8 @@ def main(argv: list = None) -> int:
     # Bare-name call sites resolve through module globals, so rebinding works
     # just like the create/delete patch.
     import inspect
+
+    import evaluate  # the clone's top-level evaluate.py, now import-patchable
     assert "max_num_attempts" in inspect.signature(evaluate.execute_sample).parameters, (
         "EOG drifted: evaluate.execute_sample no longer takes max_num_attempts; "
         "re-verify retry semantics before running"

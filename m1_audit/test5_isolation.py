@@ -1,5 +1,5 @@
 """
-TEST 5 — ISOLATION (csm)
+TEST 5, ISOLATION (csm)
 
 Seed two independent database_ids (A, B) from the same seed file. Using a
 SINGLE MCP session (one MCPClient / one mcp-session-id, constructed with no

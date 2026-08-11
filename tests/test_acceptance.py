@@ -71,6 +71,7 @@ def scripted_responder():
             proc.wait(timeout=5)
 
 
+@pytest.mark.needs_containers
 def test_k2_produces_complete_batch_then_detects_corruption(scripted_responder, tmp_path):
     out_dir = tmp_path / "runs"
 

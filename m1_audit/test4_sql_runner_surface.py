@@ -1,5 +1,5 @@
 """
-TEST 4 — SQL-RUNNER SURFACE (csm)
+TEST 4, SQL-RUNNER SURFACE (csm)
 
 Confirms: multi-table SELECT/JOIN support, sqlite_master accessibility,
 the implicit-LIMIT-100 truncation behavior and how to avoid it, and times a

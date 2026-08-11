@@ -21,6 +21,7 @@ Usage: .venv/bin/python scripts/make_data_manifests.py
 from __future__ import annotations
 
 import hashlib
+import itertools
 import json
 import subprocess
 import sys
@@ -114,7 +115,7 @@ def harness_diff(shas) -> dict:
     if len(shas) < 2:
         return {}
     changed = set()
-    for older, newer in zip(shas, shas[1:]):
+    for older, newer in itertools.pairwise(shas):
         try:
             out = subprocess.run(
                 ["git", "diff", "--name-only", older, newer,

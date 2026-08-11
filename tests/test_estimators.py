@@ -1,4 +1,4 @@
-"""Estimator test suite — written BEFORE the implementation (measurement core).
+"""Estimator test suite, written BEFORE the implementation (measurement core).
 
 Contract for agentrelbench.estimators per docs/estimators-spec.md. Every
 headline number in the eventual paper flows through these functions; a bug
@@ -22,6 +22,7 @@ API under test:
 Pure stdlib (math.comb, math.lgamma, random). No scipy on this path.
 """
 
+import itertools
 import math
 import random
 from types import SimpleNamespace
@@ -294,7 +295,8 @@ class TestClusterBootstrap:
     def test_deterministic_under_seed(self):
         rng = random.Random(3)
         stats = {i: ts(8, rng.randint(0, 8), 0) for i in range(25)}
-        f = lambda s: sum(t.x / t.n for t in s.values()) / len(s)
+        def f(s):
+            return sum(t.x / t.n for t in s.values()) / len(s)
         assert cluster_bootstrap(f, stats, n_boot=300, seed=42) == cluster_bootstrap(
             f, stats, n_boot=300, seed=42
         )
@@ -326,7 +328,7 @@ def test_prop_pass_pow_k_nonincreasing_in_k(n, data):
     s = data.draw(st.integers(0, n))
     stats = {"t": ts(n, 0, s)}
     values = [pass_pow_k(stats, k).value for k in range(1, n + 1)]
-    assert all(a >= b - 1e-12 for a, b in zip(values, values[1:]))
+    assert all(a >= b - 1e-12 for a, b in itertools.pairwise(values))
 
 
 @settings(max_examples=80, deadline=None)

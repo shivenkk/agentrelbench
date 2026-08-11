@@ -1,5 +1,5 @@
 """
-M4 TEST C — CREATE-ID STABILITY (csm)
+M4 TEST C, CREATE-ID STABILITY (csm)
 
 On TWO independently freshly-seeded csm databases, call create_new_account
 with IDENTICAL arguments and confirm both replicas receive the SAME new

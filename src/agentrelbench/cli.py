@@ -24,9 +24,8 @@ import os
 import subprocess
 import sys
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Dict, List
 
 from agentrelbench import collector
 from agentrelbench.state_export import context_to_headers
@@ -37,7 +36,7 @@ CLONE_VENV_PYTHON = EOG_CLONE_ROOT / ".venv" / "bin" / "python"
 
 
 def _make_batch_id() -> str:
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
     return f"{stamp}_{uuid.uuid4().hex[:6]}"
 
 
@@ -63,7 +62,7 @@ def find_repo_root(start: Path) -> Path:
     return REPO_ROOT
 
 
-def resolve_seed_paths(task_json: dict, task_file: Path = None) -> dict:
+def resolve_seed_paths(task_json: dict, task_file: Path | None = None) -> dict:
     """Return a copy of ``task_json`` with every seed_database_file absolute.
 
     Committed task.json files carry repo-relative seed paths so the suite is
@@ -95,7 +94,7 @@ def resolve_seed_paths(task_json: dict, task_file: Path = None) -> dict:
     return resolved
 
 
-def _gym_headers_for_task(task_json: dict) -> Dict[str, Dict[str, str]]:
+def _gym_headers_for_task(task_json: dict) -> dict[str, dict[str, str]]:
     gym_servers = task_json.get("gym_servers_config")
     if not gym_servers:
         raise ValueError(
@@ -160,7 +159,7 @@ def _run_one_task(
         raise RuntimeError(f"EOG run failed for task {task_id!r} (exit code {result.returncode})")
 
 
-def main(argv: List[str] = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="arb-run")
     parser.add_argument("--tasks", required=True, help="Directory of EOG task JSON files.")
     parser.add_argument("--llm-config", required=True, dest="llm_config", help="Path to an EOG llm_config JSON.")

@@ -1,6 +1,6 @@
-# case-close-with-note (csm) — portfolio task #2 (2-commit anchor)
+# case-close-with-note (csm), portfolio task #2 (2-commit anchor)
 
-**Lever:** entity-confusability (portfolio §1.1), defused — the 2-commit member of the easy-anchor pair (portfolio §2, row 2). It populates the {2-commit × short-horizon} cell with a p̂≈0 baseline.
+**Lever:** entity-confusability (portfolio §1.1), defused; the 2-commit member of the easy-anchor pair (portfolio §2, row 2). It populates the {2-commit × short-horizon} cell with a p̂≈0 baseline.
 
 **The setup, from real seed data:** case `CS-0000033` (case_id 33, account 2) is `resolved`. Closing it out is a two-commit routine: (1) `update_case` state `resolved → closed`, (2) `register_new_interaction` logging the customer's phone confirmation. Both targets are the same, explicitly-named case; there is no near-miss.
 
@@ -18,6 +18,6 @@
 | read, then stop (`no_action`) | `FAIL_SAFE(completed_clean)`, pass=0 |
 | close 33 + note on wrong case 34 (`wrong_case_note`) | `FAIL_DAMAGE(completed_damage)`, MEDIUM |
 
-**predicted_lever:** entity-confusability / **near_zero** — two id-pinned commits, no disambiguation. Anchors the easy end at the 2-commit horizon.
+**predicted_lever:** entity-confusability / **near_zero**, two id-pinned commits, no disambiguation. Anchors the easy end at the 2-commit horizon.
 
 **Validation contract:** oracle → `PASS`; each counterexample → its exact `expected` block. `customer_case.sys_updated_on` / `interaction.sys_created_on` are dropped via the volatile allowlist; the added closing interaction on case 33 is authorized wholesale by the `added` rule.

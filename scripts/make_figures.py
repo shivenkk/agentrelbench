@@ -28,8 +28,8 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.patches import FancyBboxPatch, Patch
 from matplotlib.lines import Line2D
+from matplotlib.patches import FancyBboxPatch, Patch
 
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "src"))
@@ -102,7 +102,7 @@ def dev_counts():
     """Compute dev damage-pair counts and cab cells from committed run data."""
     pair_counts = {}
     for model, rel in DEV_BREADTH.items():
-        rows = [json.loads(l) for l in open(REPO / rel / "verdicts.jsonl")]
+        rows = [json.loads(line) for line in open(REPO / rel / "verdicts.jsonl")]
         assert len(rows) == 160 and len({r["task_id"] for r in rows}) == 20, \
             f"{model}: expected 20 tasks x 8 = 160 breadth rows, got {len(rows)}"
         damaged = {r["task_id"] for r in rows if r["counts_as_damage"]}
@@ -112,8 +112,8 @@ def dev_counts():
 
     cab = []
     for model, rel, exp_x, exp_n in DEV_CAB_BATCHES:
-        rows = [json.loads(l) for l in open(REPO / rel / "verdicts.jsonl")
-                if json.loads(l)["task_id"] == CAB]
+        rows = [json.loads(line) for line in open(REPO / rel / "verdicts.jsonl")
+                if json.loads(line)["task_id"] == CAB]
         x = sum(1 for r in rows if r["counts_as_damage"])
         assert (x, len(rows)) == (exp_x, exp_n), \
             f"{model} cab cell drifted: {x}/{len(rows)} != {exp_x}/{exp_n}"
@@ -202,7 +202,7 @@ def fig1_pipeline():
                     color=ACCENT, style="italic", linespacing=1.2)
         if i < len(steps) - 1:
             ax.annotate("", xy=(x + w + gap - 0.03, 0.85), xytext=(x + w + 0.02, 0.85),
-                        arrowprops=dict(arrowstyle="-|>", lw=1.0, color=SECONDARY))
+                        arrowprops={"arrowstyle": "-|>", "lw": 1.0, "color": SECONDARY})
         x += w + gap
     save(fig, "fig1-pipeline")
 
@@ -217,21 +217,29 @@ def fig2_universality_forest(pool, stats, stochastic_keys, dev_cab):
                      "haiku-4.5", "opus-4.6"]
     labels, phat, lo, hi, colors, counts = [], [], [], [], [], []
     for name, x, n in dev_cab:
-        l, h = clopper_pearson(x, n)
-        labels.append(name); phat.append(x / n); lo.append(l); hi.append(h)
-        colors.append(MUTED); counts.append(f"{x}/{n}")
+        ci_lo, ci_hi = clopper_pearson(x, n)
+        labels.append(name)
+        phat.append(x / n)
+        lo.append(ci_lo)
+        hi.append(ci_hi)
+        colors.append(MUTED)
+        counts.append(f"{x}/{n}")
     for m in heldout_order:
         t = stats[(m, CAB)]
-        l, h = clopper_pearson(t.x, t.n)
-        labels.append(m); phat.append(t.x / t.n); lo.append(l); hi.append(h)
-        colors.append(ACCENT); counts.append(f"{t.x}/{t.n}")
+        ci_lo, ci_hi = clopper_pearson(t.x, t.n)
+        labels.append(m)
+        phat.append(t.x / t.n)
+        lo.append(ci_lo)
+        hi.append(ci_hi)
+        colors.append(ACCENT)
+        counts.append(f"{t.x}/{t.n}")
     xs = range(len(labels))
     a.bar(xs, phat, width=0.62, color=colors, zorder=3)
     a.errorbar(xs, phat,
-               yerr=[[p - l for p, l in zip(phat, lo)],
-                     [h - p for p, h in zip(phat, hi)]],
+               yerr=[[p - q for p, q in zip(phat, lo, strict=False)],
+                     [q - p for p, q in zip(phat, hi, strict=False)]],
                fmt="none", ecolor=INK, elinewidth=1.1, capsize=2.2, zorder=4)
-    for i, (h_, c) in enumerate(zip(hi, counts)):
+    for i, (h_, c) in enumerate(zip(hi, counts, strict=False)):
         a.text(i, h_ + 0.03, c, ha="center", va="bottom",
                fontsize=6.6, color=SECONDARY)
     a.set_xticks(list(xs))
@@ -256,15 +264,15 @@ def fig2_universality_forest(pool, stats, stochastic_keys, dev_cab):
     b.axvline(1.0, color=SECONDARY, linewidth=0.9, zorder=1)
     ylabels = []
     for i, ((m, task), t) in enumerate(pairs):
-        l, h = clopper_pearson(t.x, t.n)
+        ci_lo, ci_hi = clopper_pearson(t.x, t.n)
         stoch = (m, task) in stochastic_keys
         color = ACCENT if stoch else MUTED
-        b.plot([l, h], [i, i], color=color, linewidth=2.0, zorder=3,
+        b.plot([ci_lo, ci_hi], [i, i], color=color, linewidth=2.0, zorder=3,
                solid_capstyle="round")
         b.plot(t.x / t.n, i, "o", ms=6.5, zorder=4,
                markerfacecolor=color if stoch else "white",
                markeredgecolor=color, markeredgewidth=1.4)
-        b.text(min(h + 0.025, 1.13), i, f"{t.x}/{t.n}", va="center",
+        b.text(min(ci_hi + 0.025, 1.13), i, f"{t.x}/{t.n}", va="center",
                fontsize=6.6, color=SECONDARY)
         ylabels.append(f"{m} · {task.replace('change-request-', '')}")
     b.set_yticks(range(len(pairs)))
@@ -314,7 +322,7 @@ def fig3_gradient(stats, dev_pairs):
     ]
     fig, ax = plt.subplots(figsize=(3.5, 3.0))
     ys = range(len(order))[::-1]
-    for y, (name, cnt, color) in zip(ys, order):
+    for y, (_name, cnt, color) in zip(ys, order, strict=False):
         ax.barh(y, cnt, height=0.62, color=color, zorder=3)
         ax.text(cnt + 0.12, y, str(cnt), va="center", fontsize=7.2, color=INK)
     ax.set_yticks(list(ys))
@@ -358,8 +366,8 @@ def fig4_audit_decay(stats, stochastic_keys):
     ax.annotate("a single audit misses the\nfrontier pair 84% of the time",
                 xy=(1.15, 1 - 5 / 32), xytext=(3.3, 0.68), fontsize=6.2,
                 color=INK, va="top",
-                arrowprops=dict(arrowstyle="-", lw=0.7, color=SECONDARY,
-                                relpos=(0.0, 1.0)))
+                arrowprops={"arrowstyle": "-", "lw": 0.7, "color": SECONDARY,
+                                "relpos": (0.0, 1.0)})
     ax.set_xlabel("audit size k (independent runs)")
     ax.set_ylabel("P(audit observes zero damage)")
     ax.set_xlim(1, 18.5)
@@ -383,9 +391,9 @@ def main():
     print("== verification block (cross-check against docs/frontier-results.md) ==")
     pairs = {k: t for k, t in stats.items() if t.x > 0}
     for (m, task), t in sorted(pairs.items()):
-        l, h = clopper_pearson(t.x, t.n)
+        ci_lo, ci_hi = clopper_pearson(t.x, t.n)
         tag = "STOCHASTIC" if (m, task) in stochastic_keys else "below band"
-        print(f"  {m:14s} {task:28s} {t.x:2d}/{t.n:<3d} CI=({l:.3f},{h:.3f}) {tag}")
+        print(f"  {m:14s} {task:28s} {t.x:2d}/{t.n:<3d} CI=({ci_lo:.3f},{ci_hi:.3f}) {tag}")
     assert len(pairs) == 7, f"expected 7 held-out pairs, got {len(pairs)}"
     assert len(stochastic_keys) == 5, f"expected 5 stochastic pairs, got {len(stochastic_keys)}"
     assert ("opus-4.6", CAB) in stochastic_keys, "opus cab pair must be in the stochastic set"

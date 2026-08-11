@@ -58,8 +58,9 @@ from __future__ import annotations
 
 import inspect
 import logging
+from collections.abc import Callable
 from pathlib import Path
-from typing import Any, Callable, Dict, Optional, Tuple
+from typing import Any
 
 from agentrelbench.state_export import dump_all_tables, write_gzip_json
 
@@ -73,7 +74,7 @@ class EOGPatchError(RuntimeError):
     silently skipping would defeat the point of the state-export guarantee."""
 
 
-_STATE: Dict[str, Any] = {
+_STATE: dict[str, Any] = {
     "output_root": None,  # Path: this task's output folder; EOG creates run_N under it
     "headers_by_gym_url": {},  # {mcp_server_url: {header_name: header_value}}
     "run_counter": 0,  # increments once per create_database_from_file call
@@ -82,7 +83,7 @@ _STATE: Dict[str, Any] = {
 }
 
 
-def set_run_context(output_root: Any, headers_by_gym_url: Optional[Dict[str, Dict[str, str]]]) -> None:
+def set_run_context(output_root: Any, headers_by_gym_url: dict[str, dict[str, str]] | None) -> None:
     """Register the per-task context the patched functions need. Call once,
     before invoking evaluate.main(), for each task's EOG subprocess."""
     _STATE["output_root"] = Path(output_root)
@@ -91,11 +92,11 @@ def set_run_context(output_root: Any, headers_by_gym_url: Optional[Dict[str, Dic
     _STATE["pending_final"] = {}
 
 
-def _headers_for(gym_url: str) -> Dict[str, str]:
+def _headers_for(gym_url: str) -> dict[str, str]:
     return dict(_STATE["headers_by_gym_url"].get(gym_url, {}))
 
 
-def _check_symbol(module: Any, name: str, expected_params: Tuple[str, ...]) -> Callable:
+def _check_symbol(module: Any, name: str, expected_params: tuple[str, ...]) -> Callable:
     """Defensive existence + shape check. Raises EOGPatchError (loudly, not
     silently) if the clone's code drifted from what this patch assumes."""
     if not hasattr(module, name):
@@ -159,7 +160,7 @@ def apply_patch() -> None:
 
     mcp_client_mod.MCPClient.list_tools = guarded_list_tools
 
-    def wrapped_create_database_from_file(gym_url: str, sql_file_path: str) -> Optional[str]:
+    def wrapped_create_database_from_file(gym_url: str, sql_file_path: str) -> str | None:
         db_id = orig_create(gym_url, sql_file_path)
         if db_id:
             _STATE["run_counter"] += 1

@@ -94,3 +94,37 @@ exclude = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+    "needs_containers: requires the EnterpriseOps-Gym MCP containers to be running",
+]
+
+[tool.ruff]
+line-length = 100
+# The audit trees are frozen evidence for Appendix C, not maintained code. They
+# ran once, their output is committed, and relinting them now would mean editing
+# the scripts that produced published results.
+extend-exclude = ["m1_audit", "m1_spike", "m4_reaudit"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "PIE", "SIM", "RUF", "ASYNC"]
+ignore = [
+    # Long explanatory comments are deliberate in the measurement core: several
+    # document substrate hazards that cost real debugging to find.
+    "E501",
+    # Both of the following are real and deliberately deferred rather than fixed
+    # days before a release. They mean editing working, tested code on the paths
+    # that produce published numbers.
+    #   ASYNC230: 14 blocking open() calls inside async functions.
+    #   SIM115:   13 files opened without a context manager.
+    # Revisit after the release; see docs/release-checklist.md.
+    "ASYNC230",
+    "SIM115",
+    # ruff 0.6 predates PEP 639, so it rejects the valid `license-files` key.
+    # hatchling accepts it and emits License-Expression: Apache-2.0.
+    "RUF200",
+    # Non-ASCII characters here are deliberate, not homoglyph typos: the keys of
+    # fetch_bib.UNICODE_FIX are the literal characters that occur in arXiv titles
+    # and must match them exactly, and docstrings use real math notation.
+    "RUF001",
+    "RUF002",
+]

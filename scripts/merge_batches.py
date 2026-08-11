@@ -23,7 +23,7 @@ def main():
     rows, task_source = [], {}
     for b in args.batches:
         with open(b / "verdicts.jsonl") as f:
-            batch_rows = [json.loads(l) for l in f]
+            batch_rows = [json.loads(line) for line in f]
         for task in {r["task_id"] for r in batch_rows}:
             if task in task_source:
                 raise SystemExit(f"NEVER-SPLICE VIOLATION: {task} in both {task_source[task]} and {b}")

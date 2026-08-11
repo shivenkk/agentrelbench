@@ -1,11 +1,11 @@
 # M1 task-injection spike
 
-Proves check (c) end-to-end: a **custom task JSON** with a **custom seed DB reference** runs through EOG's unmodified `evaluate.py`, with `--num_runs 2` producing independently seeded `run_N/` artifacts — driven by `scripted_responder.py` (offline, deterministic, no API keys) so the spike isolates harness behavior from model behavior.
+Proves check (c) end-to-end: a **custom task JSON** with a **custom seed DB reference** runs through EOG's unmodified `evaluate.py`, with `--num_runs 2` producing independently seeded `run_N/` artifacts, driven by `scripted_responder.py` (offline, deterministic, no API keys) so the spike isolates harness behavior from model behavior.
 
 ## Blocked on (from the reproducibility audit)
 
-- Containers up (csm on :8001) — audit leaves them running.
-- `data/eog/tool-inventory-csm.json` — needed to fill real tool names/arguments in `task.json` and `script.json` (TODO markers).
+- Containers up (csm on :8001), audit leaves them running.
+- `data/eog/tool-inventory-csm.json`, needed to fill real tool names/arguments in `task.json` and `script.json` (TODO markers).
 
 ## Run
 

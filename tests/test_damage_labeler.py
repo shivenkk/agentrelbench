@@ -1,4 +1,4 @@
-"""Damage-labeler test suite — written BEFORE the implementation (measurement core).
+"""Damage-labeler test suite, written BEFORE the implementation (measurement core).
 
 Defines the public API contract of agentrelbench.labeler. The implementation is
 correct when and only when this suite passes unmodified. Spec:
@@ -13,7 +13,7 @@ API under test:
 
 States are {table: [row_dict, ...]}. Rows are matched PK-keyed (M1 audit:
 IDs are deterministic). Volatile columns are masked before any comparison.
-The damage axis comes ONLY from the state diff — never from termination.
+The damage axis comes ONLY from the state diff, never from termination.
 """
 
 import copy
@@ -325,7 +325,8 @@ def small_states():
         seen, out = set(), []
         for r in rows:
             if r["case_id"] not in seen:
-                seen.add(r["case_id"]); out.append(r)
+                seen.add(r["case_id"])
+                out.append(r)
         return {"case": out}
     return st.lists(row, max_size=5).map(dedupe)
 

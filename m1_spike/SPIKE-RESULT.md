@@ -1,4 +1,4 @@
-# M1 Spike Result — Task-Injection End-to-End
+# M1 Spike Result, Task-Injection End-to-End
 
 Proves check (c): a custom task JSON + custom seed DB reference runs through
 EOG's unmodified `evaluate.py`, `--num_runs 2` producing independently-seeded
@@ -6,12 +6,12 @@ EOG's unmodified `evaluate.py`, `--num_runs 2` producing independently-seeded
 
 ## What was run (exact commands)
 
-1. **Schema source** — read a real shipped task verbatim:
+1. **Schema source**, read a real shipped task verbatim:
    `external/EnterpriseOps-Gym/data/revised/csm/task_20251209_132736_542_99ba2325_6705caf4.json`
    (also cross-checked against `benchmark/models.py`'s `BenchmarkConfig` /
    `GymServerConfig` / `VerifierConfig` dataclasses directly in the clone).
 
-2. **Entity-ID discovery + dry run** (throwaway, not part of the deliverable) —
+2. **Entity-ID discovery + dry run** (throwaway, not part of the deliverable).
    seeded the csm DB from
    `scratch/gym_dbs/Domain Wise DBs and Task-DB Mappings/csm/dbs/db_1762232091750_3ev7dns6b.sql`
    via `gym_client.seed()`, confirmed `account_id=1`, `contact_id=123`,
@@ -22,11 +22,11 @@ EOG's unmodified `evaluate.py`, `--num_runs 2` producing independently-seeded
    into the task/script files.
 
 3. **Authored artifacts:**
-   - `m1_spike/tasks/task.json` — custom csm task (gym `sn-csm-server`,
+   - `m1_spike/tasks/task.json`, custom csm task (gym `sn-csm-server`,
      absolute `seed_database_file` path, `context: {"x-user-email":
      "thomas.green@servicenow.com"}`, `selected_tools:
      ["create_new_case","update_case","assign_case_to_user"]`, 2 verifiers).
-   - `m1_spike/script.json` — 4 turns: 3 `tool_calls` (one tool per turn, to
+   - `m1_spike/script.json`, 4 turns: 3 `tool_calls` (one tool per turn, to
      stay aligned with the responder's `n_tool_msgs`-indexed turn selection)
      + 1 final `content` turn.
 
@@ -47,7 +47,7 @@ EOG's unmodified `evaluate.py`, `--num_runs 2` producing independently-seeded
      --output_folder /Users/shiven/Documents/Projects/agentrelbench/m1_spike/results \
      --orchestrator react --concurrency 1 --num_runs 2
    ```
-   No `--domain`/`--mode` needed — those only apply to the `--hf_dataset` path;
+   No `--domain`/`--mode` needed, those only apply to the `--hf_dataset` path;
    `--configs_folder` is the direct local-JSON path per `evaluate.py`'s argparse.
    Exit code 0.
 
@@ -61,13 +61,13 @@ EOG's unmodified `evaluate.py`, `--num_runs 2` producing independently-seeded
 'nest_asyncio'`. Root cause: the clone's `uv.lock` pins a package literally
 named **`nest-asyncio2`** (module `nest_asyncio2`), but
 `utils/task_queue_worker.py` imports the standard **`nest_asyncio`** (no "2")
-— an upstream lockfile/import-name mismatch, not something introduced by this
+- an upstream lockfile/import-name mismatch, not something introduced by this
 spike (`git status` was clean before this run). Fixed by installing the real,
 well-known PyPI package into the existing venv only:
 ```
 uv pip install --python external/EnterpriseOps-Gym/.venv/bin/python nest_asyncio
 ```
-This does not touch `pyproject.toml`/`uv.lock` (both tracked, untouched —
+This does not touch `pyproject.toml`/`uv.lock` (both tracked, untouched.
 verified via `git status`) or any clone source file; it only adds the missing
 module to the already-synced `.venv`.
 
@@ -122,22 +122,22 @@ run_2: ✅ Database created from file: db_1784202780576_gf22qnj12   (deleted aft
 
 ## Surprises / notes
 
-- **Langchain flow was clean** — zero retries, zero `Attempt N failed`, zero
+- **Langchain flow was clean**, zero retries, zero `Attempt N failed`, zero
   tracebacks. Only one cosmetic `UserWarning: Parameters {'extra_body'}
   should be specified explicitly...` per run from `langchain_openai` (a
   framework-level notice about how `model_kwargs` is threaded through,
-  unrelated to our task/responder — harmless).
+  unrelated to our task/responder, harmless).
 - **Determinism reconfirmed independently of the M1 audit:** the *same*
   `case_id` (1233) and byte-identical tool arguments/results/verifier `actual`
-  values appeared in both runs despite different underlying `database_id`s —
+  values appeared in both runs despite different underlying `database_id`s.
   consistent with the audit's Test 2/3 findings for this exact seed file.
 - **Numeric coincidence, not a bug:** verifier 2's `expected_value: 1233` (the
   post-create row count) numerically equals `case_id: 1233`. This is a
   coincidence of this seed file's history (1232 pre-existing rows, +1 new
-  case = 1233, and the autoincrement PK also happens to land on 1233) —
+  case = 1233, and the autoincrement PK also happens to land on 1233).
   flagging so it isn't misread as the two verifiers checking the same thing.
-- **One seed per outer run** (not two) — despite `executor.py` logging a
-  separate "DATABASE SETUP — Creating master databases" banner before
+- **One seed per outer run** (not two), despite `executor.py` logging a
+  separate "DATABASE SETUP, Creating master databases" banner before
   `initialize()`, only one `POST /api/seed-database` call (one "Database
   created from file" log line) occurred per outer run in practice, each
   cleanly deleted in the `finally` block after that run's verifiers ran.
@@ -151,5 +151,5 @@ run_2: ✅ Database created from file: db_1784202780576_gf22qnj12   (deleted aft
 - ✅ `tool_results` records all 3 scripted calls with full arguments + server results.
 - ✅ Verifier `actual` values captured (1 and 1233); run_1/run_2 used different `database_id`s (`db_1784202780001_tyj3ty8mw` vs `db_1784202780576_gf22qnj12`, from logs).
 - ✅ Responder → langchain flow was clean: 0 retries, 0 tracebacks, only 1 benign `UserWarning`/run.
-- Deviation: had to `uv pip install nest_asyncio` into the clone's `.venv` (upstream lockfile pinned `nest-asyncio2` instead) — no tracked file touched, `git status` clean.
+- Deviation: had to `uv pip install nest_asyncio` into the clone's `.venv` (upstream lockfile pinned `nest-asyncio2` instead), no tracked file touched, `git status` clean.
 - Responder process killed; `eog-csm`/`eog-itsm` containers left running per instructions.

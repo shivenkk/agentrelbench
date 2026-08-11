@@ -1,5 +1,5 @@
 """
-M4 STEP 0 — TOOL UNION + SEED-FILE CONSISTENCY
+M4 STEP 0, TOOL UNION + SEED-FILE CONSISTENCY
 
 Computes the union of `selected_tools` across every task.json under
 tasks/{csm,itsm}/*/task.json (the finalized 20-task portfolio), and cross-checks

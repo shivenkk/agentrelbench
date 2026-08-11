@@ -1,5 +1,5 @@
 """
-M4 TEST A — MUTATING DETERMINISM (csm)
+M4 TEST A, MUTATING DETERMINISM (csm)
 
 Extends m1_audit/test3_replay_reproducibility_csm.py's machinery (same
 gym_client.seed/new_client, same db_diff full-dump + positional_diff_multi) to

@@ -1,5 +1,5 @@
 """
-M4 TEST A — MUTATING DETERMINISM (itsm)
+M4 TEST A, MUTATING DETERMINISM (itsm)
 
 Same machinery as test_a_mutating_determinism_csm.py (reuses m1_audit's
 gym_client/db_diff), extended to cover EVERY mutating tool in the itsm union

@@ -1,5 +1,5 @@
 """
-TEST 1 — TOOL INVENTORY
+TEST 1, TOOL INVENTORY
 
 Dump complete tools/list (name, description, inputSchema) for both live MCP
 servers and write them to data/eog/tool-inventory-{csm,itsm}.json. Also produce

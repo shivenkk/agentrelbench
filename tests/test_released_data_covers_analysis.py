@@ -18,7 +18,6 @@ sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "src"))
 
 import pytest  # noqa: E402
-
 from make_appendix_e import ARM_C  # noqa: E402
 from make_data_manifests import RELEASED  # noqa: E402
 from make_figures import DEV_BREADTH, DEV_CAB_BATCHES, MERGED  # noqa: E402

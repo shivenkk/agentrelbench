@@ -1,5 +1,5 @@
 """
-M4 TEST C — CREATE-ID STABILITY (itsm)
+M4 TEST C, CREATE-ID STABILITY (itsm)
 
 On TWO independently freshly-seeded itsm databases, call create_incident with
 IDENTICAL arguments and confirm both replicas receive the SAME new

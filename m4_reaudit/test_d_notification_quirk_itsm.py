@@ -1,5 +1,5 @@
 """
-M4 TEST D — itsm send_notification SELF-RECIPIENT NO-OP QUIRK (characterize, don't fix)
+M4 TEST D, itsm send_notification SELF-RECIPIENT NO-OP QUIRK (characterize, don't fix)
 
 tasks/itsm/notification-outward/RATIONALE.md already documents, from prior task
 design work: "send_notification returns success but creates no row when the

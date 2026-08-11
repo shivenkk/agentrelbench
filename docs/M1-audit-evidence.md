@@ -1,4 +1,4 @@
-# M1 Audit Evidence — EnterpriseOps-Gym Reproducibility
+# M1 Audit Evidence, EnterpriseOps-Gym Reproducibility
 
 Empirical follow-up to `docs/eog-technical-map.md` section "What is UNKNOWN (must
 be covered by the M1 Docker audit)". All 5 tests below were run against live
@@ -7,14 +7,14 @@ own vendored HTTP helpers (`benchmark/mcp_client.py`, endpoint conventions from
 `benchmark/verifier.py`). Rerunnable scripts live in `m1_audit/`; every script
 writes its own evidence JSON to `m1_audit/evidence/` and prints a verdict.
 Clone commit: `de22905d21a080b83bf4a54258afe4250ee2dd55` (unchanged; no tracked
-files in `external/EnterpriseOps-Gym` were modified — only a `.venv/` was
+files in `external/EnterpriseOps-Gym` were modified, only a `.venv/` was
 created inside it).
 
 ## Setup
 
 **Docker.** `docker info` initially failed ("Cannot connect to the Docker
 daemon"). Ran `open -a Docker`; a re-check of `docker info` a few seconds later
-succeeded — well within the 180s budget, no BLOCKED state reached.
+succeeded, well within the 180s budget, no BLOCKED state reached.
 
 **Images.** README's pull template (`shivakrishnareddyma225/enterpriseops-gym-mcp-<domain>:latest`)
 matched exactly; no name adaptation needed.
@@ -27,7 +27,7 @@ matched exactly; no name adaptation needed.
 **Container port mystery solved.** The README's domain/port table (lines
 128–141) has an unexplained row `| <container_port> | N/A | 8005 |`.
 `docker inspect ... --format '{{json .Config.Cmd}}'` on both images shows
-`["python","-m","uvicorn","main:app","--host","0.0.0.0","--port","8005"]` —
+`["python","-m","uvicorn","main:app","--host","0.0.0.0","--port","8005"]`.
 **every domain image listens on internal port 8005 regardless of domain**;
 only the host-side mapping differs. Containers started as:
 
@@ -42,10 +42,10 @@ note:** both images are `linux/amd64`; this host is `linux/arm64/v8`
 (Apple Silicon), so Docker prints a platform-mismatch warning and runs them
 under emulation. Functionally this caused no failures and timing stayed fast
 (see Test 4), but it's worth knowing for anyone reproducing this on Apple
-Silicon — expect a one-line harmless warning on every `docker run`.
+Silicon, expect a one-line harmless warning on every `docker run`.
 
 itsm's startup log usefully self-reports `📦 MCP Tools Module Loaded: 93 ITSM
-API tools` — an independent cross-check that matched Test 1's live count
+API tools`, an independent cross-check that matched Test 1's live count
 exactly.
 
 **Python env.** `uv sync --extra openai` inside `external/EnterpriseOps-Gym`
@@ -56,22 +56,22 @@ All `m1_audit/` scripts are run with that interpreter and import
 
 **Seed files used** (arbitrary, representative picks from `scratch/gym_dbs/`):
 - csm: `csm/dbs/db_1762232091750_3ev7dns6b.sql` (18 tables, 10,633 rows)
-- itsm: `itsm/dbs/db_1765301900121_3mwjj54xy.sql` (24 tables, smaller — used for the "lighter" itsm replay test)
+- itsm: `itsm/dbs/db_1765301900121_3mwjj54xy.sql` (24 tables, smaller; used for the "lighter" itsm replay test)
 
 **Shared library code** (`m1_audit/gym_client.py`, `m1_audit/db_diff.py`):
 - `gym_client.seed()` wraps the clone's own `create_database_from_file()` (POST `/api/seed-database`).
-- `gym_client.sql_runner()` mirrors the exact request shape used by `benchmark/verifier.py:_execute_sql_query` (POST `/api/sql-runner`, `{query, database_id}` + `x-database-id` header) — there's no standalone sql-runner helper in `mcp_client.py` itself to import, only the endpoint convention to reuse.
+- `gym_client.sql_runner()` mirrors the exact request shape used by `benchmark/verifier.py:_execute_sql_query` (POST `/api/sql-runner`, `{query, database_id}` + `x-database-id` header); there's no standalone sql-runner helper in `mcp_client.py` itself to import, only the endpoint convention to reuse.
 - `gym_client.new_client()` wraps `MCPClient` (`initialize` handshake → `tools/list` / `tools/call`).
-- `db_diff.py` provides table enumeration, PK discovery (regex over `CREATE TABLE` text from `sqlite_master.sql`, since `PRAGMA` is blocked — see Test 4), canonical hashing, and two diff strategies: a sorted/canonical hash (for yes/no identity) and a **positional** (natural DB row-order) diff, which is what actually pinpoints *which* `table.column` varies without a volatile column scrambling row alignment the way a full-row sort would.
+- `db_diff.py` provides table enumeration, PK discovery (regex over `CREATE TABLE` text from `sqlite_master.sql`, since `PRAGMA` is blocked; see Test 4), canonical hashing, and two diff strategies: a sorted/canonical hash (for yes/no identity) and a **positional** (natural DB row-order) diff, which is what actually pinpoints *which* `table.column` varies without a volatile column scrambling row alignment the way a full-row sort would.
 
 ---
 
-## Test 1 — Tool Inventory
+## Test 1, Tool Inventory
 
 **Script:** `m1_audit/test1_tool_inventory.py`
 **Command:** `.venv/bin/python m1_audit/test1_tool_inventory.py`
 
-Dumped `tools/list` from both live servers (no seed needed — tool schemas are
+Dumped `tools/list` from both live servers (no seed needed, tool schemas are
 static per domain image). Wrote full `{name, description, inputSchema}` for
 every tool to `data/eog/tool-inventory-csm.json` / `-itsm.json`.
 
@@ -85,7 +85,7 @@ falling back to description-keyword scan; full per-tool classification in
 | itsm | 93 | 51 | 42 | 0 |
 
 itsm's 93 matches the container's own startup log line
-(`📦 MCP Tools Module Loaded: 93 ITSM API tools`) exactly — independent
+(`📦 MCP Tools Module Loaded: 93 ITSM API tools`) exactly, independent
 confirmation the dump is complete.
 
 State-changing tools (csm, 40): `assign_case_to_user, set_case_assignment_group,
@@ -120,7 +120,7 @@ link_new_incident_sla, update_incident_sla_details, delete_incident_slas`
 
 **Note on heuristic quality:** the naive first pass mis-bucketed aggregate
 read tools (`count_*`, `avg_*`, `total_sum_*`, `*_count`) and `register_*`
-create-tools until the prefix/suffix list was extended (see script history —
+create-tools until the prefix/suffix list was extended (see script history.
 initial run had 16+5 "unclear"; final run has 0). This is a **name/description
 heuristic as explicitly scoped ("first-pass")**, not a verified-by-execution
 classification; a handful of borderline tools (e.g., anything that both reads
@@ -131,14 +131,14 @@ classifier.
 
 ---
 
-## Test 2 — Seed Repeatability (csm)
+## Test 2, Seed Repeatability (csm)
 
 **Script:** `m1_audit/test2_seed_repeatability.py`
 **Command:** `.venv/bin/python m1_audit/test2_seed_repeatability.py`
 
 Loaded the identical csm seed SQL file twice (`POST /api/seed-database` ×2,
 independently generated `database_id`s), enumerated tables via
-`SELECT name FROM sqlite_master WHERE type='table'` (worked directly — no
+`SELECT name FROM sqlite_master WHERE type='table'` (worked directly, no
 fallback to `information_schema` needed; **engine is SQLite**, confirmed
 further by itsm's own log line `Initializing seed database at
 ./mcp_databases/seed_store.db`), dumped every table from both with an
@@ -156,14 +156,14 @@ OVERALL canonical hash match: True
 wall time: 1.51s
 ```
 
-**Verdict: PASS — byte-for-byte identical.** No column differed at all (csm's
+**Verdict: PASS, byte-for-byte identical.** No column differed at all (csm's
 seed data contains no `CURRENT_TIMESTAMP` literals, unlike hr per the
 technical map, so there was nothing to expect to vary here). Evidence:
 `m1_audit/evidence/test2_seed_repeatability.json`.
 
 ---
 
-## Test 3 — Replay Reproducibility (the key test)
+## Test 3, Replay Reproducibility (the key test)
 
 ### csm
 
@@ -174,12 +174,12 @@ update_case, assign_case_to_user, link_new_case_sla, send_notification,
 update_case_sla_details`. Valid seed entity IDs were discovered by querying a
 throwaway seeded DB first (`account_id=1`, `contact_id=123`, `product_id=128`,
 `installed_product_id=3`, `assignment_group_id=4`, agent `user_id`s 3/5/6/9,
-`sla_def_id` 1/2 — all confirmed present via `SELECT`). Composed a fixed
+`sla_def_id` 1/2, all confirmed present via `SELECT`). Composed a fixed
 10-call sequence (2 cases created, each updated, assigned, SLA-linked; one
 notification; one SLA-detail update), hardcoding all seed-entity references.
 IDs for entities *created* during the sequence (case_a, case_b, the two
 case_sla links, the notification) are necessarily captured dynamically from
-each replica's own tool response — that dynamic capture is the mechanism that
+each replica's own tool response, that dynamic capture is the mechanism that
 lets us test whether those IDs come out identical.
 
 **Surprising early finding:** csm's `tools/call` requires an `x-user-email`
@@ -213,14 +213,14 @@ wall time: 3.39s
 ```
 
 **Deliverables:**
-- (a) Verdict: **identical modulo 4 wall-clock timestamp columns** (not byte-identical, but everything else — including every ID, every enum/state, every FK — is exactly reproduced).
+- (a) Verdict: **identical modulo 4 wall-clock timestamp columns** (not byte-identical, but everything else (including every ID, every enum/state, every FK), is exactly reproduced).
 - (b) `data/eog/volatile-columns-csm.json`: the 4 `table.column` pairs above, each tagged `behavior: "wall-clock timestamp"`. No auto-increment or random-identifier volatility was observed anywhere.
 - (c) New-row primary keys: **identical across all 3 replays** for every captured ID (case IDs, SLA-link IDs, notification ID).
 
 **Verdict: PASS modulo volatile columns.** Full evidence (call logs, per-cell
 diffs): `m1_audit/evidence/test3_replay_csm.json`.
 
-### itsm (lighter — one seeding pair, 6 calls)
+### itsm (lighter, one seeding pair, 6 calls)
 
 **Script:** `m1_audit/test3_replay_reproducibility_itsm.py`
 
@@ -230,12 +230,12 @@ register_configuration_item, update_configuration_item, send_notification`
 column per the technical map). 2 independently-seeded replicas (R1, R2).
 
 **Contrasting surprising finding:** itsm's `tools/call` did **not** require
-any `x-user-email`/context header at all — `create_incident` succeeded
+any `x-user-email`/context header at all, `create_incident` succeeded
 immediately with zero context. This is an **inconsistency between the two
 domain servers** worth flagging to whoever builds the harness-facing wrapper:
 csm enforces actor identity, itsm doesn't. `send_notification` on itsm *does*
 separately validate its `email` argument against the seeded `users` table
-(`USER_EMAIL_NOT_FOUND` if not present) — a different, argument-level check,
+(`USER_EMAIL_NOT_FOUND` if not present), a different, argument-level check,
 not a session-auth header.
 
 Key raw output:
@@ -255,7 +255,7 @@ Identical modulo volatile columns: True
 wall time: 1.47s
 ```
 
-itsm's formatted string IDs (`INC_024`, `CI_005` — a prefix + zero-padded
+itsm's formatted string IDs (`INC_024`, `CI_005`; a prefix + zero-padded
 sequential counter, not a raw integer) were **just as deterministic** as csm's
 plain integers.
 
@@ -265,7 +265,7 @@ plain integers.
 
 ---
 
-## Test 4 — SQL-Runner Surface (csm)
+## Test 4, SQL-Runner Surface (csm)
 
 **Script:** `m1_audit/test4_sql_runner_surface.py`
 
@@ -274,7 +274,7 @@ plain integers.
 | `sqlite_master` accessible | Yes (18 tables enumerated) |
 | 2-table `LEFT JOIN` w/ aliases + `AS` | Works |
 | 3-table `JOIN` + `GROUP BY` | Works |
-| `PRAGMA` (non-`SELECT`) | **Rejected**, HTTP 400, `{"detail":"Only read-only SELECT queries are allowed"}` — confirms the endpoint enforces read-only |
+| `PRAGMA` (non-`SELECT`) | **Rejected**, HTTP 400, `{"detail":"Only read-only SELECT queries are allowed"}`; confirms the endpoint enforces read-only |
 
 **Important surprise, load-bearing for every other test:** the sql-runner
 **silently injects `LIMIT 100`** onto any query without its own `LIMIT`
@@ -282,7 +282,7 @@ clause. Discovered by inspecting the response's echoed `query` field:
 requesting `SELECT * FROM case_sla;` (2,464 true rows) returned only 100 rows,
 and the server echoed back `"query": "SELECT * FROM case_sla LIMIT 100"`. An
 **explicit** larger `LIMIT` (tested at `LIMIT 1000000`) correctly overrides
-this and returns the true count (2,464/2,464 — not truncated). All dump code
+this and returns the true count (2,464/2,464; not truncated). All dump code
 in `m1_audit/db_diff.py` always appends an explicit large `LIMIT`; without
 that, Tests 2/3/5 would have silently compared truncated 100-row samples
 instead of full state, which could have hidden real nondeterminism sitting
@@ -296,7 +296,7 @@ export is cheap.
 
 ---
 
-## Test 5 — Isolation (csm)
+## Test 5, Isolation (csm)
 
 **Script:** `m1_audit/test5_isolation.py`
 
@@ -311,7 +311,7 @@ server/session-global?
 
 Because A and B are independently seeded from an identical file, the first
 `create_new_case` against each landed on the **same** next-autoincrement
-`case_id` (1233) in both — an unusually strong contamination probe, since a
+`case_id` (1233) in both, an unusually strong contamination probe, since a
 routing bug would show up as *wrong content at a colliding PK*, not just a
 missing row.
 
@@ -325,10 +325,10 @@ no_B_description_anywhere_in_A: True
 no_A_description_anywhere_in_B: True
 ```
 
-**Verdict: PASS — no cross-contamination.** Routing is confirmed **per-call
+**Verdict: PASS, no cross-contamination.** Routing is confirmed **per-call
 argument** (the `x-database-id` header set fresh on each `tools/call` request
 via `MCPClient.call_tool(..., database_id=...)`), not server-global or
-session-pinned — a single MCP session correctly served two independent
+session-pinned, a single MCP session correctly served two independent
 databases in strict alternation. Evidence:
 `m1_audit/evidence/test5_isolation.json`.
 
@@ -356,8 +356,8 @@ docker run -d --name eog-itsm -p 8006:8005 shivakrishnareddyma225/enterpriseops-
 
 ## Candid summary of what was flaky or surprising
 
-1. **The `LIMIT 100` default is the single biggest trap in this API** — completely silent unless you inspect the echoed `query` field. Any future harness code that calls `/api/sql-runner` without an explicit `LIMIT` will silently under-sample any table over 100 rows. This should be treated as a hard requirement for whatever damage-labeler / state-diff tooling gets built downstream.
-2. **`PRAGMA` is blocked** ("Only read-only SELECT queries are allowed"), so schema introspection (PK discovery) had to go through `SELECT sql FROM sqlite_master` and regex over the `CREATE TABLE` text instead — works fine, just less direct than `PRAGMA table_info`.
+1. **The `LIMIT 100` default is the single biggest trap in this API**, completely silent unless you inspect the echoed `query` field. Any future harness code that calls `/api/sql-runner` without an explicit `LIMIT` will silently under-sample any table over 100 rows. This should be treated as a hard requirement for whatever damage-labeler / state-diff tooling gets built downstream.
+2. **`PRAGMA` is blocked** ("Only read-only SELECT queries are allowed"), so schema introspection (PK discovery) had to go through `SELECT sql FROM sqlite_master` and regex over the `CREATE TABLE` text instead, works fine, just less direct than `PRAGMA table_info`.
 3. **csm and itsm disagree on auth requirements**: csm hard-requires a valid `x-user-email` context header on every tool call (validated against the seed's `user` table); itsm requires none. Anyone building a uniform multi-domain wrapper needs to handle this per-domain, not assume one auth contract.
-4. **Both docker images are `linux/amd64` on an `arm64` host** — harmless emulation warning on every `docker run`, no functional or performance issue observed (full-dump timing was still sub-second).
+4. **Both docker images are `linux/amd64` on an `arm64` host**, harmless emulation warning on every `docker run`, no functional or performance issue observed (full-dump timing was still sub-second).
 5. **The only nondeterminism found anywhere, in either domain, across 5 replay/seed/isolation replicas, was wall-clock timestamp columns** (`sys_created_on`/`sys_updated_on`/`start_time` in csm; `created_on`/`updated_on`/`created_at`/`updated_at` in itsm). Every primary key, every auto-generated formatted ID (`CS-0001233`, `INC_024`, `CI_005`), and every other logical column was byte-identical across all replicas tested. This directly confirms the technical map's prediction and narrows the M1-required "volatile column allowlist" to a short, purely-timestamp list per domain.

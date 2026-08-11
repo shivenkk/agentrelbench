@@ -1,5 +1,5 @@
 """
-M4 STEP FINAL — MERGE EMPIRICAL FINDINGS INTO data/eog/volatile-columns-*.json
+M4 STEP FINAL, MERGE EMPIRICAL FINDINGS INTO data/eog/volatile-columns-*.json
 
 Reads this audit's Test A evidence (m4_reaudit/evidence/test_a_{csm,itsm}.json
 -- the only tests that produce multi-replica diffs; Test B was zero-diff by

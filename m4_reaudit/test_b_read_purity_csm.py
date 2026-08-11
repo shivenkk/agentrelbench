@@ -1,5 +1,5 @@
 """
-M4 TEST B — READ PURITY (csm)
+M4 TEST B, READ PURITY (csm)
 
 On a single fresh seed, full-dump every table, call every READ-ONLY tool in
 the csm union (data/eog/tool-union-csm.json, 24 tools) exactly once with

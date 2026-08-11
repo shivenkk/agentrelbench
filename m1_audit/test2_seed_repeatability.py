@@ -1,5 +1,5 @@
 """
-TEST 2 — SEED REPEATABILITY (csm)
+TEST 2, SEED REPEATABILITY (csm)
 
 Load the same csm seed SQL file twice (two independent POST /api/seed-database
 calls -> two database_ids), enumerate tables via sql-runner, dump every table

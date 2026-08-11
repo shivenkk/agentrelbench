@@ -11,6 +11,7 @@ so they are testable without touching run data.
 
 import sys
 from pathlib import Path
+from typing import ClassVar
 
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
@@ -94,7 +95,7 @@ class TestIntervalEstimatorConsistency:
 
 
 class TestFractionCitations:
-    CELLS = {(5, 32), (27, 32), (12, 16)}
+    CELLS: ClassVar[set] = {(5, 32), (27, 32), (12, 16)}
 
     def test_real_cell_passes(self):
         assert findings_for(audit_fractions, "5/32 runs damaged", self.CELLS) == []

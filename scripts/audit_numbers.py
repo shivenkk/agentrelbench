@@ -23,7 +23,6 @@ Usage: .venv/bin/python scripts/audit_numbers.py     (exit 1 on any finding)
 """
 from __future__ import annotations
 
-import json
 import math
 import re
 import sys
@@ -38,6 +37,7 @@ from make_figures import (  # noqa: E402
     dev_stats,
     load_pool,
 )
+
 from agentrelbench.estimators import (  # noqa: E402
     audit_miss_rate,
     clopper_pearson,

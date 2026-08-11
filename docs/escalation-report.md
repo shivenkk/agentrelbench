@@ -1,10 +1,10 @@
-# Pilot report — per-task p̂ distribution & predicted-vs-actual levers
+# Pilot report, per-task p̂ distribution & predicted-vs-actual levers
 
 ## Model: llama-3.3-70b
 
 Batch: `runs/20260716T183218Z_432f84`
 
-### Per-task p̂ (damage probability) — predicted vs. actual
+### Per-task p̂ (damage probability), predicted vs. actual
 
 | task | n | damage runs | p̂ | 95% CI | pass runs | lever (predicted) | predicted region | actual region | match | demonstrably stochastic |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -55,7 +55,7 @@ Predicted-vs-actual: **6 match / 14 mismatch** (an inert batch shows as systemat
 
 Batch: `runs/qwen-merged`
 
-### Per-task p̂ (damage probability) — predicted vs. actual
+### Per-task p̂ (damage probability), predicted vs. actual
 
 | task | n | damage runs | p̂ | 95% CI | pass runs | lever (predicted) | predicted region | actual region | match | demonstrably stochastic |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -106,7 +106,7 @@ Predicted-vs-actual: **6 match / 14 mismatch** (an inert batch shows as systemat
 
 Batch: `runs/llama8b-merged`
 
-### Per-task p̂ (damage probability) — predicted vs. actual
+### Per-task p̂ (damage probability), predicted vs. actual
 
 | task | n | damage runs | p̂ | 95% CI | pass runs | lever (predicted) | predicted region | actual region | match | demonstrably stochastic |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -157,7 +157,7 @@ Predicted-vs-actual: **7 match / 13 mismatch** (an inert batch shows as systemat
 
 Batch: `runs/qwen14b-merged`
 
-### Per-task p̂ (damage probability) — predicted vs. actual
+### Per-task p̂ (damage probability), predicted vs. actual
 
 | task | n | damage runs | p̂ | 95% CI | pass runs | lever (predicted) | predicted region | actual region | match | demonstrably stochastic |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -201,14 +201,14 @@ Predicted-vs-actual: **6 match / 14 mismatch** (an inert batch shows as systemat
 
 - **k=1 audit miss rate**: pair-weighted 0.875 (bootstrap 95% CI 0.875–0.875, conditioned on ≥1 damage-producing task; 11.6% of resamples degenerate), event-weighted 0.875
 - **Damage-mass share at intermediate p̂** (ε=0.1): 1.000 (ε=0.05: 1.000, ε=0.2: 0.000)
-- **Demonstrably-stochastic tasks** (CI ⊂ (0.05, 0.95)): 0 carrying 0.000 of damage events: —
+- **Demonstrably-stochastic tasks** (CI ⊂ (0.05, 0.95)): 0 carrying 0.000 of damage events:.
 - **Beta-binomial**: ICC=0.000, overdispersion p=1.0000
 
 ## Model: llama-3.3-70b+plus10
 
 Batch: `runs/20260717T131252Z_1cb0d4`
 
-### Per-task p̂ (damage probability) — predicted vs. actual
+### Per-task p̂ (damage probability), predicted vs. actual
 
 | task | n | damage runs | p̂ | 95% CI | pass runs | lever (predicted) | predicted region | actual region | match | demonstrably stochastic |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -245,14 +245,14 @@ Predicted-vs-actual: **2 match / 11 mismatch** (an inert batch shows as systemat
 
 - **k=1 audit miss rate**: pair-weighted 0.875 (bootstrap 95% CI 0.875–0.875, conditioned on ≥1 damage-producing task; 11.3% of resamples degenerate), event-weighted 0.875
 - **Damage-mass share at intermediate p̂** (ε=0.1): 1.000 (ε=0.05: 1.000, ε=0.2: 0.000)
-- **Demonstrably-stochastic tasks** (CI ⊂ (0.05, 0.95)): 0 carrying 0.000 of damage events: —
+- **Demonstrably-stochastic tasks** (CI ⊂ (0.05, 0.95)): 0 carrying 0.000 of damage events:.
 - **Beta-binomial**: ICC=0.000, overdispersion p=1.0000
 
 ## Model: qwen3-32b+plus10
 
 Batch: `runs/qwen32b-plus10-merged`
 
-### Per-task p̂ (damage probability) — predicted vs. actual
+### Per-task p̂ (damage probability), predicted vs. actual
 
 | task | n | damage runs | p̂ | 95% CI | pass runs | lever (predicted) | predicted region | actual region | match | demonstrably stochastic |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -287,16 +287,16 @@ Predicted-vs-actual: **0 match / 13 mismatch** (an inert batch shows as systemat
 
 ### Headline statistics
 
-- **k=1 audit miss rate**: undefined — zero damage-producing tasks (inert batch for this model)
+- **k=1 audit miss rate**: undefined, zero damage-producing tasks (inert batch for this model)
 - **Damage-mass share at intermediate p̂** (ε=0.1): 0.000 (ε=0.05: 0.000, ε=0.2: 0.000)
-- **Demonstrably-stochastic tasks** (CI ⊂ (0.05, 0.95)): 0 carrying 0.000 of damage events: —
+- **Demonstrably-stochastic tasks** (CI ⊂ (0.05, 0.95)): 0 carrying 0.000 of damage events:.
 - **Beta-binomial**: ICC=0.000, overdispersion p=1.0000
 
 ## Model: llama-3.3-70b-k16
 
 Batch: `runs/20260717T155716Z_f2f677`
 
-### Per-task p̂ (damage probability) — predicted vs. actual
+### Per-task p̂ (damage probability), predicted vs. actual
 
 | task | n | damage runs | p̂ | 95% CI | pass runs | lever (predicted) | predicted region | actual region | match | demonstrably stochastic |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -338,7 +338,7 @@ Predicted-vs-actual: **2 match / 1 mismatch** (an inert batch shows as systemati
 
 Batch: `runs/20260717T160119Z_5daf96`
 
-### Per-task p̂ (damage probability) — predicted vs. actual
+### Per-task p̂ (damage probability), predicted vs. actual
 
 | task | n | damage runs | p̂ | 95% CI | pass runs | lever (predicted) | predicted region | actual region | match | demonstrably stochastic |
 |---|---|---|---|---|---|---|---|---|---|---|

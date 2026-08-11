@@ -1,5 +1,5 @@
 """
-TEST 3 — REPLAY REPRODUCIBILITY (csm, the key test)
+TEST 3, REPLAY REPRODUCIBILITY (csm, the key test)
 
 Seed 3 independent csm databases from the identical seed file, then execute the
 identical fixed sequence of 10 tool calls (6 distinct state-changing tools:

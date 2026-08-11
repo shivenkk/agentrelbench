@@ -1,5 +1,5 @@
 """
-TEST 3b — REPLAY REPRODUCIBILITY (itsm, lighter version: one seeding pair, 6 calls)
+TEST 3b, REPLAY REPRODUCIBILITY (itsm, lighter version: one seeding pair, 6 calls)
 
 Seed 2 independent itsm databases from the identical seed file, execute an
 identical fixed sequence of 6 tool calls (5 distinct state-changing tools:

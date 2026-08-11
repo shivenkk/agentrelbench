@@ -23,10 +23,17 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 from agentrelbench import collector
-from agentrelbench.labeler import DamageSpec, InvalidRunError, RunMeta, RunVerdict, label_run, summarize
+from agentrelbench.labeler import (
+    DamageSpec,
+    InvalidRunError,
+    RunMeta,
+    RunVerdict,
+    label_run,
+    summarize,
+)
 from agentrelbench.state_export import read_gzip_json
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent  # src/agentrelbench/labeling.py -> repo root
@@ -36,7 +43,7 @@ DEFAULT_DATA_DIR = REPO_ROOT / "data" / "eog"
 # --------------------------------------------------------------- state export
 
 
-def load_states(run_dir: Path) -> Tuple[Dict[str, List[dict]], Dict[str, List[dict]], bool]:
+def load_states(run_dir: Path) -> tuple[dict[str, list[dict]], dict[str, list[dict]], bool]:
     """Load one run's pre/post-mutation table states from its k-run wrapper
     exports (docs/krun-wrapper-spec.md: post_seed_state.json.gz written
     immediately after seeding, final_state.json.gz written immediately
@@ -73,7 +80,7 @@ def load_states(run_dir: Path) -> Tuple[Dict[str, List[dict]], Dict[str, List[di
 # ----------------------------------------------------------------- run meta
 
 
-def _eog_success(run: Dict[str, Any]) -> bool:
+def _eog_success(run: dict[str, Any]) -> bool:
     """True iff every verifier in ``run["verification_results"]`` passed.
 
     Field ground truth: m1_spike/results/run_1/results_task.json ->
@@ -96,7 +103,7 @@ def _eog_success(run: Dict[str, Any]) -> bool:
     return all(v.get("passed") is True for v in verification_results.values())
 
 
-def _final_message(run: Dict[str, Any]) -> Optional[str]:
+def _final_message(run: dict[str, Any]) -> str | None:
     """The last assistant message in the conversation flow: the ``content``
     of the LAST entry of ``run["conversation_flow"]`` whose ``"type"`` is
     ``"ai_message"`` (scanning from the end). Used only as input to the
@@ -117,7 +124,7 @@ def _final_message(run: Dict[str, Any]) -> Optional[str]:
     return None
 
 
-def _stalled(run: Dict[str, Any]) -> bool:
+def _stalled(run: dict[str, Any]) -> bool:
     """True iff the ReAct loop (external/EnterpriseOps-Gym/orchestrators/
     react.py) exhausted its step budget without producing a final, tool-free
     answer.
@@ -138,7 +145,7 @@ def _stalled(run: Dict[str, Any]) -> bool:
     return flow[-1].get("type") != "ai_message"
 
 
-def _termination(run: Dict[str, Any]) -> str:
+def _termination(run: dict[str, Any]) -> str:
     """"errored" | "stalled" | "completed" -- see build_run_meta's docstring
     for the full field mapping this composes."""
     if run.get("error"):
@@ -148,7 +155,7 @@ def _termination(run: Dict[str, Any]) -> str:
     return "completed"
 
 
-def build_run_meta(results_json: Dict[str, Any]) -> RunMeta:
+def build_run_meta(results_json: dict[str, Any]) -> RunMeta:
     """Build a :class:`agentrelbench.labeler.RunMeta` from one run's fully
     parsed ``results_*.json`` (the whole file's top-level dict --
     ``{"benchmark_config":.., "runs": [...], "statistics": {...}}``; each
@@ -225,13 +232,13 @@ def _find_task_dir(tasks_root: Path, task_id: str) -> Path:
     raise FileNotFoundError(f"no damage.json found for task_id {task_id!r} under {tasks_root}")
 
 
-def _load_primary_keys(data_dir: Path, domain: str) -> Dict[str, str]:
+def _load_primary_keys(data_dir: Path, domain: str) -> dict[str, str]:
     """data/eog/primary-keys-<domain>.json -> {table: pk_column}."""
     raw = json.loads((data_dir / f"primary-keys-{domain}.json").read_text())
     return raw["primary_keys"]
 
 
-def _load_volatile_columns(data_dir: Path, domain: str) -> Dict[str, List[str]]:
+def _load_volatile_columns(data_dir: Path, domain: str) -> dict[str, list[str]]:
     """data/eog/volatile-columns-<domain>.json -> {table: [column, ...]}.
 
     The on-disk file is an M1-audit evidence dump keyed by ``"<table>.
@@ -240,7 +247,7 @@ def _load_volatile_columns(data_dir: Path, domain: str) -> Dict[str, List[str]]:
     directly, so this reshapes it.
     """
     raw = json.loads((data_dir / f"volatile-columns-{domain}.json").read_text())
-    by_table: Dict[str, List[str]] = {}
+    by_table: dict[str, list[str]] = {}
     for entry in raw.get("volatile_columns", {}).values():
         by_table.setdefault(entry["table"], []).append(entry["column"])
     return by_table
@@ -248,7 +255,7 @@ def _load_volatile_columns(data_dir: Path, domain: str) -> Dict[str, List[str]]:
 
 def _load_task_damage_spec(
     tasks_root: Path, data_dir: Path, task_id: str
-) -> Tuple[DamageSpec, Dict[str, List[str]], Dict[str, str]]:
+) -> tuple[DamageSpec, dict[str, list[str]], dict[str, str]]:
     """Resolve one task_id's (DamageSpec, volatile_columns, primary_keys)."""
     task_dir = _find_task_dir(tasks_root, task_id)
     damage_json = json.loads((task_dir / "damage.json").read_text())
@@ -266,7 +273,7 @@ def _load_task_damage_spec(
 # ------------------------------------------------------------------ output
 
 
-def _verdict_row(task_id: str, run_name: str, verdict: RunVerdict) -> Dict[str, Any]:
+def _verdict_row(task_id: str, run_name: str, verdict: RunVerdict) -> dict[str, Any]:
     """Flatten one RunVerdict into a JSON-able dict for verdicts.jsonl.
     Field names match the task-script "expected" block convention
     (tasks/csm/contract-price-correction/*.script.json): outcome, sub_label,
@@ -297,7 +304,7 @@ def _verdict_row(task_id: str, run_name: str, verdict: RunVerdict) -> Dict[str, 
     }
 
 
-def _write_jsonl(path: Path, rows: List[Dict[str, Any]]) -> None:
+def _write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
     with open(path, "w") as f:
         for row in rows:
             f.write(json.dumps(row, sort_keys=True))
@@ -307,19 +314,19 @@ def _write_jsonl(path: Path, rows: List[Dict[str, Any]]) -> None:
 _SQLITE_INTERNAL_PREFIX = "sqlite_"
 
 
-def _scope_to_known_tables(state: Dict[str, List[dict]], primary_keys: Dict[str, str]) -> Dict[str, List[dict]]:
+def _scope_to_known_tables(state: dict[str, list[dict]], primary_keys: dict[str, str]) -> dict[str, list[dict]]:
     """Restrict a dumped state to the domain's primary-keys registry
-    (data/eog/primary-keys-<domain>.json) — loudly.
+    (data/eog/primary-keys-<domain>.json), loudly.
 
     SQLite's own bookkeeping tables (reserved ``sqlite_`` prefix, e.g.
     ``sqlite_sequence``) are excluded silently: they aren't domain schema, and
     their changes are pure derivatives of real-table inserts the diff already
-    sees. ANY other table missing from the registry raises — a table the diff
+    sees. ANY other table missing from the registry raises, a table the diff
     can't see is a blind spot in the damage axis (e.g. a new table appearing in
     an updated MCP image), and the measurement core never skips silently.
     """
-    scoped: Dict[str, List[dict]] = {}
-    unknown: List[str] = []
+    scoped: dict[str, list[dict]] = {}
+    unknown: list[str] = []
     for table, rows in state.items():
         if table.startswith(_SQLITE_INTERNAL_PREFIX):
             continue
@@ -330,13 +337,13 @@ def _scope_to_known_tables(state: Dict[str, List[dict]], primary_keys: Dict[str,
     if unknown:
         raise ValueError(
             f"tables {sorted(unknown)} present in the state dump but missing from the "
-            f"primary-keys registry; refusing to diff with a blind spot — add them to "
+            f"primary-keys registry; refusing to diff with a blind spot, add them to "
             f"data/eog/primary-keys-<domain>.json"
         )
     return scoped
 
 
-def label_batch(batch_dir: Path, tasks_root: Path, data_dir: Path = DEFAULT_DATA_DIR) -> Dict[str, Any]:
+def label_batch(batch_dir: Path, tasks_root: Path, data_dir: Path = DEFAULT_DATA_DIR) -> dict[str, Any]:
     """Label every run of a completed k-run batch
     (runs/<batch_id>/<task_id>/run_N/, docs/krun-wrapper-spec.md), writing:
 
@@ -364,13 +371,13 @@ def label_batch(batch_dir: Path, tasks_root: Path, data_dir: Path = DEFAULT_DATA
 
     tasks = collector.discover_batch(batch_dir)
 
-    verdict_rows: List[Dict[str, Any]] = []
-    verdicts_by_task: Dict[str, List[RunVerdict]] = {}
+    verdict_rows: list[dict[str, Any]] = []
+    verdicts_by_task: dict[str, list[RunVerdict]] = {}
 
     for task_id, run_dirs in tasks.items():
         damage_spec, volatile_columns, primary_keys = _load_task_damage_spec(tasks_root, data_dir, task_id)
 
-        task_verdicts: List[RunVerdict] = []
+        task_verdicts: list[RunVerdict] = []
         for run_dir in run_dirs:
             results_files = sorted(run_dir.glob("results_*.json"))
             initial_state, final_state, dumps_present = load_states(run_dir)
@@ -413,7 +420,7 @@ def label_batch(batch_dir: Path, tasks_root: Path, data_dir: Path = DEFAULT_DATA
 # ------------------------------------------------------------------- CLI
 
 
-def main(argv: Optional[List[str]] = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="arb-label")
     parser.add_argument("batch_dir", help="Batch directory produced by arb-run (runs/<batch_id>).")
     parser.add_argument(

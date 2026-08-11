@@ -36,7 +36,7 @@ import sys
 import tempfile
 import time
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 from agentrelbench import cli as arb_run_cli
 from agentrelbench.labeling import DEFAULT_DATA_DIR, label_batch
@@ -60,14 +60,14 @@ def _values_match(expected: Any, actual: Any) -> bool:
     dollar figure regardless of which JSON numeric type either side used.
     Everything else (strings, bools, None) compares with plain ``==``."""
     if (
-        isinstance(expected, (int, float)) and not isinstance(expected, bool)
-        and isinstance(actual, (int, float)) and not isinstance(actual, bool)
+        isinstance(expected, int | float) and not isinstance(expected, bool)
+        and isinstance(actual, int | float) and not isinstance(actual, bool)
     ):
         return math.isclose(float(expected), float(actual), rel_tol=1e-9, abs_tol=1e-9)
     return expected == actual
 
 
-def compare_verdict(expected: Dict[str, Any], actual: Dict[str, Any]) -> List[str]:
+def compare_verdict(expected: dict[str, Any], actual: dict[str, Any]) -> list[str]:
     """Compare only the keys present in ``expected`` against ``actual``
     (a verdicts.jsonl row). Returns human-readable mismatch descriptions;
     empty list means a full match."""
@@ -102,7 +102,7 @@ def _wait_for_port(host: str, port: int, timeout: float = 10.0) -> bool:
     return False
 
 
-def _discover_scripts(task_dir: Path) -> List[Tuple[str, Path]]:
+def _discover_scripts(task_dir: Path) -> list[tuple[str, Path]]:
     """[("oracle", oracle.script.json), (<name>, counterexamples/<name>.script.json), ...]."""
     scripts = [("oracle", task_dir / "oracle.script.json")]
     for path in sorted((task_dir / "counterexamples").glob("*.script.json")):
@@ -110,7 +110,7 @@ def _discover_scripts(task_dir: Path) -> List[Tuple[str, Path]]:
     return scripts
 
 
-def _run_one_script(task_dir: Path, name: str, script_path: Path, data_dir: Path) -> Dict[str, Any]:
+def _run_one_script(task_dir: Path, name: str, script_path: Path, data_dir: Path) -> dict[str, Any]:
     """Run a single *.script.json through arb-run (k=1) + the labeler, and
     compare the resulting verdict to the file's "expected" block. Returns a
     result dict: {name, expected, actual, mismatches, error}."""
@@ -173,7 +173,7 @@ def _run_one_script(task_dir: Path, name: str, script_path: Path, data_dir: Path
             if len(verdict_lines) != 1:
                 raise RuntimeError(f"expected exactly 1 verdict for k=1, got {len(verdict_lines)}")
             actual = json.loads(verdict_lines[0])
-    except Exception as exc:  # noqa: BLE001 -- surfaced as a FAIL row, not a crash
+    except Exception as exc:
         return {"name": name, "expected": expected, "actual": None, "mismatches": [], "error": str(exc)}
     finally:
         if responder is not None:
@@ -190,7 +190,7 @@ def _run_one_script(task_dir: Path, name: str, script_path: Path, data_dir: Path
 # ------------------------------------------------------------------------ CLI
 
 
-def _print_table(results: List[Dict[str, Any]]) -> None:
+def _print_table(results: list[dict[str, Any]]) -> None:
     name_width = max(len(r["name"]) for r in results) if results else 4
     header = f"{'script':<{name_width}}  {'result':<4}  details"
     print(header)
@@ -204,7 +204,7 @@ def _print_table(results: List[Dict[str, Any]]) -> None:
         print(f"{r['name']:<{name_width}}  {'OK' if ok else 'FAIL':<4}  {detail}")
 
 
-def main(argv: Optional[List[str]] = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="arb-validate")
     parser.add_argument("--task", required=True, help="Task directory (e.g. tasks/csm/contract-price-correction).")
     parser.add_argument(

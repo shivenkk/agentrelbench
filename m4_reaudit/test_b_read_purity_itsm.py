@@ -1,5 +1,5 @@
 """
-M4 TEST B — READ PURITY (itsm)
+M4 TEST B, READ PURITY (itsm)
 
 Same protocol as test_b_read_purity_csm.py: fresh seed, full dump, call every
 READ-ONLY tool in the itsm union (data/eog/tool-union-itsm.json, 18 tools)

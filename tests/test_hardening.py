@@ -23,7 +23,8 @@ class TestRunCountGuard:
             assert_run_counts(tasks, expected_k=2)
 
     def test_exact_counts_pass(self):
-        assert_run_counts({"t1": [Path("run_1"), Path("run_2")]}, expected_k=2) is None
+        assert assert_run_counts(
+            {"t1": [Path("run_1"), Path("run_2")]}, expected_k=2) is None
 
 
 class TestEmptyResultsGuard:
@@ -46,7 +47,7 @@ class TestVerifierGymNameLint:
         task_files = sorted(REPO.glob("tasks/*/*/task.json")) + sorted(
             REPO.glob("tasks-escalated/*/*/task.json")
         )
-        assert task_files, "no task files found — glob roots moved?"
+        assert task_files, "no task files found; glob roots moved?"
         for tf in task_files:
             task = json.loads(tf.read_text())
             gyms = {g["mcp_server_name"] for g in task["gym_servers_config"]}
@@ -54,5 +55,5 @@ class TestVerifierGymNameLint:
                 gym_name = v.get("gym_name")
                 assert not gym_name or gym_name in gyms, (
                     f"{tf}: verifier {v.get('name')!r} targets unknown gym {gym_name!r} "
-                    f"(configured: {sorted(gyms)}) — EOG would silently drop it"
+                    f"(configured: {sorted(gyms)}), EOG would silently drop it"
                 )

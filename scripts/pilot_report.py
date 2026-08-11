@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Pilot report generator: verdicts × predictions × estimators → markdown.
+"""Pilot report generator: verdicts, predictions, and estimators to markdown.
 
 Usage:
     .venv/bin/python scripts/pilot_report.py \
         --batch <model_name>=<runs/batch_dir> [--batch <model2>=<dir2> ...] \
         --tasks tasks/ --out docs/pilot-report.md
 
-Per model it computes the per-task p̂ table (with exact Clopper–Pearson CIs),
-the predicted-vs-actual lever comparison (Shiven's explicit ask, 2026-07-16),
+Per model it computes the per-task p̂ table (with exact Clopper-Pearson CIs),
+the predicted-vs-actual lever comparison,
 pass^k / safe^k curves, the k=1 audit miss rate, damage-mass share, the
 demonstrably-stochastic set, and the beta-binomial decomposition. Analysis
 lives in the tested estimators module; this script only joins and formats.
@@ -23,9 +23,8 @@ from types import SimpleNamespace
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
-from agentrelbench.estimators import (  # noqa: E402
+from agentrelbench.estimators import (
     audit_miss_rate,
-    cluster_bootstrap,
     damage_mass_share,
     demonstrably_stochastic,
     fit_beta_binomial,
@@ -74,7 +73,7 @@ def actual_region(phat: float, ci_lo: float, ci_hi: float) -> str:
 
 
 def fmt(x, nd=3):
-    return "—" if x is None else f"{x:.{nd}f}"
+    return "-" if x is None else f"{x:.{nd}f}"
 
 
 def report_model(model: str, batch_dir: Path, predictions: dict) -> str:
@@ -85,7 +84,7 @@ def report_model(model: str, batch_dir: Path, predictions: dict) -> str:
 
     # --- per-task p̂ table + predicted-vs-actual ---
     lines += [
-        "### Per-task p̂ (damage probability) — predicted vs. actual",
+        "### Per-task p̂ (damage probability), predicted vs. actual",
         "",
         "| task | n | damage runs | p̂ | 95% CI | pass runs | lever (predicted) | predicted region | actual region | match | demonstrably stochastic |",
         "|---|---|---|---|---|---|---|---|---|---|---|",
@@ -152,7 +151,7 @@ def report_model(model: str, batch_dir: Path, predictions: dict) -> str:
             f"{degenerate/5000:.1%} of resamples degenerate), event-weighted {miss_event:.3f}"
         )
     except ValueError:
-        miss_line = "- **k=1 audit miss rate**: undefined — zero damage-producing tasks (inert batch for this model)"
+        miss_line = "- **k=1 audit miss rate**: undefined, zero damage-producing tasks (inert batch for this model)"
     bb = fit_beta_binomial(stats)
     lines += [
         "### Headline statistics",
@@ -161,7 +160,7 @@ def report_model(model: str, batch_dir: Path, predictions: dict) -> str:
         f"- **Damage-mass share at intermediate p̂** (ε=0.1): {damage_mass_share(stats, eps=0.1):.3f} "
         f"(ε=0.05: {damage_mass_share(stats, eps=0.05):.3f}, ε=0.2: {damage_mass_share(stats, eps=0.2):.3f})",
         f"- **Demonstrably-stochastic tasks** (CI ⊂ (0.05, 0.95)): {len(stoch.tasks)} "
-        f"carrying {stoch.damage_share:.3f} of damage events: {sorted(stoch.tasks) if stoch.tasks else '—'}",
+        f"carrying {stoch.damage_share:.3f} of damage events: {sorted(stoch.tasks) if stoch.tasks else '-'}",
         f"- **Beta-binomial**: ICC={bb.icc:.3f}, overdispersion p={bb.overdispersion_pvalue:.4f}",
         "",
     ]
@@ -176,7 +175,7 @@ def main() -> int:
     args = ap.parse_args()
 
     predictions = load_predictions(args.tasks)
-    sections = ["# Pilot report — per-task p̂ distribution & predicted-vs-actual levers", ""]
+    sections = ["# Pilot report, per-task p̂ distribution & predicted-vs-actual levers", ""]
     for spec in args.batch:
         model, _, batch = spec.partition("=")
         sections.append(report_model(model, Path(batch), predictions))

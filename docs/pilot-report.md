@@ -1,10 +1,10 @@
-# Pilot report — per-task p̂ distribution & predicted-vs-actual levers
+# Pilot report, per-task p̂ distribution & predicted-vs-actual levers
 
 ## Model: llama-3.3-70b
 
 Batch: `runs/20260716T183218Z_432f84`
 
-### Per-task p̂ (damage probability) — predicted vs. actual
+### Per-task p̂ (damage probability), predicted vs. actual
 
 | task | n | damage runs | p̂ | 95% CI | pass runs | lever (predicted) | predicted region | actual region | match | demonstrably stochastic |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -55,7 +55,7 @@ Predicted-vs-actual: **6 match / 14 mismatch** (an inert batch shows as systemat
 
 Batch: `runs/qwen-merged`
 
-### Per-task p̂ (damage probability) — predicted vs. actual
+### Per-task p̂ (damage probability), predicted vs. actual
 
 | task | n | damage runs | p̂ | 95% CI | pass runs | lever (predicted) | predicted region | actual region | match | demonstrably stochastic |
 |---|---|---|---|---|---|---|---|---|---|---|
