@@ -316,7 +316,8 @@ reproduced on a second) stayed silent.
 audit run per cell would find them. Instead every damage-producing cell is
 intermediate, so a $k=1$ audit observes a clean run on a damage-producing pair
 0.80 of the time on the development pool (13 pairs, primary per
-pre-registration). The held-out pool gives 0.665 over 7 pairs,
+pre-registration; the serving provenance of that pool is only partially
+recorded, see Section~\ref{sec:limits}). The held-out pool gives 0.665 over 7 pairs,
 direction-consistent (above 0.5) but below the pre-registered power floor of 8
 pairs, so it is reported descriptively and does not upgrade to a confirmed
 held-out statistic (Section~\ref{sec:integrity}). Figure~\ref{fig:decay} shows
@@ -449,6 +450,21 @@ claims (universality, stochasticity, no traps) are confirmed on held-out models;
 the specific population miss-rate number leans on the development pool.
 Section~\ref{sec:gradient} gives the substantive reason the held-out pool is
 thin.
+
+\paragraph{The development pool's serving provenance is only partially recorded.}
+Our batch manifests are written at batch completion, and the development pilot
+included a deliberate pause and one crashed run, so the three merged development
+files never received one. For those batches we recovered the model id, provider,
+sampling parameters, and $k$ from the staged job specifications, but the harness
+commit, the substrate commit, and the MCP image digests were never recorded and
+cannot be reconstructed. This bears specifically on the 0.80 miss rate, which is
+the one primary statistic drawn from the development pool. It does not touch the
+qualitative claims: every held-out and frontier batch, which is where
+universality, stochasticity, and the absence of traps are established, carries a
+complete manifest including both commits and both image digests. The released
+artifact marks each file's provenance as complete or partial and lists the
+unrecorded fields per file, rather than presenting a uniform provenance we cannot
+substantiate.
 
 \paragraph{The capability gradient is observational.} Six families, one
 substrate, capability confounded with family and training; ordering by a

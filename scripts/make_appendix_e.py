@@ -158,7 +158,12 @@ INTRO_E1 = ("Protocol per model: breadth 14 tasks at k=8, depth 5 tasks at "
             "analysis; runs from different k-groups are never spliced.")
 INTRO_E2 = ("The development pool is each dev model's 20-task k=8 breadth "
             "batch. These 13 pairs are the denominator of the primary k=1 audit "
-            "miss rate (0.80, Section 5.1). Cells not listed are 0/8.")
+            "miss rate (0.80, Section 5.1). Cells not listed are 0/8. "
+            "The three merged development files carry PARTIAL provenance: model, "
+            "provider, sampling parameters, and k were recovered from the staged "
+            "job specifications, but the harness commit, substrate commit, and MCP "
+            "image digests were never recorded for these batches. Each released "
+            "file's manifest lists its unrecorded fields.")
 INTRO_E4 = ("Pre-registered k=16 reads on the fired dev tasks. The qwen3-32b "
             "sla-relink cell is the observation Section 5.4 discloses and "
             "deliberately excludes from the frozen 13-pair denominator.")
