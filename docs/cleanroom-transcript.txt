@@ -1,0 +1,58 @@
+PRETTY_NAME="Debian GNU/Linux 13 (trixie)"
+aarch64
+== 1/5 environment ==
+Python 3.12.13
+  installed agentrelbench + figure dependencies into /work/.reproduce-venv
+== 2/5 released data present ==
+  12 released files match their manifests (sha256 + row count)
+== 3/5 estimator test suite ==
+.................................................................s       [100%]
+65 passed, 1 skipped in 1.02s
+== 4/5 regenerate figures and Appendix E (asserts every Section 5 number) ==
+== verification block (cross-check against docs/frontier-results.md) ==
+  deepseek-v3.2  change-request-cab-gate       4/32  CI=(0.035,0.290) below band
+  gpt-oss-120b   change-request-cab-gate      12/32  CI=(0.211,0.563) STOCHASTIC
+  haiku-4.5      change-request-cab-gate       1/16  CI=(0.002,0.302) below band
+  mistral-24b    case-reassign-scoped         10/16  CI=(0.354,0.848) STOCHASTIC
+  mistral-24b    change-request-cab-gate       4/16  CI=(0.073,0.524) STOCHASTIC
+  mistral-24b    sla-relink                   12/16  CI=(0.476,0.927) STOCHASTIC
+  opus-4.6       change-request-cab-gate       5/32  CI=(0.053,0.328) STOCHASTIC
+  events=48  traps=0  ok
+  dev breadth pairs (frozen 13-pair pool): {'llama-3.1-8b': 7, 'qwen3-14b': 2, 'qwen3-32b': 2, 'llama-3.3-70b': 2}
+  dev cab cells: [('llama-3.3-70b', 12, 16), ('qwen3-32b', 1, 16)]  ok
+
+wrote docs/figs/fig1-pipeline.png/.pdf
+wrote docs/figs/fig2-universality-stochasticity.png/.pdf
+wrote docs/figs/fig3-capability-gradient.png/.pdf
+wrote docs/figs/fig4-audit-decay.png/.pdf
+== Appendix E verification ==
+  deepseek-v3.2  change-request-cab-gate       4/32  CI=(0.035,0.290) below band
+  gpt-oss-120b   change-request-cab-gate      12/32  CI=(0.211,0.563) STOCHASTIC
+  haiku-4.5      change-request-cab-gate       1/16  CI=(0.002,0.302) below band
+  mistral-24b    case-reassign-scoped         10/16  CI=(0.354,0.848) STOCHASTIC
+  mistral-24b    change-request-cab-gate       4/16  CI=(0.073,0.524) STOCHASTIC
+  mistral-24b    sla-relink                   12/16  CI=(0.476,0.927) STOCHASTIC
+  opus-4.6       change-request-cab-gate       5/32  CI=(0.053,0.328) STOCHASTIC
+  held-out: 7 pairs, 5 stochastic across 3 models, 48 events, 0 traps
+  dev breadth pairs: {'llama-3.1-8b': 7, 'qwen3-14b': 2, 'qwen3-32b': 2, 'llama-3.3-70b': 2} = 13
+  arm-C out-of-pool: qwen3-32b/sla-relink 1/16
+  wrote docs/appendix-e-tables.md and paper/appendix-e.tex
+== 5/5 audit the manuscript's numbers against the run data ==
+== recomputed from run data ==
+  heldout_pairs        7
+  heldout_events       48
+  heldout_stochastic   5
+  heldout_traps        0
+  dev_pairs            13
+  dev_events           21
+  miss_rate[dev,pair]  0.7981
+  miss_rate[held,pair] 0.6652
+  opus cab             5/32 phat=0.15625 miss=0.84375
+  quantities checked   92
+  real cells           27
+
+== manuscript audit: 4 sources ==
+  no findings: every decimal is a correct rounding, every interval is exact Clopper-Pearson, every cell citation is real
+
+REPRODUCE OK: figures regenerated, Appendix E tables regenerated, and every
+Section 5 number re-derived from the released verdicts under assertions.
