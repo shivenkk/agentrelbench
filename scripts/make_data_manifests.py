@@ -287,6 +287,14 @@ def trace(rel: str, batches: dict) -> dict:
         "mcp_image_digests": digests,
         "source_batches": {b: sorted(ts) for b, ts in sorted(sources.items())},
         "never_splice": "each task traced to exactly one source batch by row content",
+        "git_sha_scope": (
+            "agentrelbench_git_sha values were recorded at run time against the "
+            "pre-publication development history, which was rewritten before "
+            "release. They are the true provenance of each batch but do not "
+            "resolve in the published repository. Any harness comparison below "
+            "was performed while they still resolved and is recorded here rather "
+            "than left to be recomputed."
+        ),
         "lineage_method": (
             f"{len(anchors)} of {len(tasks)} tasks are uniquely traceable by row "
             "content and anchor the model; the remainder are clean-pass cells "

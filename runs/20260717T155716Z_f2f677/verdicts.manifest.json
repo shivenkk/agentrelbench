@@ -4,6 +4,7 @@
   },
   "eog_commit": "de22905d21a080b83bf4a54258afe4250ee2dd55",
   "file": "20260717T155716Z_f2f677/verdicts.jsonl",
+  "git_sha_scope": "agentrelbench_git_sha values were recorded at run time against the pre-publication development history, which was rewritten before release. They are the true provenance of each batch but do not resolve in the published repository. Any harness comparison below was performed while they still resolved and is recorded here rather than left to be recomputed.",
   "harness_diff_across_commits": {},
   "k_by_task": {
     "case-reassign-scoped": 16,
