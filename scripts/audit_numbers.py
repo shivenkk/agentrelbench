@@ -42,6 +42,7 @@ from agentrelbench.estimators import (  # noqa: E402
     audit_miss_rate,
     clopper_pearson,
     demonstrably_stochastic,
+    fit_beta_binomial,
     per_task_stats,
 )
 
@@ -72,6 +73,11 @@ TYPOGRAPHY = re.compile(
 # by construction and are deliberately NOT observed cells: the engagement floor
 # for the flagship task (pass >= 3/16, applied proportionally as >= 6/32 at k=32).
 PREREG_THRESHOLDS = {(3, 16), (6, 32)}
+
+# A decimal introduced by an inequality is a bound, not a point estimate:
+# "p < 0.001" is a threshold the data clears, and comparing it against nearby
+# quantities produces spurious truncation findings.
+BOUNDED = re.compile(r"(?:[<>]|\\l[et]q?|\\g[et]q?|\\ll|\\gg)\s*\$?\s*$")
 
 
 def dev_stats():
@@ -113,6 +119,15 @@ def recompute():
                 q[f"miss1[{label}/{model}/{task}]"] = (t.n - t.x) / t.n
                 q[f"ci_lo[{label}/{model}/{task}]"] = lo
                 q[f"ci_hi[{label}/{model}/{task}]"] = hi
+
+    # Beta-binomial ICC, reported in Section 2 against ClawsBench's 0.48. Both the
+    # all-cells and damage-producing-cells-only values appear in the text, so both
+    # are audited; a truncated 0.212 or 0.306 would otherwise pass unnoticed.
+    for label, stats in (("heldout", held), ("dev", dev)):
+        q[f"icc[{label},all]"] = fit_beta_binomial(stats).icc
+        producing = {k: v for k, v in stats.items() if v.x > 0}
+        if len(producing) > 1:
+            q[f"icc[{label},damage-producing]"] = fit_beta_binomial(producing).icc
 
     q["miss_rate[dev,pair]"] = audit_miss_rate(dev, "pair")
     q["miss_rate[dev,event]"] = audit_miss_rate(dev, "event")
@@ -158,6 +173,8 @@ def audit_decimals(text, path, q, findings):
     """Flag any decimal that is a truncation of a real quantity, not a rounding."""
     text = blank_typography(text)
     for m in DECIMAL.finditer(text):
+        if BOUNDED.search(text[max(0, m.start() - 12):m.start()]):
+            continue
         tok = norm(m.group(1))
         places = len(tok.split(".")[1])
         value = float(tok)

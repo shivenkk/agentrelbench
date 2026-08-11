@@ -189,11 +189,41 @@ It does repeat runs, and the reason is instructive: it reports ``the average of
 pass@1 across three runs (to reduce variance)'' as its primary metric. Repetition
 is used there to suppress the quantity we measure. Its side-effect checks also
 fold into an all-or-nothing pass@1 rather than a severity-priced damage rate, and
-it has no abstention mechanic. ClawsBench goes furthest on repetition, at 5
-repeats per task with a task-level cluster bootstrap and a reported within-task
-ICC of 0.48, but that ICC is a correction to interval width rather than a claim
-about damage recurrence, and its harm scores are task-authored rather than
-derived from a state diff. We build on EnterpriseOps-Gym rather than beside it:
+it has no abstention mechanic.
+
+ClawsBench is the closest prior work on repetition and deserves a precise
+comparison rather than a dismissal. It runs 5 repeats per task, penalizes
+irreversible harm directly, and reports a within-task intraclass correlation of
+0.48 from a 30-repeat pilot. That ICC is a variance decomposition, not merely an
+interval-width correction: it establishes that roughly half the variance in their
+trial scores is run-to-run rather than between-task. The existence and rough
+magnitude of substantial run-to-run variance in agent workspace behavior is
+therefore prior art, and we do not claim otherwise.
+
+Three things separate our result from theirs. First, the quantity: their ICC is a
+single pooled value over trial scores, not resolved to a damage outcome, and the
+paper does not attribute it to a specific metric. Second, the use: it appears in
+service of measurement reliability, justifying a task-level cluster bootstrap and
+the choice of $k=5$ as a cost-reliability tradeoff, and their reliability analysis
+argues that this variance leaves condition rankings stable (split-half
+$r_{\mathrm{SB}} = .93$, pilot-to-main task-mean $r = 0.918$). Within-task
+variance is something their design must survive, not something it measures.
+Third, and consequently, they report no per-cell damage distribution, no
+always-fail analysis, and no audit-miss quantity, so nothing there speaks to
+whether a finite audit can certify an agent.
+
+On our data the same family of statistic runs in the direction their number does
+not reach. The beta-binomial ICC over damage counts is 0.212 across the 100
+held-out and frontier cells and 0.306 across the 7 damage-producing ones, both
+with overdispersion $p < 0.001$; on the development pool it is 0.124 overall and,
+restricted to the 13 damage-producing cells, is not distinguishable from a common
+binomial rate at all ($\mathrm{ICC} = 0.000$, $p = 1.0$, which with 13 cells is an
+absence of detectable task-level structure rather than proof of its absence). A
+lower ICC means a larger share of the variance is within-cell, so a damage
+outcome carries even less task-level signature than their pooled score does.
+These are not strictly comparable numbers, computed on a different outcome with a
+different estimator over different models, and we report them as
+direction-consistent rather than as a matched contrast. We build on EnterpriseOps-Gym rather than beside it:
 AgentRelBench is the measurement layer (repetition, state-diff damage,
 estimators) demonstrated on its tasks. Judge-scored severity
 \citep{rabanser2026science} differs from ours in kind: our severity comes from a

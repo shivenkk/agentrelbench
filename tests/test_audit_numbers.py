@@ -57,6 +57,21 @@ class TestTruncationDetection:
         assert findings_for(audit_decimals, "alpha = 0.05 throughout",
                             QUANTITIES) == []
 
+    def test_inequality_bounds_are_not_point_estimates(self):
+        """"p < 0.001" is a threshold the data clears, not a rounded quantity.
+        Without this, any bound landing near a real value is flagged: the real
+        case was "p < 0.001" against a CI lower bound of 0.00158."""
+        q = {"ci_lo": 0.0015811117223165638}
+        assert findings_for(audit_decimals, "overdispersion p < 0.001", q) == []
+        assert findings_for(audit_decimals, r"$p < 0.001$ for both", q) == []
+        assert findings_for(audit_decimals, r"with $p \leq 0.001$", q) == []
+
+    def test_a_bare_truncation_is_still_caught_without_the_inequality(self):
+        """The bound exemption must not swallow the case it neighbours."""
+        q = {"ci_lo": 0.0015811117223165638}
+        out = findings_for(audit_decimals, "the interval starts at 0.001", q)
+        assert len(out) == 1 and out[0]["kind"] == "TRUNCATION"
+
     def test_line_number_is_reported(self):
         out = findings_for(audit_decimals, "intro\n\nthe value 0.42 here",
                            QUANTITIES)

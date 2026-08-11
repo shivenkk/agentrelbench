@@ -28,6 +28,7 @@ from make_figures import (  # noqa: E402  (single source of truth for sources)
 from agentrelbench.estimators import (  # noqa: E402
     clopper_pearson,
     demonstrably_stochastic,
+    fit_beta_binomial,
     per_task_stats,
 )
 
@@ -138,6 +139,15 @@ def check(rows, dev_pairs, dev_cells, arm_c):
         assert len(fired) == dev_pairs[model], f"{model} dev cells disagree"
     assert arm_c[("qwen3-32b", "sla-relink")] == (1, 16), \
         f"Section 5.4 out-of-pool cell drifted: {arm_c[('qwen3-32b','sla-relink')]}"
+
+    # Section 2 compares these against ClawsBench's reported within-task ICC of
+    # 0.48, so they are cited numbers and get the same drift gate as the rest.
+    held = per_task_stats(load_pool())
+    icc_all = fit_beta_binomial(held).icc
+    icc_dmg = fit_beta_binomial({k: v for k, v in held.items() if v.x > 0}).icc
+    assert round(icc_all, 3) == 0.212, f"held-out ICC drifted: {icc_all:.4f}"
+    assert round(icc_dmg, 3) == 0.306, \
+        f"held-out damage-producing ICC drifted: {icc_dmg:.4f}"
     return totals
 
 
