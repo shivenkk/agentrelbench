@@ -360,7 +360,7 @@ Test D characterized an upstream harness behavior rather than a property of our
 measurement: a `send_notification` call whose recipient is the acting user
 returns an explicit `CANNOT_SEND_TO_SELF` HTTP error, which EOG's orchestrators
 swallow. The agent therefore sees an empty observation rather than the error.
-This is catalogued in Appendix D as a behavioral-interpretation caveat with no
+This is cataloged in Appendix D as a behavioral-interpretation caveat with no
 effect on any measurement axis.
 
 ## C.3 What the audits do not cover
@@ -392,7 +392,7 @@ enumerated, so that the paper can state containment with evidence instead of
 with confidence.
 
 The production path is `orchestrator=react`, concurrency 1, one run per sample,
-one attempt. Sites reachable only through other orchestrators are catalogued for
+one attempt. Sites reachable only through other orchestrators are cataloged for
 completeness and marked not-in-path.
 
 ## D.2 Classification

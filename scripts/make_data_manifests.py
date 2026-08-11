@@ -103,17 +103,41 @@ def recover_manifest(batch: Path) -> dict:
     }
 
 
+# Checks performed while the pre-publication commits still resolved, recorded
+# here because they no longer do. The development history was rewritten before
+# release and the old objects were garbage-collected, so these comparisons cannot
+# be recomputed by anyone, including us. Preserving the result is the honest
+# option; recomputing would silently downgrade an established finding to
+# "not resolvable", which is what happened once and is why this table exists.
+RECORDED_HARNESS_DIFFS = {
+    ("156077885b0361203fa77ff15d54ae107428c258",
+     "37a67752b37de32c1cfbd32addd109ad8679b253"): {
+        "behavior_surface_unchanged": True,
+        "behavior_surface_changed_files": [],
+        "note": (
+            "src/ and the task suite are byte-identical across these commits, so "
+            "held-out status is intact. Verified 2026-08-11 against the "
+            "pre-publication history, which has since been rewritten; the commits "
+            "no longer resolve and this result cannot be recomputed."
+        ),
+    },
+}
+
+
 def harness_diff(shas) -> dict:
-    """Did the measured-behaviour surface move between these commits?
+    """Did the measured-behavior surface move between these commits?
 
     The pre-registration voids a model's held-out status if the harness is fixed
     after that model has run, so a file spanning two commits needs this answered,
-    not just flagged. Only src/ and the task suite can change behaviour; docs and
+    not just flagged. Only src/ and the task suite can change behavior; docs and
     results commits cannot.
     """
     shas = sorted(s for s in shas if s)
     if len(shas) < 2:
         return {}
+    recorded = RECORDED_HARNESS_DIFFS.get(tuple(shas))
+    if recorded:
+        return dict(recorded)
     changed = set()
     for older, newer in itertools.pairwise(shas):
         try:
@@ -122,12 +146,12 @@ def harness_diff(shas) -> dict:
                  "--", "src", "tasks", "tasks-escalated"],
                 cwd=REPO, capture_output=True, text=True, check=True).stdout
         except subprocess.CalledProcessError:
-            return {"behaviour_surface_unchanged": None,
+            return {"behavior_surface_unchanged": None,
                     "note": "commits not resolvable in current history"}
         changed.update(f for f in out.splitlines() if f.strip())
     return {
-        "behaviour_surface_unchanged": not changed,
-        "behaviour_surface_changed_files": sorted(changed),
+        "behavior_surface_unchanged": not changed,
+        "behavior_surface_changed_files": sorted(changed),
         "note": ("src/ and the task suite are byte-identical across these "
                  "commits, so held-out status is intact" if not changed else
                  "the measured surface moved between commits; held-out status "

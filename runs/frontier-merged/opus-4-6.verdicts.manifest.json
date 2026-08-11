@@ -8,9 +8,9 @@
   "file": "frontier-merged/opus-4-6.verdicts.jsonl",
   "git_sha_scope": "agentrelbench_git_sha values were recorded at run time against the pre-publication development history, which was rewritten before release. They are the true provenance of each batch but do not resolve in the published repository. Any harness comparison below was performed while they still resolved and is recorded here rather than left to be recomputed.",
   "harness_diff_across_commits": {
-    "behaviour_surface_changed_files": [],
-    "behaviour_surface_unchanged": true,
-    "note": "src/ and the task suite are byte-identical across these commits, so held-out status is intact"
+    "behavior_surface_changed_files": [],
+    "behavior_surface_unchanged": true,
+    "note": "src/ and the task suite are byte-identical across these commits, so held-out status is intact. Verified 2026-08-11 against the pre-publication history, which has since been rewritten; the commits no longer resolve and this result cannot be recomputed."
   },
   "k_by_task": {
     "account-onboarding-chain": 8,

@@ -43,7 +43,7 @@ evidence**.
 
 Our production path is **`orchestrator=react`, `--concurrency 1`, task
 `number_of_runs=1`, `max_num_attempts=1`** (cli.py → inner_runner). Sites that
-only live in `planner_react` / `decomposing_planner` are catalogued for
+only live in `planner_react` / `decomposing_planner` are cataloged for
 completeness and marked **not-in-path**.
 
 ---
@@ -229,7 +229,7 @@ conservative-and-recorded or benign.
 
 ## Containment summary
 
-**Sites catalogued:** 75 substantive sites across 22 files (39 ARM A, 36 ARM B),
+**Sites cataloged:** 75 substantive sites across 22 files (39 ARM A, 36 ARM B),
 plus bucketed trivial config/dataclass/telemetry defaults.
 
 By classification:
