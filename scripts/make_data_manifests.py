@@ -43,6 +43,10 @@ RELEASED = [
     "qwen-merged/verdicts.jsonl",
     "20260716T183218Z_432f84/verdicts.jsonl",
     "20260717T191024Z_147888/verdicts.jsonl",
+    # Both arm-C depth batches. The llama-70b one was missing from the release
+    # checklist's list of cited batches and was caught by the clean-room run,
+    # not by any local test: locally the untracked file is simply present.
+    "20260717T155716Z_f2f677/verdicts.jsonl",
     "20260717T160119Z_5daf96/verdicts.jsonl",
 ]
 
