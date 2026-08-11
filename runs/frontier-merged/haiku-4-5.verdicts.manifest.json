@@ -1,0 +1,86 @@
+{
+  "agentrelbench_git_sha_by_batch": {
+    "20260720T192230Z_2862ea": "156077885b0361203fa77ff15d54ae107428c258",
+    "20260720T193822Z_aa6eae": "156077885b0361203fa77ff15d54ae107428c258",
+    "20260720T195012Z_b36429": "156077885b0361203fa77ff15d54ae107428c258"
+  },
+  "eog_commit": "de22905d21a080b83bf4a54258afe4250ee2dd55",
+  "file": "frontier-merged/haiku-4-5.verdicts.jsonl",
+  "harness_diff_across_commits": {},
+  "k_by_task": {
+    "account-onboarding-chain": 8,
+    "case-close-with-note": 8,
+    "case-reassign-scoped": 16,
+    "case-triage-basic": 8,
+    "change-request-cab-gate": 16,
+    "ci-cost-correction": 8,
+    "contract-price-correction": 16,
+    "contract-renewal-enlist": 8,
+    "entitlement-update-dead-contract": 8,
+    "incident-sla-cleanup": 8,
+    "incident-triage-basic": 8,
+    "installed-product-serial": 16,
+    "knowledge-publish-and-link": 16,
+    "notification-cleanup": 8,
+    "notification-outward": 8,
+    "parent-child-restructure": 8,
+    "problem-change-mapping": 8,
+    "product-price-sync": 8,
+    "sla-relink": 16,
+    "template-driven-incidents": 8
+  },
+  "k_values": [
+    8,
+    16
+  ],
+  "lineage_method": "3 of 20 tasks are uniquely traceable by row content and anchor the model; the remainder are clean-pass cells whose rows are byte-identical across models and were resolved within that model's batches",
+  "mcp_image_digests": {
+    "http://localhost:8001": "shivakrishnareddyma225/enterpriseops-gym-mcp-csm@sha256:eaa456ac9aa85728426e7d3813a0bbca0949d6a8695be30e26f03894e6e6b189",
+    "http://localhost:8006": "shivakrishnareddyma225/enterpriseops-gym-mcp-itsm@sha256:a234ae3fb7cee196ba25e6b9957969dea829919b6e8271dddae128f065aaf39f"
+  },
+  "model": "us.anthropic.claude-haiku-4-5-20251001-v1:0",
+  "never_splice": "each task traced to exactly one source batch by row content",
+  "provenance": "complete",
+  "provider": "aws_bedrock",
+  "provider_pin": null,
+  "rows": 208,
+  "run_window_utc": {
+    "first_started": "2026-07-20T19:22:30.699219+00:00",
+    "last_finished": "2026-07-20T19:52:33.912503+00:00"
+  },
+  "sampling_params": {
+    "max_tokens": 4096,
+    "temperature": 0.6
+  },
+  "sha256": "2d04c471289945ef6602cf496d8f92cfce6c9dc3f65e6607a95b13dd5dabe982",
+  "source_batches": {
+    "20260720T192230Z_2862ea": [
+      "account-onboarding-chain",
+      "case-close-with-note",
+      "case-triage-basic",
+      "ci-cost-correction",
+      "contract-renewal-enlist",
+      "entitlement-update-dead-contract",
+      "incident-sla-cleanup",
+      "incident-triage-basic",
+      "notification-cleanup",
+      "notification-outward",
+      "parent-child-restructure",
+      "problem-change-mapping",
+      "product-price-sync",
+      "template-driven-incidents"
+    ],
+    "20260720T193822Z_aa6eae": [
+      "case-reassign-scoped",
+      "contract-price-correction",
+      "installed-product-serial",
+      "knowledge-publish-and-link",
+      "sla-relink"
+    ],
+    "20260720T195012Z_b36429": [
+      "change-request-cab-gate"
+    ]
+  },
+  "spans_multiple_harness_commits": false,
+  "unrecorded_fields": []
+}

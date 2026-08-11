@@ -1,0 +1,40 @@
+{
+  "agentrelbench_git_sha_by_batch": {
+    "20260717T191024Z_147888": "d4c9f757bf1f553dbd0ca19e8b450e2d190e8cad"
+  },
+  "eog_commit": "de22905d21a080b83bf4a54258afe4250ee2dd55",
+  "file": "20260717T191024Z_147888/verdicts.jsonl",
+  "harness_diff_across_commits": {},
+  "k_by_task": {
+    "change-request-cab-gate": 16
+  },
+  "k_values": [
+    16
+  ],
+  "lineage_method": "1 of 1 tasks are uniquely traceable by row content and anchor the model; the remainder are clean-pass cells whose rows are byte-identical across models and were resolved within that model's batches",
+  "mcp_image_digests": {
+    "http://localhost:8006": "shivakrishnareddyma225/enterpriseops-gym-mcp-itsm@sha256:a234ae3fb7cee196ba25e6b9957969dea829919b6e8271dddae128f065aaf39f"
+  },
+  "model": "meta-llama/llama-3.3-70b-instruct",
+  "never_splice": "each task traced to exactly one source batch by row content",
+  "provenance": "complete",
+  "provider": "openrouter",
+  "provider_pin": null,
+  "rows": 16,
+  "run_window_utc": {
+    "first_started": "2026-07-17T19:10:24.447136+00:00",
+    "last_finished": "2026-07-17T19:11:37.642200+00:00"
+  },
+  "sampling_params": {
+    "max_tokens": 4096,
+    "temperature": 0.6
+  },
+  "sha256": "13790d40f3d4654ad4a04510c0b8da0b8338aba4f65e22f3dc990b1e8fae0756",
+  "source_batches": {
+    "20260717T191024Z_147888": [
+      "change-request-cab-gate"
+    ]
+  },
+  "spans_multiple_harness_commits": false,
+  "unrecorded_fields": []
+}

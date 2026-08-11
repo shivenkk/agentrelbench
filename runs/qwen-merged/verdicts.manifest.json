@@ -1,0 +1,89 @@
+{
+  "agentrelbench_git_sha_by_batch": {
+    "20260716T190628Z_969c5d": null,
+    "20260716T221258Z_4c2d89": null,
+    "20260717T012645Z_5028e7": "b73b0caf77ccad153ae50a640d6e1f8a894208a3"
+  },
+  "eog_commit": "de22905d21a080b83bf4a54258afe4250ee2dd55",
+  "file": "qwen-merged/verdicts.jsonl",
+  "harness_diff_across_commits": {},
+  "k_by_task": {
+    "account-onboarding-chain": 8,
+    "case-close-with-note": 8,
+    "case-reassign-scoped": 8,
+    "case-triage-basic": 8,
+    "change-request-cab-gate": 8,
+    "ci-cost-correction": 8,
+    "contract-price-correction": 8,
+    "contract-renewal-enlist": 8,
+    "entitlement-update-dead-contract": 8,
+    "incident-sla-cleanup": 8,
+    "incident-triage-basic": 8,
+    "installed-product-serial": 8,
+    "knowledge-publish-and-link": 8,
+    "notification-cleanup": 8,
+    "notification-outward": 8,
+    "parent-child-restructure": 8,
+    "problem-change-mapping": 8,
+    "product-price-sync": 8,
+    "sla-relink": 8,
+    "template-driven-incidents": 8
+  },
+  "k_values": [
+    8
+  ],
+  "lineage_method": "9 of 20 tasks are uniquely traceable by row content and anchor the model; the remainder are clean-pass cells whose rows are byte-identical across models and were resolved within that model's batches",
+  "mcp_image_digests": {
+    "http://localhost:8001": "shivakrishnareddyma225/enterpriseops-gym-mcp-csm@sha256:eaa456ac9aa85728426e7d3813a0bbca0949d6a8695be30e26f03894e6e6b189"
+  },
+  "model": "qwen/qwen3-32b",
+  "never_splice": "each task traced to exactly one source batch by row content",
+  "provenance": "partial",
+  "provider": "openrouter",
+  "provider_pin": null,
+  "rows": 160,
+  "run_window_utc": {
+    "first_started": "2026-07-17T01:26:45.702681+00:00",
+    "last_finished": "2026-07-17T01:38:47.380633+00:00"
+  },
+  "sampling_params": {
+    "max_tokens": 4096,
+    "temperature": 0.6
+  },
+  "sha256": "e9772688c40b5efd1a90ae403fe850656c77122648afe505b5ee236fd9e91831",
+  "source_batches": {
+    "20260716T190628Z_969c5d": [
+      "account-onboarding-chain",
+      "case-close-with-note",
+      "case-reassign-scoped",
+      "case-triage-basic"
+    ],
+    "20260716T221258Z_4c2d89": [
+      "change-request-cab-gate",
+      "ci-cost-correction",
+      "contract-price-correction",
+      "contract-renewal-enlist",
+      "entitlement-update-dead-contract",
+      "incident-sla-cleanup",
+      "incident-triage-basic",
+      "installed-product-serial",
+      "knowledge-publish-and-link",
+      "notification-cleanup",
+      "notification-outward",
+      "parent-child-restructure",
+      "problem-change-mapping",
+      "product-price-sync",
+      "template-driven-incidents"
+    ],
+    "20260717T012645Z_5028e7": [
+      "sla-relink"
+    ]
+  },
+  "spans_multiple_harness_commits": false,
+  "unrecorded_fields": [
+    "agentrelbench_git_sha",
+    "eog_commit",
+    "mcp_image_digests",
+    "run_window_utc"
+  ]
+}

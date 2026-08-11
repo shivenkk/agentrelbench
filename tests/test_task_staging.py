@@ -15,7 +15,7 @@ import json
 
 import pytest
 
-from agentrelbench.cli import REPO_ROOT, resolve_seed_paths
+from agentrelbench.cli import REPO_ROOT, find_repo_root, resolve_seed_paths
 
 
 def config(seed, **extra):
@@ -111,7 +111,39 @@ class TestEverythingElseIsPreserved:
         json.dumps(resolve_seed_paths(config("data/seed-dbs/csm/db.sql")))
 
 
-def test_real_repo_root_points_at_this_repo():
-    """Guards the parents[2] arithmetic that makes resolution repo-anchored."""
-    assert (REPO_ROOT / "src" / "agentrelbench" / "cli.py").exists()
-    assert (REPO_ROOT / "pyproject.toml").exists()
+class TestAnchoringSurvivesInstallation:
+    """REPO_ROOT comes from __file__, so for a pip-installed package it points
+    into site-packages, where no seed database has ever lived. Resolution must
+    anchor on the repo containing the task file instead."""
+
+    def test_anchor_is_the_repo_containing_the_task_file(self, tmp_path):
+        repo = tmp_path / "checkout"
+        (repo / "data" / "seed-dbs").mkdir(parents=True)
+        (repo / "pyproject.toml").write_text("[project]\nname='x'\n")
+        seed = repo / "data" / "seed-dbs" / "db.sql"
+        seed.write_text("-- seed\n")
+        task_file = repo / "tasks" / "csm" / "t" / "task.json"
+        task_file.parent.mkdir(parents=True)
+        task_file.write_text("{}")
+
+        out = resolve_seed_paths(config("data/seed-dbs/db.sql"), task_file)
+        assert out["gym_servers_config"][0]["seed_database_file"] == str(seed)
+
+    def test_find_repo_root_walks_up_to_pyproject(self, tmp_path):
+        repo = tmp_path / "checkout"
+        deep = repo / "tasks" / "csm" / "t"
+        deep.mkdir(parents=True)
+        (repo / "pyproject.toml").write_text("[project]\nname='x'\n")
+        assert find_repo_root(deep) == repo
+
+    def test_find_repo_root_falls_back_when_no_marker_above(self, tmp_path):
+        orphan = tmp_path / "nowhere"
+        orphan.mkdir()
+        assert find_repo_root(orphan) == REPO_ROOT
+
+    def test_this_checkout_is_still_found_from_a_real_task_file(self):
+        """End-to-end on the committed suite, independent of how it is installed."""
+        task_file = REPO_ROOT / "tasks" / "csm" / "sla-relink" / "task.json"
+        if not task_file.exists():
+            pytest.skip("running from an installed package without the task suite")
+        assert (find_repo_root(task_file.parent) / "pyproject.toml").exists()

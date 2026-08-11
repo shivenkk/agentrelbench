@@ -16,6 +16,12 @@ dev = [
     "pytest>=7.0",
     "hypothesis>=6.0",
 ]
+# The analysis path (scripts/reproduce.sh: figures, Appendix E tables, the
+# manuscript number audit). The estimators themselves are pure stdlib; only
+# plotting needs a third-party package.
+figures = [
+    "matplotlib>=3.7",
+]
 
 [project.scripts]
 arb-run = "agentrelbench.cli:entrypoint"

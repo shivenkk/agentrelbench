@@ -41,7 +41,21 @@ def _make_batch_id() -> str:
     return f"{stamp}_{uuid.uuid4().hex[:6]}"
 
 
-def resolve_seed_paths(task_json: dict) -> dict:
+def find_repo_root(start: Path) -> Path:
+    """Nearest ancestor of ``start`` holding pyproject.toml, else ``REPO_ROOT``.
+
+    Anchoring on the task file rather than on this module is what makes seed
+    resolution work when agentrelbench is pip-installed: ``REPO_ROOT`` is derived
+    from ``__file__``, so for an installed package it points into site-packages,
+    where no seed database has ever lived.
+    """
+    for candidate in [start, *start.parents]:
+        if (candidate / "pyproject.toml").exists():
+            return candidate
+    return REPO_ROOT
+
+
+def resolve_seed_paths(task_json: dict, task_file: Path = None) -> dict:
     """Return a copy of ``task_json`` with every seed_database_file absolute.
 
     Committed task.json files carry repo-relative seed paths so the suite is
@@ -50,9 +64,12 @@ def resolve_seed_paths(task_json: dict) -> dict:
     the EOG clone instead of this repo. Resolving here, before that chdir, makes
     the chdir irrelevant and asks nothing of whoever clones the repo.
 
-    Absolute paths pass through unchanged. A path that does not exist raises --
-    a mis-seeded run is worse than a crashed one, because it still produces data.
+    Relative paths resolve against the repo containing ``task_file`` when given,
+    which keeps working for an installed package. Absolute paths pass through
+    unchanged. A path that does not exist raises: a mis-seeded run is worse than
+    a crashed one, because it still produces data.
     """
+    anchor = find_repo_root(Path(task_file).resolve().parent) if task_file else REPO_ROOT
     resolved = json.loads(json.dumps(task_json))  # deep copy, JSON in / JSON out
     for gym in resolved.get("gym_servers_config") or []:
         seed = gym.get("seed_database_file")
@@ -60,11 +77,11 @@ def resolve_seed_paths(task_json: dict) -> dict:
             continue
         path = Path(seed)
         if not path.is_absolute():
-            path = REPO_ROOT / path
+            path = anchor / path
         if not path.exists():
             raise FileNotFoundError(
                 f"seed_database_file does not exist: {path} (from {seed!r}). "
-                "Relative paths resolve against the repo root."
+                f"Relative paths resolve against {anchor}."
             )
         gym["seed_database_file"] = str(path)
     return resolved
@@ -105,7 +122,7 @@ def _run_one_task(
     # inner_runner chdirs into the clone (see resolve_seed_paths). The staged
     # file is also the record of what actually ran.
     (staging_dir / task_file.name).write_text(
-        json.dumps(resolve_seed_paths(task_json), indent=2)
+        json.dumps(resolve_seed_paths(task_json, task_file), indent=2)
     )
 
     job_spec = {

@@ -141,7 +141,11 @@ def spines(ax):
 
 def save(fig, name):
     for ext in ("png", "pdf"):
-        fig.savefig(FIGS / f"{name}.{ext}", dpi=300)
+        # Suppress the PDF CreationDate stamp: without it, every regeneration
+        # produces different bytes for identical content, and Gate C's
+        # "diff the regenerated figures against the paper" check can never pass.
+        meta = {"CreationDate": None} if ext == "pdf" else None
+        fig.savefig(FIGS / f"{name}.{ext}", dpi=300, metadata=meta)
     plt.close(fig)
     print(f"wrote docs/figs/{name}.png/.pdf")
 

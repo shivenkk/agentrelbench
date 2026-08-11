@@ -19,3 +19,4 @@ paper/*.blg
 # upload if neither it nor the .bib is present. Rebuild it whenever refs.bib changes.
 !paper/main.bbl
 paper/*.synctex.gz
+.reproduce-venv/
