@@ -27,7 +27,7 @@ Miss-rate: only **5 held-out damage-producing pairs** (floor = 8) → **underpow
 
 **0 always-fail (x=n) pairs** across all held-out runs; **42 held-out damage events** (tested-floor = 8, well cleared → genuinely tested, not vacuous). Highest single-cell rate 12/16 = 0.75, still short of x=n. The falsifier stayed silent on genuinely held-out models. One-shot audits remain structurally blind to the damage that occurs.
 
-## Reframing (proposed, Shiven's call on the paper's headline)
+## Reframing (proposed change to the paper's headline)
 
 The pre-registration reorders the paper honestly:
 - **New headline = Leg 2 + Leg 3 together:** agent damage on irreversible actions is a per-run coin flip with no discoverable always-fail traps, replicated across **six** model families (llama×2, qwen×2, mistral, gpt-oss, deepseek) and genuinely held-out ones; the purest form of "safety doesn't repeat." Population miss-rate anchored on the dev pool (0.80), held-out corroborating descriptively.

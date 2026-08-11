@@ -73,7 +73,7 @@ module to the already-synced `.venv`.
 
 ## Pass criteria
 
-**Both runs execute; `run_1/` and `run_2/` each contain `results_*.json`.** ✅
+**Both runs execute; `run_1/` and `run_2/` each contain `results_*.json`.** ✓
 ```
 m1_spike/results/run_1/results_task.json  (15326 bytes)
 m1_spike/results/run_2/results_task.json  (15326 bytes)
@@ -84,7 +84,7 @@ same for `run_2`. Tool discovery log confirms scoping worked as configured:
 `[TOOL_SOURCE] ✅ Discovered 89 tools from gym 'sn-csm-server'` →
 `[TOOL_FILTER] ✅ Filtered from 89 to 3 tools`.
 
-**`tool_results` records the scripted calls with arguments + server results.** ✅
+**`tool_results` records the scripted calls with arguments + server results.** ✓
 From `run_1/results_task.json` → `runs[0].tool_results` (identical in `run_2`):
 ```json
 {
@@ -103,7 +103,7 @@ critical, escalation:1`) and `assign_case_to_user` (`{"assignment_status":
 "success", "assigned_to": 6, ...}`), each with full arguments and full server
 response captured.
 
-**Verifier `actual` values captured; run 1 vs run 2 used different `database_id`s.** ✅
+**Verifier `actual` values captured; run 1 vs run 2 used different `database_id`s.** ✓
 `verification_results` (identical shape/values in both runs):
 ```json
 {
@@ -147,9 +147,9 @@ run_2: ✅ Database created from file: db_1784202780576_gf22qnj12   (deleted aft
 
 ## Checklist
 
-- ✅ Both runs executed; `run_1/results_task.json` and `run_2/results_task.json` present.
-- ✅ `tool_results` records all 3 scripted calls with full arguments + server results.
-- ✅ Verifier `actual` values captured (1 and 1233); run_1/run_2 used different `database_id`s (`db_1784202780001_tyj3ty8mw` vs `db_1784202780576_gf22qnj12`, from logs).
-- ✅ Responder → langchain flow was clean: 0 retries, 0 tracebacks, only 1 benign `UserWarning`/run.
+- ✓ Both runs executed; `run_1/results_task.json` and `run_2/results_task.json` present.
+- ✓ `tool_results` records all 3 scripted calls with full arguments + server results.
+- ✓ Verifier `actual` values captured (1 and 1233); run_1/run_2 used different `database_id`s (`db_1784202780001_tyj3ty8mw` vs `db_1784202780576_gf22qnj12`, from logs).
+- ✓ Responder → langchain flow was clean: 0 retries, 0 tracebacks, only 1 benign `UserWarning`/run.
 - Deviation: had to `uv pip install nest_asyncio` into the clone's `.venv` (upstream lockfile pinned `nest-asyncio2` instead), no tracked file touched, `git status` clean.
 - Responder process killed; `eog-csm`/`eog-itsm` containers left running per instructions.

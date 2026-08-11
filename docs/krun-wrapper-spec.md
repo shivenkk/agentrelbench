@@ -22,4 +22,4 @@ Reuse `m1_spike/`: scripted responder + spike task, `--k 2` through the wrapper 
 
 ## Non-goals
 
-No pass^k/safe^k estimators (Phase 2, orchestrator, test-first), no damage labeling (M2 labeler consumes these exports), no Ray orchestration (direct mode only for now).
+No pass^k/safe^k estimators (Phase 2, test-first), no damage labeling (M2 labeler consumes these exports), no Ray orchestration (direct mode only for now).

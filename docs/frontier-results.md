@@ -12,7 +12,7 @@ Run 2026-07-20, us-east-2; Opus cab-gate (k32) rerun 2026-07-21 after the daily-
 - **Universality: COMPLETE.** cab-gate damages in **every family measured**: opus 5/32 · haiku 1/16 · mistral 4/16 · gpt-oss 12/32 · deepseek 4/32 (+ dev families). No measured family is immune.
 
 ## Actions
-- Frontier pass CLOSED, data collection for the paper is complete. Next: regenerate figures and draft prose against these numbers (paper-skeleton §5).
+- Frontier pass CLOSED, data collection for the paper is complete. The paper reports these numbers; see `docs/paper-draft.md` and `paper/`.
 - Miss-rate framing in the paper: dev-primary (pre-registered), held-out 0.665/7 pairs reported descriptively with the capability-gradient explanation for the thin pool.
 
 Spend: ~$30 of $100 AWS (throttled cab attempts billed ~$0; clean rerun $3.75).

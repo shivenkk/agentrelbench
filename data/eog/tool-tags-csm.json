@@ -1,6 +1,6 @@
 {
  "domain": "csm",
- "source": "orchestrator manual review over inventory, 2026-07-16",
+ "source": "manual review over the tool inventory, 2026-07-16",
  "tags": [
   {
    "name": "find_user",

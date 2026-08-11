@@ -42,10 +42,6 @@ arb-validate = "agentrelbench.validate:entrypoint"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/agentrelbench"]
-# PROGRESS.md files are internal task-authoring scaffolding ("M4 csm batch, build
-# progress, delegated"). RATIONALE.md files stay: they document each task's damage
-# lever and the seed data the tension is built from, which a user of the suite wants.
-exclude = ["**/PROGRESS.md"]
 
 # The published task suite and its seed databases ship inside the wheel, not just
 # the sdist. Without this, `pip install agentrelbench` gives the code but none of
@@ -60,11 +56,10 @@ exclude = ["**/PROGRESS.md"]
 # directory existing. Flatten it and every packaged task ships unrunnable.
 "data/seed-dbs" = "agentrelbench/suite/data/seed-dbs"
 
-# An allowlist, deliberately, not an exclude list. hatchling's default is to ship
-# anything not gitignored, which quietly published CLAUDE.md (AI tooling
-# instructions), .hypothesis/ (test cache), the m1_audit / m1_spike / m4_reaudit
-# trees, and paper/ (LaTeX source). Naming what ships means anything added later
-# stays out by default rather than by being remembered.
+# An allowlist, deliberately, not an exclude list. hatchling ships anything not
+# gitignored by default, which swept in local editor and test caches, the frozen
+# audit trees, and the LaTeX sources. Naming what ships means anything added
+# later stays out by default rather than by being remembered.
 [tool.hatch.build.targets.sdist]
 include = [
   "/src",
@@ -88,10 +83,16 @@ include = [
 # a dangling reference is worse than a slightly untidy package. That rule is why
 # task-design-m4.md ships (10 RATIONALE.md files cite it) and paper-draft.md
 # ships (scripts/audit_numbers.py reads it).
+#
+# The planning files below are also untracked via .git/info/exclude, and both
+# mechanisms are needed. git's exclude file keeps them out of the REPOSITORY;
+# hatchling does not read it and would otherwise ship anything sitting on disk
+# under an included directory. Repository-clean and distribution-clean are
+# separate surfaces: verify each on its own terms.
 exclude = [
+  "/docs/M1-go-no-go.md",
   "/docs/release-checklist.md",
   "/docs/paper-skeleton.md",
-  "/docs/M1-go-no-go.md",
   "**/PROGRESS.md",
 ]
 
@@ -119,7 +120,6 @@ ignore = [
     # that produce published numbers.
     #   ASYNC230: 14 blocking open() calls inside async functions.
     #   SIM115:   13 files opened without a context manager.
-    # Revisit after the release; see docs/release-checklist.md.
     "ASYNC230",
     "SIM115",
     # ruff 0.6 predates PEP 639, so it rejects the valid `license-files` key.

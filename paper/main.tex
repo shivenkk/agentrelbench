@@ -1,10 +1,9 @@
 % AgentRelBench, arXiv preprint.
 %
 % ------------------------------------------------------------------------------
-% Venue decision (2026-08-11): arXiv preprint under our own names, plus at most a
-% NeurIPS workshop. No main-track conference submission, so this is deliberately a
-% plain article with a named author block rather than a double-blind template.
-% Rationale and the retired ICLR path are in docs/release-checklist.md.
+% Venue: arXiv preprint under our own names. No main-track conference submission
+% and no workshop, so this is deliberately a plain article with a named author
+% block rather than a double-blind template.
 %
 % Build: tectonic -X compile main.tex, or the classic
 %   pdflatex main && bibtex main && pdflatex main && pdflatex main
@@ -12,10 +11,6 @@
 % non-ASCII bytes, so arXiv's pdflatex builds it as-is. Do NOT add \pdfoutput and
 % do not set driver options on graphicx or hyperref: arXiv asks authors not to
 % override its driver detection. Ship the prebuilt main.bbl alongside refs.bib.
-%
-% If a workshop with a page limit is chosen, main text through references is
-% currently 10 pages; the development-pool provenance paragraph in Section 6 is
-% the one that most recently moved that number.
 % ------------------------------------------------------------------------------
 \documentclass[11pt]{article}
 

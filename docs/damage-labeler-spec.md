@@ -107,7 +107,7 @@ Property tests (Hypothesis):
 
 | Input | Status |
 |---|---|
-| volatile column lists (csm, itsm) | ✅ `data/eog/volatile-columns-{csm,itsm}.json`; timestamps only |
-| PK determinism | ✅ deterministic → PK-keyed matching (§3.2); fixtures 9–10 retired |
-| full-dump wall time | ✅ 0.304s / 18 tables / 10,633 rows; per-run dumps trivial |
-| tool inventory → reversibility tags | ⏳ inventories dumped (`data/eog/tool-inventory-{csm,itsm}.json`); human-audited tagging is an M2 task (orchestrator) |
+| volatile column lists (csm, itsm) | ✓ `data/eog/volatile-columns-{csm,itsm}.json`; timestamps only |
+| PK determinism | ✓ deterministic → PK-keyed matching (§3.2); fixtures 9–10 retired |
+| full-dump wall time | ✓ 0.304s / 18 tables / 10,633 rows; per-run dumps trivial |
+| tool inventory → reversibility tags | ⏳ inventories dumped (`data/eog/tool-inventory-{csm,itsm}.json`); human-audited tagging is an M2 task |

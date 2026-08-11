@@ -6,7 +6,7 @@ Date: 2026-07-16 · Substrate: EOG @ commit `de22905d`, MCP images digest-pinned
 
 **GO**, build the reliability instrument (damage labeler + k-run harness + custom task slice) on EnterpriseOps-Gym, scoped to **csm + itsm**. All three checks pass with direct evidence; the environment is more deterministic than required (only wall-clock timestamps vary; IDs and FKs byte-identical across independent replays), and the custom-task path works end-to-end through the unmodified harness. Fallback (bespoke mini-ERP, plan unchanged) triggers only per §5.
 
-Sign-off: _Shiven, pending written confirmation (required before M2 starts)._
+Sign-off: _pending written confirmation (required before M2 starts)._
 
 ## 1. Check (a), license permits a derivative benchmark: **PASS**
 
