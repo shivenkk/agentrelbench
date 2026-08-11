@@ -1,25 +1,34 @@
-# AgentRelBench
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)"
+            srcset="https://raw.githubusercontent.com/shivenkk/agentrelbench/main/docs/figs/header-dark.svg">
+    <img alt="AgentRelBench: a reliability instrument for action-taking LLM agents"
+         src="https://raw.githubusercontent.com/shivenkk/agentrelbench/main/docs/figs/header-light.svg">
+  </picture>
+</p>
 
-**Agent safety does not repeat. We measured it.**
+<p align="center">
+  <strong>Agent safety does not repeat. We measured it.</strong>
+</p>
 
-[![CI](https://github.com/shivenkk/agentrelbench/actions/workflows/ci.yml/badge.svg)](https://github.com/shivenkk/agentrelbench/actions/workflows/ci.yml)
-[![PyPI](https://img.shields.io/pypi/v/agentrelbench)](https://pypi.org/project/agentrelbench/)
-[![Python](https://img.shields.io/badge/python-3.11%2B-blue)](https://pypi.org/project/agentrelbench/)
-[![License](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-156-brightgreen)](https://github.com/shivenkk/agentrelbench/actions/workflows/ci.yml)
+<p align="center">
+  <a href="https://github.com/shivenkk/agentrelbench/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/shivenkk/agentrelbench/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://pypi.org/project/agentrelbench/"><img alt="PyPI" src="https://img.shields.io/pypi/v/agentrelbench"></a>
+  <a href="https://pypi.org/project/agentrelbench/"><img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11%2B-blue"></a>
+  <a href="https://github.com/shivenkk/agentrelbench/blob/main/LICENSE"><img alt="Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-blue"></a>
+  <a href="https://github.com/shivenkk/agentrelbench/actions/workflows/ci.yml"><img alt="156 tests" src="https://img.shields.io/badge/tests-156-brightgreen"></a>
+</p>
 
-When an LLM agent holds write access, a wrong action is not a bad sample you regenerate. It is a state
-change someone has to detect, price, and unwind. So the question that decides whether pre-deployment
-testing means anything is not *does this agent cause damage* but **does it cause damage repeatably.**
+When an LLM agent holds write access, a wrong action becomes a state change that someone has to detect,
+price, and unwind. You cannot regenerate it. That narrows the useful question about pre-deployment
+testing to one thing: **does an agent cause damage repeatably?**
 
-Across 2,128 evaluation runs on nine models in six families, the answer is no. Damage happens in every
-model family we measured, it is stochastic inside every damage-producing cell, and **not one task
-damaged on every run.** Zero always-fail cells across 48 held-out damage events. There is no dangerous
-task a one-shot audit can find, because there is no dangerous task, only dangerous runs.
+Across 2,128 evaluation runs on nine models in six families, no. Damage appeared in every model family
+we measured, and inside every damage-producing cell it was stochastic. **Not one task damaged on every
+run**, across 48 held-out damage events, so a one-shot audit has no dangerous task to find.
 
-**A single clean run misses a damage-producing (model, task) pair 80% of the time.** Repeat that audit
-and the miss probability decays geometrically, which is the entire problem: the audit you can afford is
-the audit that tells you least.
+**A single clean run misses a damage-producing (model, task) pair 80% of the time.** More runs help
+only geometrically.
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/shivenkk/agentrelbench/main/docs/figs/fig4-audit-decay.png"
@@ -27,8 +36,8 @@ the audit that tells you least.
 </p>
 
 This does not go away with capability. The most capable model we measured damages on only one task out
-of twenty, but that residual is still a per-run coin flip: it fails at p-hat = 0.16, and a single audit
-run misses it 84% of the time.
+of twenty, but that residual is still a per-run coin flip: it fails at p-hat = 0.16, a single audit run
+misses it 84% of the time, and five independent clean runs still miss it 43% of the time.
 
 ## Results
 
@@ -59,7 +68,7 @@ of 8 and is therefore reported as underpowered rather than as confirmation.
 
 Two further results worth naming. One model family committed the gated irreversible change **while
 declaring that it had refused**, which transcript grading and LLM-judge grading both score as a safe
-refusal. Only state-diff verification catches it. And our own initially favoured headline was demoted
+refusal. Only state-diff verification catches it. And our own initially favored headline was demoted
 by a pre-registered criterion that fired against it; that demotion is reported in the paper rather than
 quietly dropped.
 
