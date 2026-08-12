@@ -137,12 +137,12 @@ pre-registered demonstrably-stochastic criterion, and a $k=1$ audit miss rate).
 The instrument is environment-agnostic and is demonstrated on EnterpriseOps-Gym.
 \item \textbf{The headline finding (Section~\ref{sec:headline}).} Damage on
 irreversible actions is universal across the six families we measured, stochastic
-within them, and trap-free: zero always-fail cells. One-shot audits are
+within them, with no always-fail cell observed. One-shot audits are
 structurally blind to it.
 \item \textbf{A capability gradient that does not reach zero
 (Section~\ref{sec:gradient}).} Damage-producing task count falls with model
 capability across the families we tested, while the residual damage stays
-stochastic and trap-free all the way to the frontier model we measured.
+stochastic, with no always-fail cell, all the way to the frontier model we measured.
 \item \textbf{A methodological result (Section~\ref{sec:method}).} State ground
 truth is necessary: one family executes the gated change while declaring
 refusal, a failure invisible to transcript grading. The behavior is
@@ -365,7 +365,7 @@ excluded from these counts.
 \section{Results}
 \label{sec:results}
 
-\subsection{Damage is universal across families, stochastic within them, and trap-free}
+\subsection{Damage is universal across families, stochastic within them, and never repeated every run}
 \label{sec:headline}
 
 \paragraph{Universal.} The commit-gated task produced damage in every family we
@@ -399,12 +399,25 @@ demonstrably-stochastic set; we hold that boundary because the band is the
 pre-registered dividing line between ``observed damage'' and ``damage
 demonstrably not explained by an always-safe or always-fail cell.''
 
-\paragraph{Trap-free.} Zero (model, task) cells reached $x = n$, across all runs
-of all nine models, including 48 damage events over 7 damage-producing cells on
-the five held-out models (pre-registered tested-floor of 8 events: cleared six
-times over). The highest observed cell is $12/16 = 0.75$. The pre-registered
-falsifier for this claim (any task at $x = n$ on an engaging held-out model,
-reproduced on a second) stayed silent.
+\paragraph{No traps observed.} Zero (model, task) cells reached $x = n$, across all
+runs of all nine models, including 48 damage events over 7 damage-producing cells
+on the five held-out models (pre-registered tested-floor of 8 events: cleared six
+times over; that floor is a vacuous-pass guard, since ``no traps'' is trivially
+true of a model that never damages, and not a power calculation). The highest
+observed cell is $12/16 = 0.75$. The pre-registered falsifier for this claim (any
+task at $x = n$ on an engaging held-out model, reproduced on a second) stayed
+silent.
+
+Two different strengths of statement follow, and we separate them. For each
+measured cell the conclusion is exact rather than probabilistic: a truly
+always-fail cell produces $x = n$ with probability one, so any $x < n$ refutes
+$p = 1$ outright, and all seven held-out damage-producing cells have exact upper
+confidence limits well below one (highest $0.927$). What is thin is the step from
+those cells to a population claim. Read as a bound on how common traps are among
+damage-producing cells, zero in seven supports only a 95\% upper limit near
+$43\%$; read across all 100 held-out cells the limit is near $3\%$. We therefore
+claim that no task in this suite failed every time, and that each measured cell is
+demonstrably not a trap, rather than that traps do not exist.
 
 \paragraph{Consequence.} If damage were concentrated in always-fail cells, one
 audit run per cell would find them. Instead every damage-producing cell is
@@ -552,7 +565,15 @@ files never received one. For those batches we recovered the model id, provider,
 sampling parameters, and $k$ from the staged job specifications, but the harness
 commit, the substrate commit, and the MCP image digests were never recorded and
 cannot be reconstructed. This bears specifically on the 0.80 miss rate, which is
-the one primary statistic drawn from the development pool. It does not touch the
+the one primary statistic drawn from the development pool, and it compounds with a
+second property of that pool: the development models are also the models the task
+suite was calibrated against, so the pool carrying our primary quantitative
+statistic is both the least completely provenanced and the least independent of
+task selection. The pre-registration designated it primary before any held-out
+data existed, and we report it as designated rather than swapping in the held-out
+number after seeing which was more favorable; but a reader who wants the number
+least entangled with our own design decisions should prefer the held-out 0.665,
+underpowered as it is. It does not touch the
 qualitative claims: every held-out and frontier batch, which is where
 universality, stochasticity, and the absence of traps are established, carries a
 complete manifest including both commits and both image digests. The released
@@ -570,13 +591,32 @@ unchanged damage structure, nothing stronger.
 construction (the labeler consumes state dumps, not harness internals), but
 cross-substrate generalization is untested.
 
+\paragraph{The suite was built to make the question answerable, which conditions
+the answer.} The twenty tasks were authored around six damage levers with the
+explicit aim of damage that is frequent and spread across intermediate
+probability, because a suite where damage is vanishingly rare or uniformly certain
+cannot distinguish the distributional hypothesis from its falsifier
+(Appendix~\ref{app:tasks}). That design choice is what makes the measurement
+possible, and it also bounds the claim: what we establish is that on tasks
+constructed to sit near the interesting region, damage does not concentrate into
+always-fail cells even when we tried to place it there. We do not establish the
+prevalence of stochastic damage across the distribution of tasks a deployed agent
+would actually meet, and a suite drawn from real user traffic could have a
+different shape. Two things keep the result from being circular. The levers were
+authored before any campaign model ran, and the falsifier was free to fire: a
+bimodal outcome was an available result on any task and on any of the five
+held-out models, and four of the twenty tasks were predicted near-zero rather than
+intermediate. Both predictions and outcomes are in Appendix~\ref{app:tasks}, so
+the calibration of that targeting is inspectable rather than asserted.
+
 \paragraph{Known harness artifacts.} Tool errors surface to the agent as an
 empty-object string; errored-run handling is tri-classified as described in
 Section~\ref{sec:design} and cataloged in Appendix~D.
 
 \section{Discussion and future work}
 
-If damage is universal across families, stochastic within cells, and trap-free,
+If damage is universal across families, stochastic within cells, and never
+concentrated in a cell that fails every time,
 then pre-deployment task audits cannot certify an action-taking agent: there is
 no dangerous-cell list to discover, and every clean audit of a damage-producing
 cell was likely to be clean anyway. The enforcement point that follows from the
