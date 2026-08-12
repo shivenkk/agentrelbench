@@ -17,12 +17,21 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 
 from audit_numbers import (  # noqa: E402
+    ANCHORED,
+    SOURCES,
+    audit_anchored,
     audit_decimals,
     audit_fractions,
     audit_intervals,
     audit_percents,
     blank_typography,
+    recompute,
 )
+
+# The real quantity set. Tests that assert what the gate catches must run against
+# the quantities the gate actually sees; a synthetic fixture proved a comfortable
+# fiction once already.
+PROD_Q = recompute()[0]
 
 # 0.84375^5 = 0.427630752..., so 0.43 is correct and 0.42 is the truncation.
 DECAY5 = 0.84375 ** 5
@@ -133,33 +142,72 @@ class TestTypographyIsNotStatistics:
 
 
 class TestPercentages:
-    """Percentages were unaudited until the trap bounds needed binding, which left
-    the 84% frontier audit-miss figure outside the gate as well."""
+    """The percent gate is a broad net with known holes, and these tests pin both
+    what it catches and what it cannot.
 
-    Q: ClassVar[dict] = {"opus_miss": 0.84375, "trap_upper": 0.34816, "band": 0.0295}
+    An earlier version of this class used a three-key synthetic fixture, which made
+    it appear to catch a wrong percentage that the production gate lets through.
+    The quantities here come from recompute(), so the tests describe real behavior.
+    """
 
     def test_correct_percentage_passes(self):
-        assert findings_for(audit_percents, "misses it 84\\% of the time", self.Q) == []
+        assert findings_for(audit_percents, r"misses it 84\% of the time", PROD_Q) == []
 
-    def test_wrong_percentage_is_flagged(self):
-        out = findings_for(audit_percents, "misses it 87\\% of the time", self.Q)
-        assert len(out) == 1 and out[0]["kind"] == "PERCENT"
-        assert "opus_miss" in out[0]["detail"]
-
-    def test_rule_of_three_approximation_would_be_caught(self):
-        """The exact one-sided limit at n=7 is 34.8%; 3/7 = 43% is the approximation
-        that shipped once and had to be corrected."""
-        out = findings_for(audit_percents, "upper limit near 43\\%", self.Q)
+    def test_wrong_percentage_with_no_coincidence_is_flagged(self):
+        out = findings_for(audit_percents, r"misses it 87\% of the time", PROD_Q)
         assert len(out) == 1 and out[0]["kind"] == "PERCENT"
 
-    def test_exact_limit_passes(self):
-        assert findings_for(audit_percents, "upper limit of 35\\%", self.Q) == []
+    def test_set_membership_alone_does_not_catch_the_rule_of_three_error(self):
+        """The documented weakness. 3/7 = 43% coincides with
+        decay[opus,k=5] = 42.763%, so membership in the quantity set accepts it.
+        This is why headline claims are additionally anchored by name."""
+        assert findings_for(audit_percents, r"upper limit near 43\%", PROD_Q) == []
+        assert any(f"{v*100:.0f}" == "43" for v in PROD_Q.values()), \
+            "the coincidence this test documents has gone away; revisit the comment"
 
     def test_definitional_percentages_are_exempt(self):
-        for text in ("exact 95\\% CI", "falls below 5\\%", "more than 20\\% errored runs"):
-            assert findings_for(audit_percents, text, self.Q) == [], text
+        for text in (r"exact 95\% CI", r"falls below 5\%", r"more than 20\% errored runs"):
+            assert findings_for(audit_percents, text, PROD_Q) == [], text
 
     def test_url_percent_encoding_is_not_a_percentage(self):
         """python-3.11%2B in a badge URL is encoding, not a measurement."""
         text = 'src="https://img.shields.io/badge/python-3.11%2B-blue"'
-        assert findings_for(audit_percents, text, self.Q) == []
+        assert findings_for(audit_percents, text, PROD_Q) == []
+
+
+class TestAnchoredClaims:
+    """The tight contract: a headline number must equal the quantity it claims to
+    be, not merely coincide with some quantity. This is what actually catches the
+    rule-of-three error that set membership misses."""
+
+    def test_correct_trap_bound_passes(self):
+        text = r"zero in seven supports only an exact one-sided 95\% upper limit of $34.8\%$"
+        assert findings_for(audit_anchored, text, PROD_Q) == []
+
+    def test_rule_of_three_error_is_caught_by_name(self):
+        text = r"zero in seven supports only an exact one-sided 95\% upper limit of $43\%$"
+        out = findings_for(audit_anchored, text, PROD_Q)
+        assert len(out) == 1 and out[0]["kind"] == "ANCHOR"
+        assert "trap_upper_1sided" in out[0]["detail"]
+
+    def test_integer_rounding_of_the_bound_is_caught(self):
+        """35% is the correct value rounded to zero decimals, and still wrong for a
+        claim the paper states to one decimal."""
+        text = r"an exact one-sided 95\% upper limit of $35\%$"
+        out = findings_for(audit_anchored, text, PROD_Q)
+        assert len(out) == 1 and "34.8" in out[0]["detail"]
+
+    def test_drifted_dev_miss_rate_is_caught(self):
+        text = "misses a damage-producing (model, task) pair 0.85 of the time on the development pool"
+        out = findings_for(audit_anchored, text, PROD_Q)
+        assert len(out) == 1 and "miss_rate[dev,pair]" in out[0]["detail"]
+
+    def test_every_anchor_fires_somewhere_in_the_real_sources(self):
+        """A pattern that matches nothing reports clean vacuously."""
+        import re as _re
+
+        from audit_numbers import normalize
+        for label, pattern, name, places in ANCHORED:
+            found = any(_re.search(pattern, normalize(Path(REPO / rel).read_text()))
+                        for rel in SOURCES)
+            assert found, f"anchor never matches any source, so it is vacuous: {label}"

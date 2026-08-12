@@ -226,6 +226,66 @@ def audit_intervals(text, path, intervals, findings):
         })
 
 
+# ---------------------------------------------------------------- anchored claims
+#
+# Set membership is a weak contract. With ~100 recomputed quantities, 39% of all
+# integer percentages and 4.8% of one-decimal values match *something*, so a
+# drifted headline number can stay hidden behind an unrelated coincidence. The
+# rule-of-three error this gate was built to catch did exactly that: 43% passed
+# because decay[opus,k=5] happens to be 42.763%.
+#
+# For claims the paper's argument rests on, bind the number to the quantity it is
+# supposed to be. Each entry is (label, context pattern, quantity name, decimals);
+# the pattern's single group must capture the number as written.
+ANCHORED = [
+    ("trap bound, damage-producing cells",
+     r"one-sided 95% upper limit of ([\d.]+)%",
+     "trap_upper_1sided[damage-producing cells]", 1),
+    ("trap bound, all held-out cells",
+     r"across all 100 held-out cells the limit is ([\d.]+)%",
+     "trap_upper_1sided[all held-out cells]", 1),
+    ("k=1 audit miss rate, development pool (pre-registered primary)",
+     r"pair ([\d.]+) of the time on the development pool",
+     "miss_rate[dev,pair]", 2),
+    ("k=1 audit miss rate, held-out pool",
+     r"held-out pool gives ([\d.]+) over 7 pairs",
+     "miss_rate[heldout,pair]", 3),
+    ("frontier single-audit miss",
+     r"single audit misses it ([\d.]+)% of the time",
+     "opus_miss1", 0),
+]
+
+# LaTeX and markdown write the same sentence differently; normalize before matching.
+def normalize(text):
+    text = re.sub(r"\\(?:phat|passk|safek)\{?\}?", "p-hat", text)
+    text = text.replace("\\%", "%").replace("$", "").replace("~", " ")
+    text = re.sub(r"\\[a-zA-Z]+\{([^{}]*)\}", r"\1", text)
+    text = re.sub(r"[{}]", "", text)
+    return re.sub(r"\s+", " ", text)
+
+
+def audit_anchored(text, path, q, findings):
+    """Each headline number must equal the specific quantity it claims to be."""
+    norm = normalize(text)
+    for label, pattern, name, places in ANCHORED:
+        for m in re.finditer(pattern, norm):
+            written = m.group(1)
+            if name not in q:
+                findings.append({"kind": "ANCHOR", "where": path,
+                                 "detail": f"{label}: quantity {name!r} is not recomputed"})
+                continue
+            actual = q[name]
+            scale = 100 if "%" in pattern else 1
+            expect = f"{actual * scale:.{places}f}"
+            if written != expect:
+                findings.append({
+                    "kind": "ANCHOR",
+                    "where": path,
+                    "detail": (f"{label}: text says {written} but {name} = "
+                               f"{actual * scale:.4f} (expected {expect})"),
+                })
+
+
 def audit_percents(text, path, q, findings):
     """A percentage in the text must round to some recomputed quantity.
 
@@ -298,6 +358,7 @@ def main():
         audit_intervals(text, rel, intervals, findings)
         audit_fractions(text, rel, cells, findings)
         audit_percents(text, rel, q, findings)
+        audit_anchored(text, rel, q, findings)
 
     print(f"\n== manuscript audit: {len(SOURCES)} sources ==")
     if not findings:
