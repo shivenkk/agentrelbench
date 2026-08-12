@@ -26,7 +26,10 @@
 \usepackage{xcolor}
 \usepackage[colorlinks=true,allcolors=blue!60!black]{hyperref}
 
-\graphicspath{{../docs/figs/}}
+% Two search paths so one source builds in both places: from the repo the
+% figures live in ../docs/figs, and in the flat arXiv source package they sit
+% beside the .tex files. LaTeX tries each in order.
+\graphicspath{{../docs/figs/}{./}}
 
 % Long \texttt task identifiers (change-request-cab-gate, case-reassign-scoped)
 % do not hyphenate and pushed several paragraphs past the right margin. This is
