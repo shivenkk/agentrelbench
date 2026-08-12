@@ -207,7 +207,7 @@ class TestAnchoredClaims:
         import re as _re
 
         from audit_numbers import normalize
-        for label, pattern, name, places in ANCHORED:
+        for label, pattern, _name, _places in ANCHORED:
             found = any(_re.search(pattern, normalize(Path(REPO / rel).read_text()))
                         for rel in SOURCES)
             assert found, f"anchor never matches any source, so it is vacuous: {label}"
