@@ -12,19 +12,26 @@
 % do not set driver options on graphicx or hyperref: arXiv asks authors not to
 % override its driver detection. Ship the prebuilt main.bbl alongside refs.bib.
 % ------------------------------------------------------------------------------
-\documentclass[11pt]{article}
+\documentclass{article}
 
-\usepackage[letterpaper,margin=1in]{geometry}
-\usepackage[utf8]{inputenc}
+\usepackage[preprint,nonatbib]{neurips_2026}
+% Drop the style's first-page notice box: it advertises a submission deadline that
+% does not apply to a preprint.
+\makeatletter
+\renewcommand{\@notice}{}
+\makeatother
+
 \usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{longtable}
-\usepackage{natbib}
-\usepackage{xcolor}
-\usepackage[colorlinks=true,allcolors=blue!60!black]{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
 
 % Two search paths so one source builds in both places: from the repo the
 % figures live in ../docs/figs, and in the flat arXiv source package they sit
@@ -44,8 +51,11 @@
 
 \title{Safety Doesn't Repeat: Universal, Stochastic, Trap-Free Damage\\
 in Action-Taking LLM Agents}
-\author{Shiven Khurdi\\Northeastern University\\\texttt{khurdi.s@northeastern.edu}}
-\date{}
+\author{%
+  Shiven Khurdi\\
+  Northeastern University\\
+  \texttt{khurdi.s@northeastern.edu}
+}
 
 \begin{document}
 \maketitle

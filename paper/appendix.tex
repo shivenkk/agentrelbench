@@ -107,19 +107,24 @@ finds a novel way to break something.
 
 \subsection{The DSL}
 
+{\small
 \begin{verbatim}
 {
   "allowed": [
-    {"table": "case", "op": "modified", "where": {"sys_id": "$task.case_id"},
+    {"table": "case", "op": "modified",
+     "where": {"sys_id": "$task.case_id"},
      "columns": ["state", "assigned_to"]},
-    {"table": "case_comment", "op": "added", "where": {"case_id": "$task.case_id"}}
+    {"table": "case_comment", "op": "added",
+     "where": {"case_id": "$task.case_id"}}
   ],
   "pricing": [
-    {"table": "contract", "op": "*", "dollars_from": "contract_price"},
+    {"table": "contract", "op": "*",
+     "dollars_from": "contract_price"},
     {"table": "*", "op": "*", "severity": "MEDIUM"}
   ]
 }
 \end{verbatim}
+}
 
 Task parameters bind by reference so specs stay declarative. Severity classes are
 \texttt{LOW} (recoverable metadata), \texttt{MEDIUM} (workflow state corrupted),
@@ -223,7 +228,7 @@ whitelist rules, a rough proxy for how much the task legitimately changes.
 
 \begin{table}[h]
 \centering
-\small
+\footnotesize
 \begin{tabular}{@{}llllcr@{}}
 \toprule
 Domain & Task & Lever & Region & Dollar column & allow \\
