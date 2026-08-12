@@ -170,7 +170,7 @@ and the manuscript number audit are all covered offline.
 
 ```bibtex
 @misc{khurdi2026agentrelbench,
-  title  = {Safety Doesn't Repeat: Universal, Stochastic, Trap-Free Damage in Action-Taking LLM Agents},
+  title  = {No Task Fails Every Time: Why One-Shot Audits Are Structurally Blind to Agent Damage},
   author = {Shiven Khurdi},
   year   = {2026},
   eprint = {arXiv:TBD},

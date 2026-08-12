@@ -62,6 +62,8 @@ SOURCES = [
 DECIMAL = re.compile(r"(?<![\d.])(0?\.\d{2,4})(?![\d])")
 INTERVAL = re.compile(r"\(\s*(0?\.\d{2,4})\s*,\s*(0?\.\d{2,4})\s*\)")
 FRACTION = re.compile(r"(?<![\d./])(\d{1,3})\s*/\s*(\d{1,3})(?![\d/])")
+PERCENT = re.compile(
+    r"(?<![\d.])(\d{1,3}(?:\.\d+)?)\s*(?:\\%|%)(?![0-9A-Fa-f]{2})")
 
 # LaTeX carries decimals that are typography, not statistics: p{0.42\linewidth}
 # column specs, includegraphics widths, scale factors. Blanked (length-preserving,
@@ -76,6 +78,15 @@ TYPOGRAPHY = re.compile(
 # by construction and are deliberately NOT observed cells: the engagement floor
 # for the flagship task (pass >= 3/16, applied proportionally as >= 6/32 at k=32).
 PREREG_THRESHOLDS = {(3, 16), (6, 32)}
+
+# Percentages that state a convention rather than report a measurement: the
+# confidence level, and the stochastic band edge. Both are chosen, not computed.
+DEFINITIONAL_PERCENTS = {
+    95.0,   # confidence level
+    5.0,    # stochastic band edge
+    50.0,   # coin-flip reference
+    20.0,   # pre-registered errored-run ceiling above which a cell is invalid
+}
 
 # A decimal introduced by an inequality is a bound, not a point estimate:
 # "p < 0.001" is a threshold the data clears, and comparing it against nearby
@@ -110,6 +121,7 @@ def recompute():
     # Beta-binomial ICC, reported in Section 2 against ClawsBench's 0.48. Both the
     # all-cells and damage-producing-cells-only values appear in the text, so both
     # are audited; a truncated 0.212 or 0.306 would otherwise pass unnoticed.
+    producing_held = {k: v for k, v in held.items() if v.x > 0}
     for label, stats in (("heldout", held), ("dev", dev)):
         q[f"icc[{label},all]"] = fit_beta_binomial(stats).icc
         producing = {k: v for k, v in stats.items() if v.x > 0}
@@ -119,6 +131,13 @@ def recompute():
             # The unfloored value is cited in Section 2 to explain why a reported
             # ICC of exactly 0.000 is a floored estimate and not a bug.
             q[f"icc_raw[{label},damage-producing]"] = abs(fit.icc_raw)
+
+    # Exact one-sided 95% upper limits on trap prevalence given zero traps
+    # observed, cited in Section 5.1. One-sided because the claim is
+    # directional; the rule-of-three approximation 3/n is wrong by 8pp at n=7.
+    for label, n in (("damage-producing cells", len(producing_held)),
+                     ("all held-out cells", len(held))):
+        q[f"trap_upper_1sided[{label}]"] = 1.0 - 0.05 ** (1.0 / n)
 
     q["miss_rate[dev,pair]"] = audit_miss_rate(dev, "pair")
     q["miss_rate[dev,event]"] = audit_miss_rate(dev, "event")
@@ -207,6 +226,31 @@ def audit_intervals(text, path, intervals, findings):
         })
 
 
+def audit_percents(text, path, q, findings):
+    """A percentage in the text must round to some recomputed quantity.
+
+    Percentages were previously unaudited, so the 84% frontier audit-miss figure
+    and the trap-prevalence bounds sat outside the gate entirely.
+    """
+    for m in PERCENT.finditer(text):
+        value = float(m.group(1))
+        if value in DEFINITIONAL_PERCENTS:
+            continue
+        places = len(m.group(1).split(".")[1]) if "." in m.group(1) else 0
+        matches = [name for name, actual in q.items()
+                   if f"{actual * 100:.{places}f}" == m.group(1)]
+        if matches:
+            continue
+        near = sorted(((abs(actual * 100 - value), name, actual * 100)
+                       for name, actual in q.items()), key=lambda z: z[0])[:1]
+        hint = f"; nearest recomputed value is {near[0][1]} = {near[0][2]:.2f}%" if near else ""
+        findings.append({
+            "kind": "PERCENT",
+            "where": f"{path}:{line_of(text, m.start())}",
+            "detail": f"{m.group(1)}% does not round to any recomputed quantity{hint}",
+        })
+
+
 def audit_fractions(text, path, cells, findings):
     """Flag x/n citations whose denominator matches a real k but x/n does not."""
     real_n = {n for _, n in cells}
@@ -253,6 +297,7 @@ def main():
         audit_decimals(text, rel, q, findings)
         audit_intervals(text, rel, intervals, findings)
         audit_fractions(text, rel, cells, findings)
+        audit_percents(text, rel, q, findings)
 
     print(f"\n== manuscript audit: {len(SOURCES)} sources ==")
     if not findings:

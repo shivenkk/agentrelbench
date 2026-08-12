@@ -1,8 +1,8 @@
-# Safety Doesn't Repeat: Universal, Stochastic, Trap-Free Damage in Action-Taking LLM Agents
+# No Task Fails Every Time: Why One-Shot Audits Are Structurally Blind to Agent Damage
 
 **Draft v1 (2026-07-21), for honesty review before any external circulation.**
 Figures: `docs/figs/fig1..fig4` (regenerated from committed merged verdicts by `scripts/make_figures.py`).
-Alternative title: *No Task Fails Every Time: Why One-Shot Audits Are Structurally Blind to Agent Damage.*
+Alternative title (the earlier framing, retired 2026-08-12 as less careful than the body): *Safety Doesn't Repeat: Universal, Stochastic, Trap-Free Damage in Action-Taking LLM Agents.*
 
 ---
 

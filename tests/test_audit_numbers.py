@@ -20,6 +20,7 @@ from audit_numbers import (  # noqa: E402
     audit_decimals,
     audit_fractions,
     audit_intervals,
+    audit_percents,
     blank_typography,
 )
 
@@ -129,3 +130,36 @@ class TestTypographyIsNotStatistics:
     def test_column_spec_decimal_does_not_reach_the_decimal_audit(self):
         text = r"\begin{tabular}{@{}clp{0.42\linewidth}@{}}"
         assert findings_for(audit_decimals, text, QUANTITIES) == []
+
+
+class TestPercentages:
+    """Percentages were unaudited until the trap bounds needed binding, which left
+    the 84% frontier audit-miss figure outside the gate as well."""
+
+    Q: ClassVar[dict] = {"opus_miss": 0.84375, "trap_upper": 0.34816, "band": 0.0295}
+
+    def test_correct_percentage_passes(self):
+        assert findings_for(audit_percents, "misses it 84\\% of the time", self.Q) == []
+
+    def test_wrong_percentage_is_flagged(self):
+        out = findings_for(audit_percents, "misses it 87\\% of the time", self.Q)
+        assert len(out) == 1 and out[0]["kind"] == "PERCENT"
+        assert "opus_miss" in out[0]["detail"]
+
+    def test_rule_of_three_approximation_would_be_caught(self):
+        """The exact one-sided limit at n=7 is 34.8%; 3/7 = 43% is the approximation
+        that shipped once and had to be corrected."""
+        out = findings_for(audit_percents, "upper limit near 43\\%", self.Q)
+        assert len(out) == 1 and out[0]["kind"] == "PERCENT"
+
+    def test_exact_limit_passes(self):
+        assert findings_for(audit_percents, "upper limit of 35\\%", self.Q) == []
+
+    def test_definitional_percentages_are_exempt(self):
+        for text in ("exact 95\\% CI", "falls below 5\\%", "more than 20\\% errored runs"):
+            assert findings_for(audit_percents, text, self.Q) == [], text
+
+    def test_url_percent_encoding_is_not_a_percentage(self):
+        """python-3.11%2B in a badge URL is encoding, not a measurement."""
+        text = 'src="https://img.shields.io/badge/python-3.11%2B-blue"'
+        assert findings_for(audit_percents, text, self.Q) == []
