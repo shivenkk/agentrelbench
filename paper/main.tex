@@ -628,6 +628,16 @@ committed document that predates all held-out data, and its criteria, including
 the one that demoted our own initially favored finding, are reproduced verbatim
 in Appendix~F.
 
+% The style's own environment rather than a hand-rolled \section*: it supplies the
+% heading and, under a double-blind submission option, hides the whole block
+% (neurips_2026.sty does \let\ack\hide). A \section* would always render.
+\begin{ack}
+This work received no external funding; the compute was self-funded. A large
+language model assisted with drafting and editing the manuscript. The
+experiments, the measurements, and every number reported here were produced and
+checked by the author.
+\end{ack}
+
 \bibliographystyle{plainnat}
 \bibliography{refs}
 
