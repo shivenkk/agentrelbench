@@ -42,7 +42,21 @@ from agentrelbench import cli as arb_run_cli
 from agentrelbench.labeling import DEFAULT_DATA_DIR, label_batch
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent  # src/agentrelbench/validate.py -> repo root
-RESPONDER_SCRIPT = REPO_ROOT / "m1_spike" / "scripted_responder.py"
+
+
+def _responder_script() -> Path:
+    """The scripted responder, in a checkout or an installed package.
+
+    Same shape as labeling._default_data_dir: REPO_ROOT points into
+    site-packages for a wheel, where m1_spike/ does not exist, so the responder
+    ships beside the task suite.
+    """
+    packaged = Path(__file__).resolve().parent / "suite" / "scripted_responder.py"
+    checkout = REPO_ROOT / "m1_spike" / "scripted_responder.py"
+    return checkout if checkout.is_file() else packaged
+
+
+RESPONDER_SCRIPT = _responder_script()
 RESPONDER_HOST = "127.0.0.1"
 
 # Only these keys are ever compared -- exactly the keys a task's *.script.json

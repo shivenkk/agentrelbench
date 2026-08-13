@@ -37,7 +37,23 @@ from agentrelbench.labeler import (
 from agentrelbench.state_export import read_gzip_json
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent  # src/agentrelbench/labeling.py -> repo root
-DEFAULT_DATA_DIR = REPO_ROOT / "data" / "eog"
+
+
+def _default_data_dir() -> Path:
+    """Locate the per-domain registries in a checkout or an installed package.
+
+    In a checkout they sit at <repo>/data/eog. In a wheel, REPO_ROOT resolves
+    into site-packages and that path does not exist, so the registries ship
+    alongside the task suite instead. arb-label hard-reads primary-keys-*.json,
+    so getting this wrong makes the command unusable from a pip install rather
+    than merely inconvenient.
+    """
+    packaged = Path(__file__).resolve().parent / "suite" / "data" / "eog"
+    checkout = REPO_ROOT / "data" / "eog"
+    return checkout if checkout.is_dir() else packaged
+
+
+DEFAULT_DATA_DIR = _default_data_dir()
 
 
 # --------------------------------------------------------------- state export

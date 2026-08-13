@@ -55,6 +55,12 @@ packages = ["src/agentrelbench"]
 # repo-relative path "data/seed-dbs/...", and find_repo_root anchors on that
 # directory existing. Flatten it and every packaged task ships unrunnable.
 "data/seed-dbs" = "agentrelbench/suite/data/seed-dbs"
+# arb-label reads the per-domain primary-key and volatile-column registries, and
+# arb-validate execs the scripted responder. Both resolved through a path that
+# only exists in a checkout, so two of the three console scripts were unusable
+# from a pip install. See labeling._default_data_dir / validate._responder_script.
+"data/eog" = "agentrelbench/suite/data/eog"
+"m1_spike/scripted_responder.py" = "agentrelbench/suite/scripted_responder.py"
 
 # An allowlist, deliberately, not an exclude list. hatchling ships anything not
 # gitignored by default, which swept in local editor and test caches, the frozen
@@ -69,6 +75,9 @@ include = [
   "/data",
   "/scripts",
   "/docs",
+  # The wheel is built from the unpacked sdist, so anything the wheel
+  # force-includes must exist here too or the build fails outright.
+  "/m1_spike/scripted_responder.py",
   "/README.md",
   "/LICENSE",
   "/pyproject.toml",
