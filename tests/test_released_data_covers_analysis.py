@@ -65,6 +65,15 @@ def test_every_released_file_exists_and_is_non_empty():
         assert path.stat().st_size > 0, f"released file is empty: {rel}"
 
 
+def test_released_set_is_the_twelve_files_the_docs_promise():
+    """README ("all 12 released verdicts files", "12 released verdicts files")
+    and the paper's reproducibility statement both quote this count."""
+    assert len(RELEASED) == 12, (
+        f"RELEASED now has {len(RELEASED)} files, but README and the paper's "
+        f"reproducibility statement say 12; update both or restore the set"
+    )
+
+
 def test_every_released_file_has_a_manifest():
     for rel in RELEASED:
         manifest = (REPO / "runs" / rel).with_suffix(".manifest.json")

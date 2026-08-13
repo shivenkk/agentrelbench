@@ -138,6 +138,14 @@ row counts, runs the estimator and audit suites, regenerates every figure and th
 under assertions, and re-derives every headline number from the run data. It exits nonzero on any
 drift. Proven in a `python:3.12-slim` container; the transcript is in `docs/cleanroom-transcript.txt`.
 
+Those 12 files are the confirmatory and exploratory pools in full, plus every development batch any
+published number reads; the 2,128 figure above counts runs executed, which is the larger set, and the
+remainder are early and superseded development batches outside the frozen 13-pair pool that no
+published number uses. That is enforced, not just claimed:
+`tests/test_released_data_covers_analysis.py` requires every file the analysis opens to be one of the
+released ones, so a number computed from an unreleased batch fails the suite instead of reaching the
+page.
+
 This reproduces the *analysis*, not the agent runs. The campaign numbers are records of runs that
 already happened, and by this paper's own finding those runs are stochastic, so re-running them would
 not reproduce them and must not be used to regenerate them.
