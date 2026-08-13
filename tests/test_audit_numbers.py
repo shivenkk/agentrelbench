@@ -181,7 +181,7 @@ class TestAnchoredClaims:
     rule-of-three error that set membership misses."""
 
     def test_correct_trap_bound_passes(self):
-        text = r"zero in seven supports only an exact one-sided 95\% upper limit of $34.8\%$"
+        text = r"zero in five supports only an exact one-sided 95\% upper limit of $45.1\%$"
         assert findings_for(audit_anchored, text, PROD_Q) == []
 
     def test_rule_of_three_error_is_caught_by_name(self):
@@ -191,11 +191,11 @@ class TestAnchoredClaims:
         assert "trap_upper_1sided" in out[0]["detail"]
 
     def test_integer_rounding_of_the_bound_is_caught(self):
-        """35% is the correct value rounded to zero decimals, and still wrong for a
+        """45% is the correct value rounded to zero decimals, and still wrong for a
         claim the paper states to one decimal."""
-        text = r"an exact one-sided 95\% upper limit of $35\%$"
+        text = r"an exact one-sided 95\% upper limit of $45\%$"
         out = findings_for(audit_anchored, text, PROD_Q)
-        assert len(out) == 1 and "34.8" in out[0]["detail"]
+        assert len(out) == 1 and "45.1" in out[0]["detail"]
 
     def test_drifted_dev_miss_rate_is_caught(self):
         text = "misses a damage-producing (model, task) pair 0.85 of the time on the development pool"

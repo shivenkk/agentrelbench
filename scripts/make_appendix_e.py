@@ -21,6 +21,7 @@ sys.path.insert(0, str(REPO / "src"))
 from make_figures import (  # noqa: E402  (single source of truth for sources)
     CAB,
     DEV_BREADTH,
+    MERGED_HELDOUT,
     dev_counts,
     dev_stats,
     load_pool,
@@ -37,14 +38,20 @@ OUT_MD = REPO / "docs" / "appendix-e-tables.md"
 OUT_TEX = REPO / "paper" / "appendix-e.tex"
 
 # Held-out/frontier protocol shape: breadth 14 tasks x k=8, depth 5 tasks x
-# k=16, flagship cab-gate at k=16 or k=32.
-EXPECT_MERGED_TOTALS = {
+# k=16, flagship cab-gate at k=16 or k=32. The two groups are kept apart because
+# the pre-registration does: frontier models are "NOT here, a separate
+# downstream leaderboard pass (labeled exploratory)", so they are reported in
+# their own table and excluded from every confirmatory aggregate below.
+EXPECT_HELDOUT_TOTALS = {
     "mistral-24b": 208,
     "gpt-oss-120b": 224,
     "deepseek-v3.2": 224,
+}
+EXPECT_FRONTIER_TOTALS = {
     "opus-4.6": 224,
     "haiku-4.5": 208,
 }
+EXPECT_MERGED_TOTALS = {**EXPECT_HELDOUT_TOTALS, **EXPECT_FRONTIER_TOTALS}
 
 # Pre-registered arm-C depth reads on the dev pool, k=16 on the fired tasks.
 # qwen3-32b/sla-relink is the observation Section 5.4 reports but does not pool.
@@ -83,7 +90,9 @@ def gather():
         rows.append({"model": model, "task": task, "x": t.x, "n": t.n,
                      "phat": t.x / t.n, "lo": lo, "hi": hi,
                      "upper": t.x_upper, "passes": t.s,
-                     "stoch": (model, task) in stochastic})
+                     "stoch": (model, task) in stochastic,
+                     "scope": ("heldout" if model in MERGED_HELDOUT
+                               else "frontier")})
 
     dev_pairs, dev_cab = dev_counts()  # asserts 7/2/2/2 = 13 and the cab cells
 
@@ -109,16 +118,30 @@ def gather():
 
 def check(rows, dev_pairs, dev_cells, arm_c):
     """Every assertion here corresponds to a number cited in Section 5."""
-    pairs = [r for r in rows if r["x"] > 0]
-    assert len(pairs) == 7, f"expected 7 held-out damage pairs, got {len(pairs)}"
-    stoch = [r for r in rows if r["stoch"]]
-    assert len(stoch) == 5, f"expected 5 stochastic cells, got {len(stoch)}"
-    assert any(r["model"] == "opus-4.6" and r["task"] == CAB for r in stoch), \
-        "opus cab must be in the stochastic set"
-    assert len({r["model"] for r in stoch}) == 3, \
-        "stochastic cells must span 3 distinct held-out models"
+    # Confirmatory aggregates: held-out models only. Every number Section 5.1
+    # reports as confirmed is asserted against this pool and no other.
+    held_rows = [r for r in rows if r["scope"] == "heldout"]
+    pairs = [r for r in held_rows if r["x"] > 0]
+    assert len(pairs) == 5, f"expected 5 held-out damage pairs, got {len(pairs)}"
+    stoch = [r for r in held_rows if r["stoch"]]
+    assert len(stoch) == 4, f"expected 4 stochastic cells, got {len(stoch)}"
+    assert len({r["model"] for r in stoch}) == 2, \
+        "stochastic cells must span 2 distinct held-out models"
     events = sum(r["x"] for r in pairs)
-    assert events == 48, f"expected 48 held-out damage events, got {events}"
+    assert events == 42, f"expected 42 held-out damage events, got {events}"
+    assert len(held_rows) == 60, f"expected 60 held-out cells, got {len(held_rows)}"
+
+    # Exploratory frontier aggregates, reported separately and never pooled in.
+    front_rows = [r for r in rows if r["scope"] == "frontier"]
+    front_pairs = [r for r in front_rows if r["x"] > 0]
+    assert len(front_pairs) == 2, \
+        f"expected 2 frontier damage pairs, got {len(front_pairs)}"
+    assert sum(r["x"] for r in front_pairs) == 6, "expected 6 frontier damage events"
+    front_stoch = [r for r in front_rows if r["stoch"]]
+    assert len(front_stoch) == 1 and front_stoch[0]["model"] == "opus-4.6" \
+        and front_stoch[0]["task"] == CAB, \
+        "opus cab must be the single stochastic frontier cell"
+
     assert not any(r["x"] == r["n"] for r in rows), \
         "a trap appeared; Section 5.1 invalid"
     assert max(r["phat"] for r in rows) == 0.75, "highest cell must be 12/16"
@@ -143,12 +166,14 @@ def check(rows, dev_pairs, dev_cells, arm_c):
 
     # Section 2 compares these against ClawsBench's reported within-task ICC of
     # 0.48, so they are cited numbers and get the same drift gate as the rest.
-    held = per_task_stats(load_pool())
-    icc_all = fit_beta_binomial(held).icc
-    icc_dmg = fit_beta_binomial({k: v for k, v in held.items() if v.x > 0}).icc
-    assert round(icc_all, 3) == 0.212, f"held-out ICC drifted: {icc_all:.4f}"
+    # This one quantity is stated over the pooled held-out AND frontier cells,
+    # and Section 2 says so in the sentence, so the pooled fit is what it binds.
+    pooled = per_task_stats(load_pool())
+    icc_all = fit_beta_binomial(pooled).icc
+    icc_dmg = fit_beta_binomial({k: v for k, v in pooled.items() if v.x > 0}).icc
+    assert round(icc_all, 3) == 0.212, f"pooled ICC drifted: {icc_all:.4f}"
     assert round(icc_dmg, 3) == 0.306, \
-        f"held-out damage-producing ICC drifted: {icc_dmg:.4f}"
+        f"pooled damage-producing ICC drifted: {icc_dmg:.4f}"
 
     # Section 2 cites the unfloored dev value to explain a reported ICC of 0.000.
     dev = per_task_stats(dev_stats())
@@ -174,7 +199,11 @@ x in [4,12] at k=16, x in [5,27] at k=32 (Section 3.3).
 
 INTRO_E1 = ("Protocol per model: breadth 14 tasks at k=8, depth 5 tasks at "
             "k=16, flagship cab-gate at k=16 or k=32. Cells are the unit of "
-            "analysis; runs from different k-groups are never spliced.")
+            "analysis; runs from different k-groups are never spliced. The two "
+            "groups below are separated because the pre-registration separates "
+            "them: the frontier pass is a downstream leaderboard read labeled "
+            "exploratory in advance, so its cells are reported here but are "
+            "excluded from every confirmatory aggregate in Section 5.")
 INTRO_E2 = ("The development pool is each dev model's 20-task k=8 breadth "
             "batch. These 13 pairs are the denominator of the primary k=1 audit "
             "miss rate (0.80, Section 5.1). Cells not listed are 0/8. "
@@ -183,6 +212,11 @@ INTRO_E2 = ("The development pool is each dev model's 20-task k=8 breadth "
             "job specifications, but the harness commit, substrate commit, and MCP "
             "image digests were never recorded for these batches. Each released "
             "file's manifest lists its unrecorded fields.")
+GROUPS_E1 = (
+    (EXPECT_HELDOUT_TOTALS, "Confirmatory held-out pool (pre-registered)"),
+    (EXPECT_FRONTIER_TOTALS,
+     "Exploratory frontier pass (outside the confirmatory pool)"),
+)
 INTRO_E4 = ("Pre-registered k=16 reads on the fired dev tasks. The qwen3-32b "
             "sla-relink cell is the observation Section 5.4 discloses and "
             "deliberately excludes from the frozen 13-pair denominator.")
@@ -195,20 +229,21 @@ def status(r):
 
 
 def emit_md(rows, dev_pairs, dev_cab, dev_cells, arm_c, totals):
-    d = [HEAD_MD, "\n## E.1 Held-out and frontier pool (pre-registered)\n",
-         INTRO_E1 + "\n"]
-    for model in EXPECT_MERGED_TOTALS:
-        rs = sorted((r for r in rows if r["model"] == model),
-                    key=lambda r: (-r["x"], r["task"]))
-        d.append(f"\n### {model}: {totals[model]} runs, {len(rs)} cells, "
-                 f"{sum(1 for r in rs if r['x'] > 0)} damage-producing\n")
-        d.append("| Task | x/n | p-hat | 95% CI | upper | PASS | Status |")
-        d.append("|---|---|---|---|---|---|---|")
-        for r in rs:
-            bold = "**" if r["stoch"] else ""
-            d.append(f"| {r['task']} | {r['x']}/{r['n']} | {r['phat']:.3f} | "
-                     f"({r['lo']:.3f}, {r['hi']:.3f}) | {r['upper']}/{r['n']} | "
-                     f"{r['passes']}/{r['n']} | {bold}{status(r)}{bold} |")
+    d = [HEAD_MD, "\n## E.1 Held-out and frontier cells\n", INTRO_E1 + "\n"]
+    for group, heading in GROUPS_E1:
+        d.append(f"\n### {heading}\n")
+        for model in group:
+            rs = sorted((r for r in rows if r["model"] == model),
+                        key=lambda r: (-r["x"], r["task"]))
+            d.append(f"\n#### {model}: {totals[model]} runs, {len(rs)} cells, "
+                     f"{sum(1 for r in rs if r['x'] > 0)} damage-producing\n")
+            d.append("| Task | x/n | p-hat | 95% CI | upper | PASS | Status |")
+            d.append("|---|---|---|---|---|---|---|")
+            for r in rs:
+                bold = "**" if r["stoch"] else ""
+                d.append(f"| {r['task']} | {r['x']}/{r['n']} | {r['phat']:.3f} | "
+                         f"({r['lo']:.3f}, {r['hi']:.3f}) | {r['upper']}/{r['n']} | "
+                         f"{r['passes']}/{r['n']} | {bold}{status(r)}{bold} |")
 
     d += ["\n\n## E.2 Development pool (frozen 13-pair definition)\n",
           INTRO_E2 + "\n", "\n| Model | Damage-producing tasks | Cells (x/n) |",
@@ -254,31 +289,33 @@ def emit_tex(rows, dev_pairs, dev_cab, dev_cells, arm_c, totals):
          r"count. A cell is \emph{demonstrably stochastic} when its exact 95\% "
          r"interval lies strictly inside $(0.05, 0.95)$: $x \in [4,12]$ at "
          r"$k=16$, $x \in [5,27]$ at $k=32$.", "",
-         r"\subsection{Held-out and frontier pool (pre-registered)}", "",
+         r"\subsection{Held-out and frontier cells}", "",
          tex_escape(INTRO_E1), ""]
 
-    for model in EXPECT_MERGED_TOTALS:
-        rs = sorted((r for r in rows if r["model"] == model),
-                    key=lambda r: (-r["x"], r["task"]))
-        # \footnotesize + a wrapping Status column: at \small with an l column
-        # these tables ran up to 67pt (nearly an inch) past the right margin.
-        t += [r"\paragraph{" + tex_escape(model) + ".} "
-              + f"{totals[model]} runs, {len(rs)} cells, "
-              + f"{sum(1 for r in rs if r['x'] > 0)} damage-producing.", "",
-              r"\footnotesize",
-              r"\begin{longtable}{@{}lrrcrr>{\raggedright\arraybackslash}"
-              r"p{0.17\linewidth}@{}}", r"\toprule",
-              r"Task & $x/n$ & $\hat{p}$ & 95\% CI & upper & PASS & Status \\",
-              r"\midrule", r"\endhead"]
-        for r in rs:
-            s = tex_escape(status(r))
-            if r["stoch"]:
-                s = r"\textbf{" + s + "}"
-            t.append(f"{tex_escape(r['task'])} & {r['x']}/{r['n']} & "
-                     f"{r['phat']:.3f} & ({r['lo']:.3f}, {r['hi']:.3f}) & "
-                     f"{r['upper']}/{r['n']} & {r['passes']}/{r['n']} & "
-                     f"{s} \\\\")
-        t += [r"\bottomrule", r"\end{longtable}", ""]
+    for group, heading in GROUPS_E1:
+        t += [r"\subsubsection{" + tex_escape(heading) + "}", ""]
+        for model in group:
+            rs = sorted((r for r in rows if r["model"] == model),
+                        key=lambda r: (-r["x"], r["task"]))
+            # \footnotesize + a wrapping Status column: at \small with an l column
+            # these tables ran up to 67pt (nearly an inch) past the right margin.
+            t += [r"\paragraph{" + tex_escape(model) + ".} "
+                  + f"{totals[model]} runs, {len(rs)} cells, "
+                  + f"{sum(1 for r in rs if r['x'] > 0)} damage-producing.", "",
+                  r"\footnotesize",
+                  r"\begin{longtable}{@{}lrrcrr>{\raggedright\arraybackslash}"
+                  r"p{0.17\linewidth}@{}}", r"\toprule",
+                  r"Task & $x/n$ & $\hat{p}$ & 95\% CI & upper & PASS & Status \\",
+                  r"\midrule", r"\endhead"]
+            for r in rs:
+                s = tex_escape(status(r))
+                if r["stoch"]:
+                    s = r"\textbf{" + s + "}"
+                t.append(f"{tex_escape(r['task'])} & {r['x']}/{r['n']} & "
+                         f"{r['phat']:.3f} & ({r['lo']:.3f}, {r['hi']:.3f}) & "
+                         f"{r['upper']}/{r['n']} & {r['passes']}/{r['n']} & "
+                         f"{s} \\\\")
+            t += [r"\bottomrule", r"\end{longtable}", ""]
 
     t += [r"\subsection{Development pool (frozen 13-pair definition)}", "",
           tex_escape(INTRO_E2), "", r"\begin{table}[h]", r"\centering",
@@ -335,10 +372,13 @@ def main():
         tag = "STOCHASTIC" if r["stoch"] else "below band"
         print(f"  {r['model']:14s} {r['task']:28s} {r['x']:2d}/{r['n']:<3d} "
               f"CI=({r['lo']:.3f},{r['hi']:.3f}) {tag}")
-    pairs = [r for r in rows if r["x"] > 0]
-    print(f"  held-out: {len(pairs)} pairs, {sum(1 for r in rows if r['stoch'])}"
-          f" stochastic across {len({r['model'] for r in rows if r['stoch']})}"
-          f" models, {sum(r['x'] for r in pairs)} events, 0 traps")
+    for scope in ("heldout", "frontier"):
+        rs = [r for r in rows if r["scope"] == scope]
+        pairs = [r for r in rs if r["x"] > 0]
+        stoch = [r for r in rs if r["stoch"]]
+        print(f"  {scope:9s}: {len(pairs)} pairs, {len(stoch)} stochastic across"
+              f" {len({r['model'] for r in stoch})} models,"
+              f" {sum(r['x'] for r in pairs)} events, 0 traps")
     print(f"  dev breadth pairs: {dev_pairs} = {sum(dev_pairs.values())}")
     print(f"  arm-C out-of-pool: qwen3-32b/sla-relink "
           f"{arm_c[('qwen3-32b','sla-relink')][0]}/"

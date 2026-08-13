@@ -601,8 +601,14 @@ $k=32$, and a vacuous-pass guard on the third leg.
 Development models, used for design and tuning and therefore not confirmation:
 llama-3.3-70b, qwen3-32b, llama-3.1-8b, qwen3-14b. Held-out and frozen:
 mistral-small-24b, gpt-oss-120b, deepseek-v3.2, with a fourth model named in
-advance as the replacement should an instrument prove invalid. The frontier pass
-on claude-opus-4.6 and claude-haiku-4.5 was run later under the same criteria.
+advance as the replacement should an instrument prove invalid. On frontier
+models the document is explicit, and the clause is short enough to give in full:
+``Frontier: NOT here, a separate downstream leaderboard pass (labeled
+exploratory). Frontier-null read still pre-committed (\S5) so it isn't
+improvised.'' The frontier pass on claude-opus-4.6 and claude-haiku-4.5 was run
+later under the same protocol and read against the same criteria, but that
+clause is what fixes its status: it is reported in full throughout the paper and
+excluded from every confirmatory aggregate.
 
 Four protocol rules were fixed in advance:
 
@@ -630,9 +636,10 @@ collection, so the larger sample was committed in advance.
 
 \subsection{Serving control}
 
-Every cell pins its provider with fallbacks disabled and logs provider,
-quantization, and generation id per run. A cell with more than 20\% errored runs
-is invalid and is rerun. Providers are pinned per model at capability-priority
+As frozen, the document required every cell to pin its provider with fallbacks
+disabled and to log provider, quantization, and generation id per run, and
+declared a cell with more than 20\% errored runs invalid and to be rerun.
+Providers are pinned per model at capability-priority
 precision and are deliberately \textbf{not} forced constant across models,
 because degrading a model to a lower precision to match another buys little and
 costs capability. Cross-model serving is a stated limitation rather than a
@@ -640,6 +647,22 @@ controlled variable, and therefore \textbf{no cross-model damage-rate ordering
 claim is made}; cross-model reads are restricted to existence, within-cell
 stochasticity, and disjointness of fired task sets, none of which require rate
 matching.
+
+\emph{Outcome: pinning held, logging was partial, the ceiling was breached three
+times.} Provider pinning was configured as written, with
+\texttt{allow\_fallbacks} false on every request, and the pinned provider is
+recorded in the campaign run logs. Quantization and per-request
+generation ids were never captured by the harness, so that half of the logging
+requirement went unmet; the released manifests carry the model id, the serving
+platform, and the sampling parameters in their place. Three cells exceeded the
+20\% errored ceiling and were retained rather than rerun: mistral-24b on
+\texttt{case-reassign-scoped} (9/16 errored, 56.2\%), deepseek-v3.2 on
+\texttt{case-reassign-scoped} (6/16, 37.5\%), and opus-4.6 on
+\texttt{sla-relink} (5/16, 31.2\%), the last of these in the exploratory
+frontier pass, where the rule does not bind. Neither confirmatory breach is a
+cab-gate cell, so the first leg's invalid-instrument response was not triggered.
+Section~\ref{sec:headline} reports the breaches, the direction in which
+retaining them moves the headline, and the miss rate recomputed without them.
 
 \subsection{Per-claim replicate and demote criteria, as frozen}
 
@@ -666,10 +689,18 @@ tested only over at least 8 held-out damage-producing pairs; below that it is
 reported descriptively with the 13-pair development pool as primary. Demote:
 held-out probabilities bimodal at zero or one.
 
-\emph{Outcome: core replicated, floor not met.} Five stochastic cells across
-three distinct held-out models, against a requirement of two. The miss-rate pool
-reached 7 pairs against a floor of 8, so the held-out figure of 0.665 is reported
-descriptively and the development pool figure of 0.80 remains primary.
+\emph{Outcome: core replicated at the minimum, floor not met.} Four stochastic
+cells across two distinct held-out models, against a requirement of two: the
+minimum is met exactly rather than exceeded. The exploratory frontier pass adds
+a fifth such cell on a further model, which does not count here. The miss-rate
+pool reached 5 pairs against a floor of 8, so the held-out figure of 0.575 is
+reported descriptively and the development pool figure of 0.80 remains primary.
+The miss-rate conjunct is ambiguous in the frozen wording, which asks for a
+``pooled'' rate ``over the held-out damage-producing pairs'': pair-weighted it is
+0.575 and clears the threshold, event-weighted it is 0.494 and does not.
+Section~\ref{sec:headline} gives both readings and both verdicts. We did not
+resolve the wording after seeing the data, and we record here that under the
+event-weighted reading this conjunct fails.
 
 \paragraph{Leg 3, no always-fail traps.} Holds: zero cells at $x = n$ across
 held-out runs, provided held-out data actually produced damage. Tested-floor, a
@@ -678,8 +709,9 @@ least 8 damage events, because ``no traps'' is trivially true of a model that
 never damages. Falsified: any task reaches $x = n$ on an engaging held-out model
 and reproduces on another.
 
-\emph{Outcome: replicated cleanly.} Zero cells at $x = n$, with 48 held-out
-damage events against a floor of 8. The falsifier stayed silent.
+\emph{Outcome: replicated cleanly.} Zero cells at $x = n$, with 42 confirmatory
+held-out damage events against a floor of 8, and a further 6 in the exploratory
+frontier pass, also with no cell at $x = n$. The falsifier stayed silent.
 
 \paragraph{Reporting rule, as written.} Whatever the criteria return is reported,
 and no criterion is revised after the data.
@@ -688,7 +720,8 @@ and no criterion is revised after the data.
 
 \paragraph{Engagement-floor scaling.} The pre-registration states the floor as
 pass of at least 3/16. At $k=32$ it is applied proportionally as at least 6/32.
-The frontier model clears either reading at 27/32, so nothing in
+The floor was written for held-out instruments; the frontier model, read as
+exploratory, clears either version of it at 27/32, so nothing in
 Section~\ref{sec:gradient} depends on which convention is used.
 
 \paragraph{Family counting.} The paper counts six families across nine models:

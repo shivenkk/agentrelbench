@@ -68,13 +68,27 @@ plt.rcParams.update({
     "savefig.bbox": "tight",
 })
 
-MERGED = {
+# The confirmatory held-out pool, exactly the roster frozen in the
+# pre-registration (docs/campaign-prereg.md sec1).
+MERGED_HELDOUT = {
     "mistral-24b": REPO / "runs/campaign-merged/mistral-24b.verdicts.jsonl",
     "gpt-oss-120b": REPO / "runs/campaign-merged/gpt-oss-120b.verdicts.jsonl",
     "deepseek-v3.2": REPO / "runs/campaign-merged/deepseek-v3.2.verdicts.jsonl",
+}
+
+# The frontier pass. The pre-registration puts frontier models outside the
+# confirmatory pool -- "NOT here, a separate downstream leaderboard pass
+# (labeled exploratory)" -- so these cells are reported but never folded into a
+# confirmatory aggregate. Keeping them in their own dict is what makes that
+# boundary mechanical rather than a matter of remembering.
+MERGED_FRONTIER = {
     "opus-4.6": REPO / "runs/frontier-merged/opus-4-6.verdicts.jsonl",
     "haiku-4.5": REPO / "runs/frontier-merged/haiku-4-5.verdicts.jsonl",
 }
+
+MERGED = {**MERGED_HELDOUT, **MERGED_FRONTIER}
+
+POOLS = {"all": MERGED, "heldout": MERGED_HELDOUT, "frontier": MERGED_FRONTIER}
 
 CAB = "change-request-cab-gate"
 
@@ -140,9 +154,11 @@ def dev_stats():
     return pool
 
 
-def load_pool():
+def load_pool(scope="all"):
+    """Verdicts keyed by (model, task). ``scope`` selects the confirmatory
+    held-out pool, the exploratory frontier pass, or their union."""
     pool = {}
-    for model, fp in MERGED.items():
+    for model, fp in POOLS[scope].items():
         for line in open(fp):
             row = json.loads(line)
             pool.setdefault((model, row["task_id"]), []).append(SimpleNamespace(

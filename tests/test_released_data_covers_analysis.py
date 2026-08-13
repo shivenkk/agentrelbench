@@ -10,6 +10,7 @@ Existence is the assertion, not git-tracked-ness: the clean room has no git, and
 "the file is there when the analysis runs" is the property that actually matters.
 """
 
+import json
 import sys
 from pathlib import Path
 
@@ -69,4 +70,35 @@ def test_every_released_file_has_a_manifest():
         manifest = (REPO / "runs" / rel).with_suffix(".manifest.json")
         assert manifest.exists(), (
             f"{rel} has no provenance sidecar; run scripts/make_data_manifests.py"
+        )
+
+
+# Section 4 states one decoding configuration for the whole study. A single
+# off-config batch would falsify that sentence silently, so it is asserted here
+# rather than left to a reader diffing JSON.
+SAMPLING = {"temperature": 0.6, "max_tokens": 4096}
+
+
+def test_every_llm_config_sets_the_same_sampling_parameters():
+    """Temperature must be set EXPLICITLY: the substrate's LLMConfig dataclass
+    defaults temperature to 0.0, so an omitted key would silently run greedy."""
+    configs = sorted((REPO / "conf-local").glob("*.json"))
+    assert configs, "no LLM configs found; conf-local is where they live"
+    for path in configs:
+        cfg = json.loads(path.read_text())
+        for key, expected in SAMPLING.items():
+            assert cfg.get(key) == expected, (
+                f"{path.name} sets {key}={cfg.get(key)!r}, not {expected!r}; "
+                f"Section 4's single-configuration claim no longer holds"
+            )
+
+
+def test_every_manifest_records_the_same_sampling_parameters():
+    manifests = sorted((REPO / "runs").rglob("*manifest*.json"))
+    assert manifests, "no manifests found"
+    for path in manifests:
+        recorded = json.loads(path.read_text()).get("sampling_params")
+        assert recorded == SAMPLING, (
+            f"{path.relative_to(REPO)} records {recorded!r}, not {SAMPLING!r}; "
+            f"Section 4's single-configuration claim no longer holds"
         )
