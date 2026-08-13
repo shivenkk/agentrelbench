@@ -408,7 +408,12 @@ protocol. Development pool: 1{,}040 runs (832 base-task
 runs across the pilot, depth, and provider-pin diagnostic arms, plus 208
 distractor-variant runs). Smoke tests and quarantined invalid batches (for
 example, a fully throttled frontier batch superseded by its clean rerun) are
-excluded from these counts.
+excluded from these counts, as is one provider-pin diagnostic batch,
+\texttt{20260717T230105Z\_3ab80b}, the pinned cab-gate cell routed to Together:
+the provider returned 404 on all 16 attempts, so no request reached a model and
+the batch produced no evaluation runs. The counting rule is that a run counts
+once it reaches a model, so the other error-contaminated diagnostic cells, whose
+runs did reach models, are counted with their errored runs included.
 
 \section{Results}
 \label{sec:results}
