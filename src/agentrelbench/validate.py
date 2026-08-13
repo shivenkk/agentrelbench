@@ -162,9 +162,16 @@ def _run_one_script(task_dir: Path, name: str, script_path: Path, data_dir: Path
             # the real task directory so the batch's task_id (arb-run's
             # cli.py uses the filename stem) matches what _find_task_dir
             # expects when tasks_root == task_dir.parent.
+            # Seed paths are resolved against the real task.json rather than the
+            # copy, because the copy lands in a temp dir with neither a checkout
+            # nor the packaged suite above it to anchor a relative path on (see
+            # cli.find_repo_root).
             staged_tasks_dir = tmp_dir / "tasks"
             staged_tasks_dir.mkdir()
-            (staged_tasks_dir / f"{task_dir.name}.json").write_text((task_dir / "task.json").read_text())
+            real_task_file = task_dir / "task.json"
+            (staged_tasks_dir / f"{task_dir.name}.json").write_text(json.dumps(
+                arb_run_cli.resolve_seed_paths(json.loads(real_task_file.read_text()), real_task_file)
+            ))
 
             runs_root = tmp_dir / "runs"
             rc = arb_run_cli.main([

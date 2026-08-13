@@ -11,10 +11,10 @@ process (running in agentrelbench's own, lightweight venv) never imports
 EnterpriseOps-Gym itself. For each task it stages a one-task configs folder,
 writes a small JSON job spec, and execs `agentrelbench.inner_runner` under
 the *clone's own* venv Python (which already has langchain/ray/etc., plus
-nest_asyncio) with PYTHONPATH extended to this package's `src/` -- so the
-clone's venv can `import agentrelbench.eog_patch` without ever having
-agentrelbench pip-installed into it. Only the clone's already-synced venv
-runs EOG code; this process's own venv only needs httpx + stdlib.
+nest_asyncio) with PYTHONPATH extended to the directory this package sits
+in -- so the clone's venv can `import agentrelbench.eog_patch` without ever
+having agentrelbench pip-installed into it. Only the clone's already-synced
+venv runs EOG code; this process's own venv only needs httpx + stdlib.
 """
 from __future__ import annotations
 
@@ -31,8 +31,30 @@ from agentrelbench import collector
 from agentrelbench.state_export import context_to_headers
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent  # src/agentrelbench/cli.py -> repo root
-EOG_CLONE_ROOT = REPO_ROOT / "external" / "EnterpriseOps-Gym"
-CLONE_VENV_PYTHON = EOG_CLONE_ROOT / ".venv" / "bin" / "python"
+
+
+def _eog_clone_root() -> Path:
+    """Locate the EOG clone, in a checkout or from an installed package.
+
+    Same problem as labeling._default_data_dir, without the same escape: the
+    clone is a separate repository with its own uv-synced venv, whose python
+    this process execs, so it can never ship inside our wheel. In a checkout it
+    sits at <repo>/external/EnterpriseOps-Gym; from an install REPO_ROOT points
+    into site-packages, where nothing was ever cloned, so ARB_EOG_CLONE is the
+    only way to name it -- and one env var covers arb-validate too, which drives
+    arb-run in-process and so cannot pass it a flag.
+
+    Resolved to an absolute path because inner_runner chdirs into the clone and
+    puts it on sys.path, after which a relative path names something else.
+    """
+    override = os.environ.get("ARB_EOG_CLONE")
+    if override:
+        return Path(override).resolve()
+    return REPO_ROOT / "external" / "EnterpriseOps-Gym"
+
+
+def _clone_venv_python(clone_root: Path) -> Path:
+    return clone_root / ".venv" / "bin" / "python"
 
 
 def _make_batch_id() -> str:
@@ -111,6 +133,7 @@ def _run_one_task(
     llm_config_path: Path,
     batch_dir: Path,
     k: int,
+    clone_root: Path,
 ) -> None:
     task_json = json.loads(task_file.read_text())
     headers_by_gym_url = _gym_headers_for_task(task_json)
@@ -140,19 +163,22 @@ def _run_one_task(
         "concurrency": 1,
         "orchestrator": "react",
         "headers_by_gym_url": headers_by_gym_url,
-        "clone_root": str(EOG_CLONE_ROOT),
+        "clone_root": str(clone_root),
     }
     job_spec_path = batch_dir / "_staging" / f"{task_id}.job_spec.json"
     job_spec_path.write_text(json.dumps(job_spec))
 
     env = os.environ.copy()
-    src_dir = str(REPO_ROOT / "src")
+    # The directory our package sits in -- <repo>/src in a checkout, site-packages
+    # from an install -- which is what the clone's venv imports agentrelbench from.
+    # Deriving it from REPO_ROOT would name a src/ that only a checkout has.
+    package_parent = str(Path(__file__).resolve().parent.parent)
     existing_pythonpath = env.get("PYTHONPATH")
-    env["PYTHONPATH"] = f"{src_dir}{os.pathsep}{existing_pythonpath}" if existing_pythonpath else src_dir
+    env["PYTHONPATH"] = f"{package_parent}{os.pathsep}{existing_pythonpath}" if existing_pythonpath else package_parent
 
     result = subprocess.run(
-        [str(CLONE_VENV_PYTHON), "-m", "agentrelbench.inner_runner", str(job_spec_path)],
-        cwd=str(EOG_CLONE_ROOT),
+        [str(_clone_venv_python(clone_root)), "-m", "agentrelbench.inner_runner", str(job_spec_path)],
+        cwd=str(clone_root),
         env=env,
     )
     if result.returncode != 0:
@@ -171,8 +197,22 @@ def main(argv: list[str] | None = None) -> int:
     llm_config_path = Path(args.llm_config).resolve()
     out_root = Path(args.out).resolve()
 
-    if not CLONE_VENV_PYTHON.exists():
-        print(f"ERROR: EOG clone venv python not found at {CLONE_VENV_PYTHON}", file=sys.stderr)
+    # Resolved once per batch, not once per task: the manifest records this clone
+    # as the substrate for every run in the batch, so it must not be re-read from
+    # the environment midway through one.
+    clone_root = _eog_clone_root()
+    venv_python = _clone_venv_python(clone_root)
+    if not venv_python.exists():
+        print(
+            f"ERROR: EOG clone venv python not found at {venv_python}\n"
+            "arb-run only ever runs EOG under the clone's own venv, and the clone is a "
+            "separate repository that is not shipped with this package. Clone it, sync it, "
+            "and point ARB_EOG_CLONE at it:\n"
+            "  git clone https://github.com/ServiceNow/EnterpriseOps-Gym\n"
+            "  cd EnterpriseOps-Gym && uv sync --extra openai\n"
+            "  export ARB_EOG_CLONE=$PWD",
+            file=sys.stderr,
+        )
         return 1
 
     task_files = sorted(tasks_dir.glob("*.json"))
@@ -192,7 +232,7 @@ def main(argv: list[str] | None = None) -> int:
     started_at = collector.utc_now_iso()
     for task_id, task_file in task_id_to_file.items():
         try:
-            _run_one_task(task_file, task_id, llm_config_path, batch_dir, args.k)
+            _run_one_task(task_file, task_id, llm_config_path, batch_dir, args.k, clone_root)
         except Exception as exc:
             print(f"ERROR: {exc}", file=sys.stderr)
             return 1
@@ -207,7 +247,7 @@ def main(argv: list[str] | None = None) -> int:
             started_at=started_at,
             finished_at=finished_at,
             our_repo_root=REPO_ROOT,
-            eog_clone_root=EOG_CLONE_ROOT,
+            eog_clone_root=clone_root,
             task_files=task_id_to_file,
         )
     except (collector.InvalidMissingDumpError, collector.PostSeedDriftError) as exc:

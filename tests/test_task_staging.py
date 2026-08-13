@@ -12,9 +12,11 @@ irrelevant, and needs no env var or setup step from whoever clones the repo.
 """
 
 import json
+from pathlib import Path
 
 import pytest
 
+from agentrelbench import validate
 from agentrelbench.cli import REPO_ROOT, find_repo_root, resolve_seed_paths
 
 
@@ -172,3 +174,50 @@ class TestAnchoringSurvivesInstallation:
         if not task_file.exists():
             pytest.skip("running from an installed package without the task suite")
         assert (find_repo_root(task_file.parent) / "pyproject.toml").exists()
+
+
+class _FakeResponder:
+    """Stands in for the scripted responder subprocess; only these are called."""
+
+    def terminate(self):
+        pass
+
+    def wait(self, timeout=None):
+        pass
+
+
+class TestArbValidateStagesResolvedSeeds:
+    """arb-validate copies task.json into a TemporaryDirectory and points arb-run
+    at the copy, which has neither anchor above it -- so the copy's relative seed
+    path fell back to REPO_ROOT, i.e. to a checkout that an installed package does
+    not have. Anchoring on the real task file is what the copy loses."""
+
+    def test_staged_copy_carries_the_seed_path_resolved_against_the_real_task(
+        self, tmp_path, monkeypatch
+    ):
+        suite = tmp_path / "site-packages" / "agentrelbench" / "suite"
+        seed = suite / "data" / "seed-dbs" / "csm" / "db.sql"
+        seed.parent.mkdir(parents=True)
+        seed.write_text("-- seed\n")
+        task_dir = suite / "tasks" / "csm" / "case-triage-basic"
+        task_dir.mkdir(parents=True)
+        (task_dir / "task.json").write_text(json.dumps(config("data/seed-dbs/csm/db.sql")))
+        script_path = task_dir / "oracle.script.json"
+        script_path.write_text(json.dumps({"expected": {"outcome": "clean"}, "script": []}))
+
+        # Where the old fallback landed: a REPO_ROOT with no seed databases under
+        # it, so anything still resolving through it fails the existence check.
+        monkeypatch.setattr("agentrelbench.cli.REPO_ROOT", tmp_path / "site-packages")
+        staged = {}
+
+        def fake_arb_run(argv):
+            tasks_dir = Path(argv[argv.index("--tasks") + 1])
+            staged["task"] = json.loads(next(tasks_dir.glob("*.json")).read_text())
+            return 1  # stop before EOG; the staged file is the whole subject here
+
+        monkeypatch.setattr(validate.arb_run_cli, "main", fake_arb_run)
+        monkeypatch.setattr(validate, "_wait_for_port", lambda *a, **k: True)
+        monkeypatch.setattr(validate.subprocess, "Popen", lambda *a, **k: _FakeResponder())
+        validate._run_one_script(task_dir, "oracle", script_path, suite / "data" / "eog")
+
+        assert staged["task"]["gym_servers_config"][0]["seed_database_file"] == str(seed)

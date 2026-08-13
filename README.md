@@ -16,7 +16,7 @@
   <a href="https://pypi.org/project/agentrelbench/"><img alt="PyPI" src="https://img.shields.io/pypi/v/agentrelbench"></a>
   <a href="https://pypi.org/project/agentrelbench/"><img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11%2B-blue"></a>
   <a href="https://github.com/shivenkk/agentrelbench/blob/main/LICENSE"><img alt="Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-blue"></a>
-  <a href="https://github.com/shivenkk/agentrelbench/actions/workflows/ci.yml"><img alt="156 tests" src="https://img.shields.io/badge/tests-156-brightgreen"></a>
+  <a href="https://github.com/shivenkk/agentrelbench/actions/workflows/ci.yml"><img alt="175 tests" src="https://img.shields.io/badge/tests-175-brightgreen"></a>
 </p>
 
 When an LLM agent holds write access, a wrong action becomes a state change that someone has to detect,
@@ -25,7 +25,7 @@ testing to one thing: **does an agent cause damage repeatably?**
 
 Across 2,128 evaluation runs on nine models in six families, no. Damage appeared in every model family
 we measured, and inside every damage-producing cell it was stochastic. **Not one task damaged on every
-run**, across 48 held-out damage events, so a one-shot audit has no dangerous task to find.
+run**, across 42 confirmatory held-out damage events, so a one-shot audit has no dangerous task to find.
 
 **A single clean run misses a damage-producing (model, task) pair 80% of the time.** More runs help
 only geometrically.
@@ -35,7 +35,8 @@ only geometrically.
        alt="Probability that k independent audit runs all look clean, for each demonstrably-stochastic held-out cell" width="560">
 </p>
 
-This does not go away with capability. The most capable model we measured damages on only one task out
+This does not go away with capability. In our exploratory frontier pass, the most capable model we
+measured damages on only one task out
 of twenty, but that residual is still a per-run coin flip: it fails at p-hat = 0.16, a single audit run
 misses it 84% of the time, and five independent clean runs still miss it 43% of the time.
 
@@ -49,8 +50,8 @@ loudly on drift. Held-out models were chosen and their criteria frozen before an
 | Held-out | mistral-small-24b | 208 | 3 / 20 | 26 | 3 | **0** |
 | Held-out | gpt-oss-120b | 224 | 1 / 20 | 12 | 1 | **0** |
 | Held-out | deepseek-v3.2 | 224 | 1 / 20 | 4 | 0 | **0** |
-| Frontier | claude-opus-4.6 | 224 | 1 / 20 | 5 | 1 | **0** |
-| Frontier | claude-haiku-4.5 | 208 | 1 / 20 | 1 | 0 | **0** |
+| Frontier (exploratory) | claude-opus-4.6 | 224 | 1 / 20 | 5 | 1 | **0** |
+| Frontier (exploratory) | claude-haiku-4.5 | 208 | 1 / 20 | 1 | 0 | **0** |
 | Development | llama-3.1-8b | 160 | 7 / 20 | 11 | 0 | **0** |
 | Development | llama-3.3-70b | 160 | 2 / 20 | 4 | 0 | **0** |
 | Development | qwen3-32b | 160 | 2 / 20 | 4 | 0 | **0** |
@@ -58,8 +59,15 @@ loudly on drift. Held-out models were chosen and their criteria frozen before an
 
 "Stochastic" means the cell's exact 95% Clopper-Pearson interval lies strictly inside (0.05, 0.95),
 a criterion fixed in advance. The k=1 audit miss rate is 0.80 over the 13 development pairs (the
-pre-registered primary) and 0.665 over 7 held-out pairs, which is below our pre-registered power floor
-of 8 and is therefore reported as underpowered rather than as confirmation.
+pre-registered primary) and 0.575 over 5 confirmatory held-out pairs, which is below our pre-registered
+power floor of 8 and is therefore reported as underpowered rather than as confirmation. That held-out
+figure is pair-weighted; our pre-registered wording ("pooled ... over the held-out damage-producing
+pairs") does not settle the weighting, and event-weighted the same quantity is 0.494, which falls on
+the other side of the 0.5 threshold the criterion names. The paper discloses both readings and both
+verdicts rather than picking the one that passes. The
+pre-registration puts frontier models outside the confirmatory pool ("a separate downstream leaderboard
+pass (labeled exploratory)"), so the two frontier rows above are reported but never pooled into a
+confirmatory number.
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/shivenkk/agentrelbench/main/docs/figs/fig2-universality-stochasticity.png"
@@ -90,13 +98,26 @@ own model, run it against the published task suite in the published environment.
 pip install agentrelbench
 ```
 
-The 20-task suite and its seed databases ship inside the package. Locate them, run a model k times per
-task, then label the runs into verdicts:
+The 20-task suite and its seed databases ship inside the package. The substrate does not: `arb-run`
+runs the benchmark under the EnterpriseOps-Gym clone's own venv, so clone it once and name it.
+
+```bash
+git clone https://github.com/ServiceNow/EnterpriseOps-Gym
+(cd EnterpriseOps-Gym && uv sync --extra openai)
+export ARB_EOG_CLONE=$PWD/EnterpriseOps-Gym
+```
+
+`arb-run` takes a flat directory of task JSONs, so copy the suite out and stage the domain you want:
+each task's seed path resolves against the suite it sits in. Then run a model k times per task and
+label the runs into verdicts:
 
 ```bash
 SUITE=$(python -c "import agentrelbench,pathlib;print(pathlib.Path(agentrelbench.__file__).parent/'suite')")
-arb-run   --tasks "$SUITE/tasks/csm" --llm-config my-model.json --k 8 --out runs/
-arb-label --tasks "$SUITE/tasks/csm" runs/<batch_id>
+cp -r "$SUITE" suite
+mkdir suite/tasks-csm
+for t in suite/tasks/csm/*/; do cp "$t/task.json" "suite/tasks-csm/$(basename "$t").json"; done
+arb-run   --tasks suite/tasks-csm --llm-config my-model.json --k 8 --out runs/
+arb-label --tasks suite/tasks/csm runs/<batch_id>
 ```
 
 Running the instrument needs the EnterpriseOps-Gym containers up and a provider credential in your LLM
@@ -162,7 +183,7 @@ produce their declared verdicts.
 pytest
 ```
 
-156 tests. One acceptance test drives the real EnterpriseOps-Gym containers over HTTP and is marked
+175 tests. One acceptance test drives the real EnterpriseOps-Gym containers over HTTP and is marked
 `needs_containers`; CI runs `pytest -m "not needs_containers"`. The estimators, the damage labeler,
 and the manuscript number audit are all covered offline.
 
