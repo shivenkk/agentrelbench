@@ -16,7 +16,7 @@
   <a href="https://pypi.org/project/agentrelbench/"><img alt="PyPI" src="https://img.shields.io/pypi/v/agentrelbench"></a>
   <a href="https://pypi.org/project/agentrelbench/"><img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11%2B-blue"></a>
   <a href="https://github.com/shivenkk/agentrelbench/blob/main/LICENSE"><img alt="Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-blue"></a>
-  <a href="https://github.com/shivenkk/agentrelbench/actions/workflows/ci.yml"><img alt="175 tests" src="https://img.shields.io/badge/tests-175-brightgreen"></a>
+  <a href="https://github.com/shivenkk/agentrelbench/actions/workflows/ci.yml"><img alt="176 tests" src="https://img.shields.io/badge/tests-176-brightgreen"></a>
 </p>
 
 When an LLM agent holds write access, a wrong action becomes a state change that someone has to detect,
@@ -191,7 +191,7 @@ produce their declared verdicts.
 pytest
 ```
 
-175 tests. One acceptance test drives the real EnterpriseOps-Gym containers over HTTP and is marked
+176 tests. One acceptance test drives the real EnterpriseOps-Gym containers over HTTP and is marked
 `needs_containers`; CI runs `pytest -m "not needs_containers"`. The estimators, the damage labeler,
 and the manuscript number audit are all covered offline.
 
