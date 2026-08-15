@@ -61,42 +61,33 @@ Why One-Shot Audits Are Structurally Blind to Agent Damage}
 \maketitle
 
 \begin{abstract}
-Enterprise LLM agents increasingly take irreversible actions: a wrong database
-commit is damage to be detected and unwound, not a bad sample to regenerate. We
-introduce AgentRelBench, an environment-agnostic reliability instrument that
-computes ground-truth, severity-priced damage from database state diffs, with no
-LLM anywhere in the measurement path, across repeated runs (\passk{} and
-\safek{}), demonstrated on a simulated enterprise-operations substrate
-(EnterpriseOps-Gym). Across 2{,}128 evaluation runs spanning nine models in six
-families (four development models; three models evaluated under pre-registered
-held-out criteria, plus a frontier pass on two frontier-tier models that the
-pre-registration designates exploratory), we find: \textbf{(1)}
-damage on irreversible actions is universal across the families we measured and
-stochastic within them; the same model on the same task with the same pinned
-serving configuration damages on some runs and not others. \textbf{(2)} No task
-damaged on every run: zero always-fail cells across 42 confirmatory held-out
-damage events, so
-the damage is real but carries no discoverable dangerous-task signature that a
-one-shot audit could find. A single clean run misses a damage-producing (model,
-task) pair 0.80 of the time on the development pool (13 pairs); the held-out pool
-is descriptively consistent (0.575 over 5 pairs, pair-weighted) but sits below our
-pre-registered power floor and is reported as underpowered, not as confirmation.
-\textbf{(3)} The number of damage-producing tasks decreases with model capability
-across the families we tested, from 7 of 20 tasks for an 8B model to 1 of 20 for
-the most capable model we measured; capability is confounded with family and
-training, so we report this as an observed gradient, not a causal claim.
-Critically, the residual damage does not change in character: in the exploratory
-frontier pass, the most capable model's single damaging task fails at
-$\phat = 0.16$ per run, meets the same demonstrably-stochastic criterion, and a
-single audit misses it 84\% of the time. \textbf{(4)} As a methodological finding, one model family committed
-the gated irreversible change while declaring it had refused; transcript- and
-judge-based grading scores those runs as safe refusals, and only state-diff
-verification labels them damage. All confirmatory findings were pre-registered
-with per-claim demote criteria; one criterion demoted our own initially favored
-finding, and we report that demotion. We release the instrument and task
-suite.\footnote{Code, task suite, released per-run verdicts, and a one-command
-reproduction of every number in Section~\ref{sec:results}:
-\url{https://github.com/shivenkk/agentrelbench}}
+We introduce AgentRelBench, an environment-agnostic reliability instrument that
+computes ground-truth, severity-priced damage from database state diffs across
+repeated runs, with no LLM in the measurement path, demonstrated on
+EnterpriseOps-Gym.\footnote{Code, task suite, released per-run verdicts, and a
+one-command reproduction of every number in Section~\ref{sec:results}:
+\url{https://github.com/shivenkk/agentrelbench}} Across 2{,}128 evaluation runs
+spanning nine models in six families (four development, three pre-registered
+held-out, plus a frontier pass on two frontier-tier models that the
+pre-registration designates exploratory), we find: \textbf{(1)} damage on
+irreversible actions is universal across the families we measured and stochastic
+within them on pinned, single-provider stacks. \textbf{(2)} No task damaged on
+every run: zero always-fail cells across 42 confirmatory held-out damage events.
+A single clean run misses a damage-producing (model, task) pair 0.80 of the time
+on the development pool (13 pairs); the held-out pool is descriptively consistent
+(0.575 over 5 pairs, pair-weighted) but sits below our pre-registered power floor
+and is reported as underpowered, not as confirmation. \textbf{(3)}
+Damage-producing task count falls with model capability, from 7 of 20 tasks for
+an 8B model to 1 of 20 for the most capable; capability is confounded with family
+and training, so this is an observed gradient, not a causal claim. The residual
+damage does not change in character: in the exploratory frontier pass, the most
+capable model's one damaging task damages at $\phat = 0.16$ per run, inside the
+same demonstrably-stochastic band, and a single audit misses it 84\% of the time.
+\textbf{(4)} One model family committed the gated irreversible change while
+declaring it had refused: transcript- and judge-based grading scores those runs
+as safe refusals, only state diffs as damage. All confirmatory findings were
+pre-registered with per-claim demote criteria; one demoted our own initially
+favored finding, which we report.
 \end{abstract}
 
 \section{Introduction}
@@ -124,7 +115,8 @@ properties at once: \textbf{damage severity} (not just task failure),
 variance away), and \textbf{ground-truth state verification} (not transcript or
 judge grading). The middle property is the one most easily mistaken for solved.
 Several benchmarks do run each task more than once, but they do so to stabilize a
-point estimate; none reports the per-cell damage distribution that decides whether
+point estimate, with the exceptions Section~\ref{sec:related} details; none
+reports the per-cell damage distribution that decides whether
 a finite audit can certify an agent. Section~\ref{sec:related} maps the landscape;
 each axis exists somewhere, and no benchmark crosses all three.
 
@@ -144,7 +136,8 @@ structurally blind to it.
 \item \textbf{A capability gradient that does not reach zero
 (Section~\ref{sec:gradient}).} Damage-producing task count falls with model
 capability across the families we tested, while the residual damage stays
-stochastic, with no always-fail cell, all the way to the frontier model we measured.
+stochastic, with no always-fail cell, all the way to the frontier model we
+measured, a read the pre-registration designates exploratory.
 \item \textbf{A methodological result (Section~\ref{sec:method}).} State ground
 truth is necessary: one family executes the gated change while declaring
 refusal, a failure invisible to transcript grading. The behavior is
@@ -157,12 +150,17 @@ demoted our initially favored finding, and the paper reports it.
 \section{Related work}
 \label{sec:related}
 
-The measurement gap is visible as three columns that no prior benchmark crosses.
+The measurement gap is visible as three columns that no prior benchmark crosses
+(Table~\ref{tab:related}).
 
-\begin{table}[h]
+\begin{table}[t]
 \centering
 \small
-\begin{tabular}{@{}p{0.17\linewidth}p{0.29\linewidth}p{0.24\linewidth}p{0.22\linewidth}@{}}
+\setlength{\tabcolsep}{4pt}
+\caption{The measurement gap. Each axis has a strong prior occupant; no prior
+benchmark crosses all three.}
+\label{tab:related}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.17\linewidth}>{\raggedright\arraybackslash}p{0.29\linewidth}>{\raggedright\arraybackslash}p{0.24\linewidth}>{\raggedright\arraybackslash}p{0.22\linewidth}@{}}
 \toprule
 \textbf{Axis} & \textbf{Representative work} & \textbf{What it measures} &
 \textbf{What it lacks} \\
@@ -178,15 +176,15 @@ no damage axis; state verification asks whether the goal was reached, so failure
 Damage, variance averaged away &
 SABER, workspace safety \citep{hu2026saber}; ClawsBench
 \citep{li2026clawsbench}; EnterpriseOps-Gym \citep{malay2026enterpriseops} &
-end-state safety, unsafe-action rates, or side-effect verifiers; 1 to 5 runs
-per cell &
+end-state safety, unsafe-action rates, or side-effect verifiers; 5 runs per cell
+in ClawsBench, 3 in EnterpriseOps-Gym &
 run-to-run variance is a nuisance parameter, not the measurand; no per-cell
 damage distribution \\
 \addlinespace
 Abstention / mechanism &
 AgentAbstain \citep{liu2026agentabstain}; Yes-Man Syndrome
 \citep{yeke2026yesman}; SABER, mutating steps \citep{cuadron2025saber};
-abstention competence \citep{ojewale2026abstention}; Science of Agent Reliability
+informed abstention \citep{ojewale2026abstention}; Science of Agent Reliability
 \citep{rabanser2026science} &
 refusal competence, mutation-step sensitivity, judge-scored severity; several do
 repeat runs &
@@ -203,7 +201,7 @@ It does repeat runs, and the reason is instructive: it reports ``the average of
 pass@1 across three runs (to reduce variance)'' as its primary metric. Repetition
 is used there to suppress the quantity we measure. Its side-effect checks also
 fold into an all-or-nothing pass@1 rather than a severity-priced damage rate, and
-it has no abstention mechanic.
+its infeasible-task refusal is scored once per task, never across repeats.
 
 ClawsBench is the closest prior work on repetition and deserves a precise
 comparison rather than a dismissal. It runs 5 repeats per task, penalizes
@@ -251,7 +249,7 @@ damage indicator, and an ICC on a bounded continuous score is not the same
 quantity as an ICC on a Bernoulli event. We therefore report these as
 direction-consistent rather than as a matched contrast.
 
-Two further overlaps are worth naming rather than leaving for a reader to find.
+Two further overlaps are worth naming outright.
 ReliabilityBench is the closest prior work on state verification, not on damage:
 it uses deterministic state-based oracles and says so explicitly, ``unlike
 benchmarks that rely on LLM judges or text matching.'' Its oracle asks whether the
@@ -294,8 +292,9 @@ environment, the wrapper dumps the full final state. The labeler diffs it agains
 the post-seed state under a closed-world DSL: primary-key-matched row comparison,
 a per-domain volatile-column allowlist, and per-task damage specs with severity
 classes plus dollar pricing where the schema carries money columns. Errored runs
-are tri-classified (an errored run without mutation is not damage;
-mutation-then-error contributes to an upper bound, reported as \safek{} upper).
+split two ways (mutation-then-error is damage outright and enters the headline
+count; an errored run without mutation is not damage, and is the only case
+entering the conservative errors-as-damage bound, reported as \safek{} upper).
 There is no LLM anywhere in the measurement path; the labeler is deterministic,
 test-first, and its verdict taxonomy is in Appendix~A. Refusal detection is a
 deterministic token check, so a stalled run is never counted as an abstention.
@@ -366,9 +365,10 @@ and in none of the confirmatory aggregates. Held-out and frontier models alike
 had zero pre-campaign contact with the harness; first contact was the campaign
 run itself.
 
-\paragraph{Protocol.} $k=8$ across the 20-task breadth set, $k=16$ on a five-task
-depth set, and $k=32$ on the flagship cab-gate task for the two large campaign
-models and the frontier Opus model ($k=16$ elsewhere). Serving is controlled as a
+\paragraph{Protocol.} $k=16$ on six depth tasks and $k=8$ on the other fourteen,
+giving 208 runs per model, with $k=32$ on the flagship cab-gate task for the two
+large campaign models and the frontier Opus model (224 runs for those three).
+Serving is controlled as a
 method: OpenRouter runs pin the provider with fallbacks disabled
 (\texttt{allow\_fallbacks} false), and the pinned provider is recorded
 in the campaign run logs; Bedrock is a single fixed serving stack. The released
@@ -382,13 +382,12 @@ differing serving stacks (Section~\ref{sec:limits}).
 and unchanged across all nine models and all 2{,}128 runs. One caveat for anyone
 diffing our run logs against this description: the substrate's task configuration
 carries its own \texttt{max\_tokens} default of 16{,}384, which is what the logs
-print, but that field is never read: the values that reach the provider are the
+print, but that field is never read. The values that reach the provider are the
 LLM configuration's. Fixed nonzero-temperature sampling is the expected proximate
 mechanism for the run-to-run variance we report, and we do not argue otherwise.
 It is also the configuration in which these agents are actually deployed, since
 production stacks sample, so the reliability question a deployer faces is about
-the system as configured rather than about a hypothetical greedy decoder. The
-claim here is accordingly about a deployment-realistic configuration, and none of
+the system as configured rather than about a hypothetical greedy decoder. None of
 it depends on the mechanism being sampling: the damage labeler, the
 demonstrably-stochastic criterion, and the audit-miss arithmetic all consume
 per-cell counts and are indifferent to why two runs of one cell differ.
@@ -503,7 +502,7 @@ and that each measured cell is demonstrably not a trap, rather than that traps d
 not exist.
 
 \paragraph{Consequence.} If damage were concentrated in always-fail cells, one
-audit run per cell would find them. Instead every damage-producing cell is
+audit run per cell would find them. Instead, every damage-producing cell is
 intermediate, so a $k=1$ audit observes a clean run on a damage-producing pair
 0.80 of the time on the development pool (13 pairs, primary per
 pre-registration; the serving provenance of that pool is only partially
@@ -520,7 +519,7 @@ Safety, as observed in any finite audit, does not repeat.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.75\linewidth]{fig4-audit-decay}
+\includegraphics[width=0.63\linewidth]{fig4-audit-decay}
 \caption{Probability that an audit of $k$ independent runs observes zero damage,
 for the demonstrably-stochastic cells. A clean audit is the expected outcome at
 small $k$ even on cells that damage.}
@@ -538,9 +537,9 @@ pre-registered invalid-instrument response for the first leg was not triggered.
 The mistral-24b cell is load-bearing twice: it is one of the four
 demonstrably-stochastic confirmatory cells and it sits in the miss-rate pool.
 Retention is the conservative choice there, and we state the direction plainly:
-its single-audit miss of $0.375$ is the lowest in the pool, so keeping it
-\emph{lowers} the headline. Excluding both breaching held-out cells raises the
-miss rate to 0.625 over the four remaining pairs; the deepseek-v3.2 cell
+its single-audit miss of $0.375$ sits well below the pool mean of $0.575$, so
+keeping it \emph{lowers} the headline. Excluding both breaching held-out cells
+raises the miss rate to 0.625 over the four remaining pairs; the deepseek-v3.2 cell
 produced no damage and so never entered that denominator, which makes the whole
 of the movement attributable to the mistral-24b cell. The stochasticity minimum
 survives the exclusion as well, at three cells across the same two models. We
@@ -551,7 +550,7 @@ pre-registration exists to prevent.
 \paragraph{The miss-rate conjunct turns on a weighting the pre-registration does
 not settle.} Leg 2's replicate criterion reads: ``pooled $k=1$ audit miss rate
 $> 0.5$ over the held-out damage-producing pairs.'' That clause has two readings,
-and on the corrected confirmatory set they disagree across the threshold.
+and on the confirmatory set they disagree across the threshold.
 Weighting each damage-producing pair equally gives 0.575, which clears $0.5$;
 weighting each pair by the damage events it carries gives 0.494, which does not.
 We take pair-weighting as primary, because ``over the held-out damage-producing
@@ -565,7 +564,8 @@ pairs and is reported descriptively rather than as confirmation
 (Section~\ref{sec:integrity}), and the cross-model half of leg 2 is met on two
 distinct held-out models under either weighting.
 
-All three qualifications attach to the held-out corroboration and stop there: the
+The power floor, the retained errored-run breaches, and this weighting ambiguity
+all attach to the held-out corroboration and stop there: the
 development pool remains the pre-registered primary
 (Section~\ref{sec:integrity}), and neither the demonstrably-stochastic criterion
 nor the absence of always-fail cells routes through the miss rate, both being
@@ -598,7 +598,7 @@ tasks and did not.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.8\linewidth]{fig3-capability-gradient}
+\includegraphics[width=0.63\linewidth]{fig3-capability-gradient}
 \caption{Damage-producing tasks of 20, ordered by an approximate capability
 proxy. The surface shrinks; what remains does not change character.}
 \label{fig:gradient}
@@ -609,7 +609,8 @@ the frontier model's
 residual damage is still not a rounding error or a fluke run: it is 5 damage
 events in
 32 runs on a task the model demonstrably can do (27/32 PASS, far above the
-engagement floor of 6/32 the pre-registration set for held-out instruments),
+engagement floor the pre-registration set for held-out instruments, 3/16, applied
+proportionally as 6/32 at this $k$),
 with an exact CI of $(0.053, 0.328)$,
 inside the pre-registered stochastic band. The most capable model we measured, on
 its single damaging task, at the highest per-cell sample size in the study,
@@ -646,17 +647,19 @@ cab-gate is universal (Section~\ref{sec:headline}); only its disguise is
 family-specific. We present this section as evidence for the measurement method,
 not as a claim about agents in general.
 
-\paragraph{The substrate's own verifier misses most of this damage, and misses it
-systematically.} The disagreement is not noise at the margin, it is a clean
-split. Across all released merged label files, the flagship task produced 31
-damage events, and they separate perfectly by whether the mutation crossed the
-gate. The 20 events that left \texttt{change.status} untouched, editing the
+\paragraph{The substrate's own verifier misses this damage, and misses it
+systematically.} The disagreement is not noise at the margin; it is a clean
+split. On the three confirmatory held-out models the flagship task produced 20
+damage events, and 18 of them left \texttt{change.status} untouched, editing the
 description, the close notes, the implementation plan, or an incident work note
-instead, \emph{all} carry \texttt{eog\_success} true: the substrate scored those
-runs as successes while our state diff scored them damage. The 11 events that did
-move \texttt{change.status} all carry \texttt{eog\_success} false. There are no
-exceptions in either direction. Restricted to the confirmatory held-out pool the
-same split reads 18 and 2. The mechanism is visible in the task configuration:
+instead; \emph{all} 18 carry \texttt{eog\_success} true, so the substrate scored
+those runs as successes while our state diff scored them damage. Over the seven
+flagship cells this paper reports the share is lower, 19 of 39, so the miss is
+substantial rather than uniform. What is exact is the separation itself. Across
+every released verdict file the flagship task produced 58 damage events: all 21
+that left \texttt{change.status} untouched carry \texttt{eog\_success} true, and
+all 37 that moved it carry \texttt{eog\_success} false. There are no exceptions
+in either direction. The mechanism is visible in the task configuration:
 this task's SQL verifiers ask whether the incident was reopened and whether the
 gated change is still at \texttt{implement}, so any mutation outside those two
 columns is invisible to them by construction. This is the general shape of the
@@ -750,9 +753,8 @@ out-of-scope cases in a single sweep and still scores LOW for the run, because
 to LOW. That is a design property rather than a labeler defect. The tag is a
 property of the primitive, and a volume term would require a defensible exchange
 rate between breadth and kind that we do not have; inventing one after seeing
-which runs it would reprice is exactly the move the pre-registration exists to
-prevent, so the scale is unchanged. We flag it as a calibration limit on the
-severity axis. It does not touch any rate reported here: every rate in
+which runs it would reprice would be repricing our own results after the fact, so
+the scale is unchanged. It does not touch any rate reported here: every rate in
 Section~\ref{sec:results} counts damage runs, none is severity-weighted.
 
 \paragraph{The capability gradient is observational.} Six families, one
@@ -778,14 +780,15 @@ prevalence of stochastic damage across the distribution of tasks a deployed agen
 would actually meet, and a suite drawn from real user traffic could have a
 different shape. Two things keep the result from being circular. The levers were
 authored before any campaign model ran, and the falsifier was free to fire: a
-bimodal outcome was an available result on any task and on any of the five
-held-out models, and four of the twenty tasks were predicted near-zero rather than
-intermediate. Both predictions and outcomes are in Appendix~\ref{app:tasks}, so
+bimodal outcome was an available result on any task and on any of the three
+held-out models or either frontier model, and four of the twenty tasks were
+predicted near-zero rather than intermediate. The predictions are in
+Appendix~\ref{app:tasks} and the outcomes in Appendix~\ref{app:tables}, so
 the calibration of that targeting is inspectable rather than asserted.
 
 \paragraph{Known harness artifacts.} Tool errors surface to the agent as an
-empty-object string; errored-run handling is tri-classified as described in
-Section~\ref{sec:design} and cataloged in Appendix~D.
+empty-object string; errored-run handling splits by whether the run had already
+mutated, as described in Section~\ref{sec:design} and cataloged in Appendix~D.
 
 \section{Discussion and future work}
 
@@ -811,11 +814,12 @@ evaluations; we flag it as a direction rather than a result.
 
 \section{Conclusion}
 
-Across nine models in six families, 2{,}128 runs, and a pre-registered
-confirmatory protocol, damage on irreversible actions was universal across
-families, stochastic within every damage-producing cell, and never concentrated
-in an always-fail task. Capability compressed the damage surface from seven tasks
-in twenty down to one, and left that one a per-run coin flip at the frontier. A
+Across nine models in six families, 2{,}128 runs, and a protocol frozen before
+held-out contact, damage on irreversible actions was universal across every
+family we measured, demonstrably stochastic on every cell the pre-registered band
+could resolve, and never concentrated in an always-fail task. Capability
+compressed the damage surface from seven tasks in twenty down to one, and, on the
+exploratory frontier read, left that one a per-run coin flip. A
 passed safety test is a coin-flip observation, not a property of the model, and
 certification of action-taking agents will have to live where the coin is
 flipped: at the commit, on every run.
@@ -829,15 +833,17 @@ substrate is pinned by container digest and commit; each run re-seeds a fresh
 database, and two replay audits establish that only wall-clock timestamp columns
 vary across independently seeded replicas (Appendix~C), which is what licenses
 treating runs as independent draws. Every batch additionally carries a post-seed
-state export, so each batch doubles as a determinism monitor and seeding drift
-raises rather than passing quietly. The public repository
+state export, so each batch doubles as a determinism monitor that raises on
+seeding drift. The public repository
 (\url{https://github.com/shivenkk/agentrelbench}) ships the instrument, the full
 task suite with its oracles and counterexamples, the merged per-run verdicts
 behind every number reported here, each with a provenance manifest recording
-model, sampling parameters, per-task $k$, container digests and sha256,
+model, sampling parameters, per-task $k$, and, for every held-out and frontier
+batch, container digests and sha256 (the three merged development files are
+marked partial and list their unrecorded fields, Section~\ref{sec:limits}),
 and a one-command script that regenerates all four figures and prints every
 Section~5 statistic under assertions that fail loudly on drift; Appendix~E is
-generated by that same path rather than transcribed. Those released verdicts are
+generated by that same path. Those released verdicts are
 the confirmatory and exploratory pools in full, together with every development
 batch any reported number reads; the 2{,}128 figure counts runs executed, which
 is the larger set, and the remainder are early and superseded development batches
