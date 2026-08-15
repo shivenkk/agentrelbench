@@ -111,7 +111,7 @@ contract modified). Run severity is the maximum over deltas; dollars are summed.
 Where a money column exists on an affected row, the dollar figure is read out of
 the state itself rather than assigned by hand.
 
-One authoring rule is easy to get wrong and is linted against the schema:
+One authoring rule is easy to get wrong, and we check it by review:
 **`where`-clauses match the final row, so they must reference immutable
 identifying columns only.** A clause keyed on a mutable column such as `status`
 would un-match its own allow-rule once the task legitimately changed that
@@ -141,7 +141,7 @@ degrades and the verdict does not change.
 
 ## A.8 Test suite, written before the implementation
 
-The measurement core was built test-first as a project rule. 104 tests across 8
+The measurement core was built test-first as a project rule. 176 tests across 12
 files cover, among others: identity (`label(s, s) = none`), whitelisted-only
 change, unauthorized add/remove/modify, volatile-only difference, dollar pricing
 read from the affected row, severity mapping, the success-by-damage joint cell,
@@ -253,7 +253,7 @@ Every task ships five artifacts, and none was accepted without all five.
 1. A task JSON on the EOG schema, using existing tools only. Custom tools would
    require rebuilding the container images, so the suite reuses the shipped
    toolsets, which is also why there is no explicit `abstain()` tool.
-2. Parameters and a damage spec, whitelist plus pricing, linted so that
+2. Parameters and a damage spec, whitelist plus pricing, reviewed so that
    `where`-clauses reference immutable columns only.
 3. An **oracle script**: a scripted-responder sequence proving PASS is
    achievable, replayed through the k-run wrapper, with the labeler required to
@@ -402,25 +402,28 @@ artifacts, or raises), `SIL-AG` (silent to the acting model but fully recorded),
 `SIL` (silent, reachable only by reading source), and `A2A` (surfaces to the
 agent as an error).
 
-**75 substantive sites across 22 files** (39 in the vendored harness, 36 in our
-own pipeline, which was held to the same standard and not exempted).
+The audit enumerates **76 sites across 22 files**, 40 in the vendored harness and
+36 in our own pipeline, which was held to the same standard and not exempted.
 
 | Class | Count | Reading |
 |---|---:|---|
 | `A2ART` | 41 | the pipeline is overwhelmingly loud by construction |
-| `SIL` | 27 | impact split below |
+| `SIL` | 24 | impact split below |
 | `SIL-AG` | 3 | the tool-error swallow, one instance in path |
 | `A2A` | **0** | **the agent never sees a tool error as an error**; it sees a result or `{}` |
+| No class recorded | 8 | trivial config, dataclass and telemetry defaults, all benign |
+| **Total** | **76** | |
 
 Impact split for the silent sites:
 
 | Impact | Count | Disposition |
 |---|---:|---|
-| Benign (cosmetic, telemetry, provenance, safe default) | 15 | no measurement surface |
-| Hides tool failures the agent acted on | 3 | behavioral only, fully recorded |
-| Hides an errored run or misclassifies termination | 7 | 1 fixed, 4 backstopped by design, 2 low or not-in-path |
+| Benign (cosmetic, telemetry, provenance, safe default) | 11 | no measurement surface |
+| Hides tool failures the agent acted on | 5 | behavioral only, fully recorded |
+| Hides an errored run or misclassifies termination | 8 | 1 fixed, 5 backstopped by design, 2 low or not-in-path |
 | Corrupts run semantics | 4 | 1 fixed; 3 are intra-run and refuted below |
-| Corrupts state capture or labeling | all backstopped | every dump or label failure raises |
+| Corrupts state capture or labeling | 1 | backstopped: labeling raises before it can diff against a missing state |
+| **Total** | **29** | across the 27 silent sites (24 silent, 3 silent to agent); two of them carry two impacts each |
 
 ## D.3 The three previously known members
 

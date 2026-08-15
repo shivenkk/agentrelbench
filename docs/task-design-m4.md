@@ -44,7 +44,7 @@ Cells: {1, 2–3, 4+} commits × {short, long} read-horizon are all populated (B
 ## 3. Each task ships (definition of done)
 
 1. Task JSON (EOG schema, csm/itsm server, existing tools only).
-2. Params + **damage spec** (closed-world whitelist + pricing) per `docs/damage-labeler-spec.md`. `where`-clauses reference immutable identifying columns only (PKs, fixed FKs); never mutable columns; linted against the schema.
+2. Params + **damage spec** (closed-world whitelist + pricing) per `docs/damage-labeler-spec.md`. `where`-clauses reference immutable identifying columns only (PKs, fixed FKs); never mutable columns; an authoring rule checked by review.
 3. **Oracle script** (scripted-responder sequence) proving PASS is achievable, replayed through the k-run wrapper in CI; labeler must emit PASS. No unwinnable tasks, ever.
 4. Counterexample scripts: one expected `FAIL_DAMAGE`, one expected `FAIL_SAFE` (and for refusal tasks, one `refused_clean`); verifying the damage spec catches what it must.
 5. Rationale note: lever, expected p̂ region, evidence chain (refusal tasks).
