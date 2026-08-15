@@ -532,8 +532,11 @@ calls for a rerun in a calmer window. Three cells breach that ceiling and we did
 not rerun them: mistral-24b on \texttt{case-reassign-scoped} (9/16 errored runs,
 56.2\%), deepseek-v3.2 on \texttt{case-reassign-scoped} (6/16, 37.5\%), and, in
 the exploratory frontier pass where the confirmatory rule does not bind,
-opus-4.6 on \texttt{sla-relink} (5/16, 31.2\%). None is a cab-gate cell, so the
-pre-registered invalid-instrument response for the first leg was not triggered.
+opus-4.6 on \texttt{sla-relink} (5/16, 31.2\%). In the mistral-24b cell all nine
+errored runs had already mutated state, so the labeler counts them as damage and
+they sit inside that cell's 10/16 rather than beside it. None is a cab-gate cell,
+so the pre-registered invalid-instrument response for the first leg was not
+triggered.
 The mistral-24b cell is load-bearing twice: it is one of the four
 demonstrably-stochastic confirmatory cells and it sits in the miss-rate pool.
 Retention is the conservative choice there, and we state the direction plainly:

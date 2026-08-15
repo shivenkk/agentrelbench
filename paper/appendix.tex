@@ -133,7 +133,7 @@ deleted, contract modified). Run severity is the maximum over deltas; dollars ar
 summed. Where a money column exists on an affected row, the dollar figure is read
 out of the state itself rather than assigned by hand.
 
-One authoring rule is easy to get wrong and is linted against the schema:
+One authoring rule is easy to get wrong, and we check it by review:
 \textbf{\texttt{where} clauses match the final row, so they must reference
 immutable identifying columns only.} A clause keyed on a mutable column such as
 \texttt{status} would un-match its own allow-rule once the task legitimately
@@ -165,7 +165,7 @@ degrades and the verdict does not change.
 
 \subsection{Test suite, written before the implementation}
 
-The measurement core was built test-first as a project rule: 104 tests across 8
+The measurement core was built test-first as a project rule: 176 tests across 12
 files. They cover, among others, identity (labeling a state against itself yields
 no damage), whitelisted-only change, unauthorized add, remove and modify,
 volatile-only difference, dollar pricing read from the affected row, severity
@@ -285,7 +285,7 @@ Every task ships five artifacts, and none was accepted without all five.
 \item A task specification on the harness schema, using existing tools only.
 Custom tools would require rebuilding the container images, so the suite reuses
 the shipped toolsets, which is also why there is no explicit abstain tool.
-\item Parameters and a damage spec, whitelist plus pricing, linted so that
+\item Parameters and a damage spec, whitelist plus pricing, reviewed so that
 \texttt{where} clauses reference immutable columns only.
 \item An \textbf{oracle script}: a scripted-responder sequence proving
 \texttt{PASS} is achievable, replayed through the k-run wrapper, with the labeler
@@ -441,9 +441,9 @@ cataloged for completeness and marked not-in-path.
 
 Each site is classified by where the error becomes visible: surfaces to artifacts
 or raises; silent to the acting model but fully recorded; silent, reachable only
-by reading source; or surfaces to the agent as an error. There are
-\textbf{75 substantive sites across 22 files}, 39 in the vendored harness and 36
-in our own pipeline, which was held to the same standard and not exempted.
+by reading source; or surfaces to the agent as an error. The audit enumerates
+\textbf{76 sites across 22 files}, 40 in the vendored harness and 36 in our own
+pipeline, which was held to the same standard and not exempted.
 
 \begin{table}[h]
 \centering
@@ -454,10 +454,14 @@ Class & Count & Reading \\
 \midrule
 Surfaces to artifacts, or raises & 41 & the pipeline is overwhelmingly loud by
 construction \\
-Silent & 27 & impact split below \\
+Silent & 24 & impact split below \\
 Silent to agent, recorded & 3 & the tool-error swallow, one instance in path \\
 Surfaces to the agent as an error & \textbf{0} & \textbf{the agent never sees a
 tool error as an error}; it sees a result or an empty object \\
+No class recorded & 8 & trivial config, dataclass and telemetry defaults, all
+benign \\
+\midrule
+Total & 76 & \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -469,14 +473,17 @@ tool error as an error}; it sees a result or an empty object \\
 \toprule
 Impact of the silent sites & Count & Disposition \\
 \midrule
-Benign (cosmetic, telemetry, provenance, safe default) & 15 & no measurement
+Benign (cosmetic, telemetry, provenance, safe default) & 11 & no measurement
 surface \\
-Hides tool failures the agent acted on & 3 & behavioral only, fully recorded \\
-Hides an errored run or misclassifies termination & 7 & 1 fixed, 4 backstopped by
+Hides tool failures the agent acted on & 5 & behavioral only, fully recorded \\
+Hides an errored run or misclassifies termination & 8 & 1 fixed, 5 backstopped by
 design, 2 low or not-in-path \\
 Corrupts run semantics & 4 & 1 fixed; 3 are intra-run and refuted below \\
-Corrupts state capture or labeling & all backstopped & every dump or label
-failure raises \\
+Corrupts state capture or labeling & 1 & backstopped: labeling raises before it
+can diff against a missing state \\
+\midrule
+Total & 29 & across the 27 silent sites (24 silent, 3 silent to agent); two of
+them carry two impacts each \\
 \bottomrule
 \end{tabular}
 \end{table}
