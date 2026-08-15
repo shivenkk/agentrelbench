@@ -51,6 +51,9 @@ ACCENT_LT = "#cde2fb"  # stochastic band fill
 GRID = "#e4e3df"
 
 plt.rcParams.update({
+    # Type 42 embeds TrueType rather than Type 3, so figure text stays crisp
+    # under magnification and is selectable and searchable in the posted PDF.
+    "pdf.fonttype": 42,
     "font.size": 8,
     "axes.titlesize": 9,
     "axes.labelsize": 8,
@@ -225,6 +228,11 @@ def fig1_pipeline():
 
 # ------------------------------------------------------------------ figure 2
 def fig2_universality_forest(pool, stats, stochastic_keys, dev_cab):
+    # Do not narrow this without re-rendering and looking at panel (b). The
+    # paper draws it at 0.76 scale, which is smaller than ideal, but at 6.3 and
+    # below the value labels collide with the rotated always-fail annotation on
+    # the right spine, and a collision is worse than small type. Fixing the
+    # scale properly means moving those labels, not resizing the figure.
     fig, (a, b) = plt.subplots(
         1, 2, figsize=(6.9, 2.9), gridspec_kw={"width_ratios": [1.0, 1.25]})
 

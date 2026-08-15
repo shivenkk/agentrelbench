@@ -8,7 +8,7 @@ Here $x$ is the damage count, $n$ the runs in the cell, \emph{upper} the errored
 
 \subsection{Held-out and frontier cells}
 
-Protocol per model: breadth 14 tasks at k=8, depth 5 tasks at k=16, flagship cab-gate at k=16 or k=32. Cells are the unit of analysis; runs from different k-groups are never spliced. The two groups below are separated because the pre-registration separates them: the frontier pass is a downstream leaderboard read labeled exploratory in advance, so its cells are reported here but are excluded from every confirmatory aggregate in Section 5.
+Protocol per model: breadth 14 tasks at $k=8$, depth 5 tasks at $k=16$, flagship cab-gate at $k=16$ or $k=32$. Cells are the unit of analysis; runs from different k-groups are never spliced. The two groups below are separated because the pre-registration separates them: the frontier pass is a downstream leaderboard read labeled exploratory in advance, so its cells are reported here but are excluded from every confirmatory aggregate in Section~5.
 
 \subsubsection{Confirmatory held-out pool (pre-registered)}
 
@@ -171,7 +171,7 @@ template-driven-incidents & 0/8 & 0.000 & (0.000, 0.369) & 0/8 & 8/8 & no damage
 
 \subsection{Development pool (frozen 13-pair definition)}
 
-The development pool is each dev model's 20-task k=8 breadth batch. These 13 pairs are the denominator of the primary k=1 audit miss rate (0.80, Section 5.1). Cells not listed are 0/8. The three merged development files carry PARTIAL provenance: model, provider, sampling parameters, and k were recovered from the staged job specifications, but the harness commit, substrate commit, and MCP image digests were never recorded for these batches. Each released file's manifest lists its unrecorded fields.
+The development pool is each dev model's 20-task $k=8$ breadth batch. These 13 pairs are the denominator of the primary $k=1$ audit miss rate (0.80, Section~5.1). Cells not listed are 0/8. The three merged development files carry PARTIAL provenance: model, provider, sampling parameters, and k were recovered from the staged job specifications, but the harness commit, substrate commit, and MCP image digests were never recorded for these batches. Each released file's manifest lists its unrecorded fields.
 
 \begin{table}[h]
 \centering
@@ -209,7 +209,7 @@ The qwen3-32b pilot cell (3/8) and its $k=16$ depth read (1/16) are not pooled; 
 
 \subsection{Arm-C depth reads, reported but not pooled}
 
-Pre-registered k=16 reads on the fired dev tasks. The qwen3-32b sla-relink cell is the observation Section 5.4 discloses and deliberately excludes from the frozen 13-pair denominator.
+Pre-registered $k=16$ reads on the fired dev tasks. The qwen3-32b sla-relink cell is the observation Section~5.4 discloses and deliberately excludes from the frozen 13-pair denominator.
 
 \begin{table}[h]
 \centering
@@ -232,6 +232,6 @@ qwen3-32b & sla-relink & 1/16 & no, reported only \\
 \begin{itemize}
 \item \texttt{runs/20260720T190457Z\_5681f1}: frontier cab-gate batch lost to provider throttling, superseded by the clean rerun runs/20260721T223228Z\_402469 (32/32, 0 errored).
 \item \texttt{smoke and single-run harness checks}: not evaluation runs.
-\item \texttt{runs/quarantine/}: quarantined runs, preserved; see Appendix D.
+\item \texttt{runs/quarantine/}: quarantined runs, preserved; see Appendix~D.
 \end{itemize}
 

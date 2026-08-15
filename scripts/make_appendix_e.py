@@ -11,6 +11,7 @@ paper Section 5 and the script exits nonzero if any of them drifts.
         -> paper/appendix-e.tex         (included by paper/appendix.tex)
 """
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -72,6 +73,20 @@ EXCLUDED = [
 def tex_escape(s):
     return (s.replace("_", r"\_").replace("&", r"\&").replace("%", r"\%")
              .replace("#", r"\#"))
+
+
+def tex_prose(s):
+    """Escape shared prose, then apply the conventions the rest of the paper keeps.
+
+    The intro and exclusion strings are written once and emitted to both the
+    markdown mirror and the .tex, so math-mode k and non-breaking cross
+    references belong here rather than in the source strings, where they would
+    leak $...$ and ~ into the mirror. Elsewhere the paper is uniform: every
+    other k is math mode and every other Section reference is unbreakable.
+    """
+    s = tex_escape(s)
+    s = re.sub(r"\bk=(\d+)", r"$k=\1$", s)
+    return re.sub(r"\b(Section|Appendix)\s+(\d+(?:\.\d+)?|[A-F])\b", r"\1~\2", s)
 
 
 def load_dir(rel, task=None):
@@ -290,7 +305,7 @@ def emit_tex(rows, dev_pairs, dev_cab, dev_cells, arm_c, totals):
          r"interval lies strictly inside $(0.05, 0.95)$: $x \in [4,12]$ at "
          r"$k=16$, $x \in [5,27]$ at $k=32$.", "",
          r"\subsection{Held-out and frontier cells}", "",
-         tex_escape(INTRO_E1), ""]
+         tex_prose(INTRO_E1), ""]
 
     for group, heading in GROUPS_E1:
         t += [r"\subsubsection{" + tex_escape(heading) + "}", ""]
@@ -318,7 +333,7 @@ def emit_tex(rows, dev_pairs, dev_cab, dev_cells, arm_c, totals):
             t += [r"\bottomrule", r"\end{longtable}", ""]
 
     t += [r"\subsection{Development pool (frozen 13-pair definition)}", "",
-          tex_escape(INTRO_E2), "", r"\begin{table}[h]", r"\centering",
+          tex_prose(INTRO_E2), "", r"\begin{table}[h]", r"\centering",
           r"\small", r"\begin{tabular}{@{}lrp{0.55\linewidth}@{}}", r"\toprule",
           r"Model & Pairs & Cells ($x/n$) \\", r"\midrule"]
     for model in DEV_BREADTH:
@@ -342,7 +357,7 @@ def emit_tex(rows, dev_pairs, dev_cab, dev_cells, arm_c, totals):
           r"not pooled; the depth read is the pre-registered demotion "
           r"(Section~5.4, item 3).", "",
           r"\subsection{Arm-C depth reads, reported but not pooled}", "",
-          tex_escape(INTRO_E4), "", r"\begin{table}[h]", r"\centering",
+          tex_prose(INTRO_E4), "", r"\begin{table}[h]", r"\centering",
           r"\small", r"\begin{tabular}{@{}lllc@{}}", r"\toprule",
           r"Model & Task & $x/n$ & In frozen dev pool? \\", r"\midrule"]
     for (model, task), (x, n) in sorted(arm_c.items()):
@@ -353,7 +368,7 @@ def emit_tex(rows, dev_pairs, dev_cab, dev_cells, arm_c, totals):
           r"\subsection{Excluded from all tables}", r"\begin{itemize}"]
     for what, why in EXCLUDED:
         t.append(r"\item \texttt{" + tex_escape(what) + "}: "
-                 + tex_escape(why) + ".")
+                 + tex_prose(why) + ".")
     t += [r"\end{itemize}", ""]
 
     OUT_TEX.parent.mkdir(exist_ok=True)
