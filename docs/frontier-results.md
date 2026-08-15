@@ -1,5 +1,18 @@
 # Frontier Pass, Results (Bedrock Opus 4.6 + Haiku 4.5, read vs pre-reg §5)
 
+> **Superseded 2026-08-12. Read the paper, not this file, for the confirmatory
+> figures.** This records the read as it stood on 2026-07-21, when opus-4.6 and
+> haiku-4.5 were pooled with the held-out models. The pre-registration places
+> the frontier pass outside the confirmatory pool ("a separate downstream
+> leaderboard pass (labeled exploratory)"), and a later audit found that clause
+> had not been applied. Reclassifying moves every aggregate below: **7
+> damage-producing pairs become 5, 48 damage events become 42, the pooled k=1
+> audit miss rate of 0.665 becomes 0.575 pair-weighted, and the five
+> demonstrably-stochastic cells across three models become four across two**,
+> since opus cab-gate is exploratory. The frontier numbers themselves are
+> unchanged and still correct; only their pooling was wrong. The file is kept
+> as written because the correction is part of the record.
+
 Run 2026-07-20, us-east-2; Opus cab-gate (k32) rerun 2026-07-21 after the daily-token quota rolled off. **All 6 cells now valid**: the rerun came back clean (batch `20260721T223228Z_402469`, 32/32 results, 0 errored, $3.75). The Jul-20 throttled cab batch (`5681f1`, all 32 errored) and the partial retry attempts stay excluded/quarantined per the invalid-instrument rule. Merged per-model (never-splice validated): `runs/frontier-merged/opus-4-6.verdicts.jsonl` (20 tasks, 224 rows) and `runs/frontier-merged/haiku-4-5.verdicts.jsonl` (20 tasks, 208 rows).
 
 ## Final read (held-out pool 5 models: mistral, gpt-oss, deepseek, opus, haiku; all 20 tasks each)
