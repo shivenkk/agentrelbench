@@ -1,0 +1,48 @@
+{
+  "_comment": [
+    "Single source of truth for the drift gates in the derived papers.",
+    "",
+    "This paper now has three copies: the arXiv source in this repo, the",
+    "workshop version, and the SaTML version. Each derived copy trims a",
+    "different amount of body, so its main.tex cannot be hash-checked against",
+    "this one, and a correction landing here does not propagate on its own.",
+    "That is not hypothetical: the errored-run clarification landed here after",
+    "the workshop body was written and was missing until a reader caught it.",
+    "",
+    "Each derived repo's scripts/check_sync.py reads THIS file from this repo's",
+    "committed HEAD, so there is one list rather than three drifting copies.",
+    "",
+    "When a claim in this paper is corrected, add the old wording to 'retired'.",
+    "When a correction only matters where its surrounding passage survived the",
+    "trim, add a 'paired' entry so a derived copy that kept the context but lost",
+    "the fix fails loudly. Phrase every string so it cannot wrap across a line;",
+    "the checks flatten whitespace, but short phrases are still safer."
+  ],
+
+  "retired": [
+    "75 substantive",
+    "104 tests",
+    "linted against the schema",
+    "linted so that",
+    "1 to 5 runs per cell",
+    "no abstention mechanic",
+    "five held-out models",
+    "lowest in the pool",
+    "20-task breadth set",
+    "0.665",
+    "tri-classified"
+  ],
+
+  "paired": [
+    {
+      "context": "Three cells breach",
+      "required": "already mutated state",
+      "why": "a body that discusses the errored-run ceiling without this reads as 10 damage + 9 errored + 5 pass = 24 runs against n=16, which looks like corrupted data"
+    },
+    {
+      "context": "load-bearing twice",
+      "required": "sits well below the pool mean",
+      "why": "the retained-cell argument depends on the corrected comparison, not the false superlative it replaced"
+    }
+  ]
+}
