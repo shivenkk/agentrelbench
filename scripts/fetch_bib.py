@@ -8,6 +8,7 @@ camera-ready task (an arXiv record does not tell us where a paper was published)
 
     python scripts/fetch_bib.py    ->  paper/refs.bib
 """
+import re
 import sys
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -56,6 +57,42 @@ def to_latex(text):
     return text
 
 
+# plainnat lowercases a title past its first word, which turns SABER into
+# Saber, LLM into llm, and EnterpriseOps-Gym into Enterpriseops-gym. Any token
+# carrying a capital past its first letter is a proper noun or an acronym, so
+# brace it. The rule is structural rather than a list of names, so a citation
+# added later is protected without anyone remembering to add it here.
+WORD = re.compile(r"[A-Za-z0-9@'-]+")
+
+
+def protect_caps(title):
+    def brace(m):
+        w = m.group(0)
+        return "{" + w + "}" if len(w) > 1 and any(c.isupper() for c in w[1:]) else w
+
+    # Math segments are already typeset; leave them exactly as fetched.
+    parts = re.split(r"(\$[^$]*\$)", title)
+    return "".join(p if p.startswith("$") else WORD.sub(brace, p) for p in parts)
+
+
+def fix_name(name):
+    """Keep BibTeX from misreading a fetched author name.
+
+    A hyphenated given name whose second half is lowercase, such as
+    Han-chung, parses as first=Han von=chung last=Lee: it prints as "Han chung
+    Lee" and sorts under "chung". Bracing the token keeps it whole. A bare
+    single-letter initial also gets its period, which arXiv's metadata omits.
+    """
+    parts = []
+    for tok in name.split():
+        if "-" in tok and re.search(r"-[a-z]", tok):
+            tok = "{" + tok + "}"
+        elif len(tok) == 1 and tok.isalpha() and tok.isupper():
+            tok = tok + "."
+        parts.append(tok)
+    return " ".join(parts)
+
+
 def fetch():
     url = ("https://export.arxiv.org/api/query?id_list="
            + ",".join(CITES.values()) + f"&max_results={len(CITES) * 2}")
@@ -88,15 +125,20 @@ def main():
              ""]
     for key, aid in CITES.items():
         m = by_id[aid]
-        authors = " and ".join(m["authors"])
+        authors = " and ".join(fix_name(a) for a in m["authors"])
         lines += [
             f"@misc{{{key},",
-            f"  title         = {{{m['title']}}},",
+            f"  title         = {{{protect_caps(m['title'])}}},",
             f"  author        = {{{authors}}},",
             f"  year          = {{{m['year']}}},",
             f"  eprint        = {{{aid}}},",
             "  archivePrefix = {arXiv},",
-            f"  primaryClass  = {{{m['primary']}}}",
+            f"  primaryClass  = {{{m['primary']}}},",
+            # plainnat prints neither eprint nor archivePrefix, so without
+            # these two the rendered entry is author, title, year and nothing
+            # a reader could use to find the paper.
+            f"  howpublished  = {{arXiv:{aid} [{m['primary']}]}},",
+            f"  url           = {{https://arxiv.org/abs/{aid}}}",
             "}",
             "",
         ]

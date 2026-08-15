@@ -7,69 +7,91 @@
 
 \bibitem[Cuadron et~al.(2025)Cuadron, Yu, Liu, and Gupta]{cuadron2025saber}
 Alejandro Cuadron, Pengfei Yu, Yang Liu, and Arpit Gupta.
-\newblock Saber: Small actions, big errors -- safeguarding mutating steps in
-  llm agents, 2025.
+\newblock {SABER}: Small actions, big errors -- safeguarding mutating steps in
+  {LLM} agents.
+\newblock arXiv:2512.07850 [cs.LG], 2025.
+\newblock URL \url{https://arxiv.org/abs/2512.07850}.
 
 \bibitem[Gupta(2026)]{gupta2026reliabilitybench}
 Aayush Gupta.
-\newblock Reliabilitybench: Evaluating llm agent reliability under
-  production-like stress conditions, 2026.
+\newblock {ReliabilityBench}: Evaluating {LLM} agent reliability under
+  {Production-Like} stress conditions.
+\newblock arXiv:2601.06112 [cs.AI], 2026.
+\newblock URL \url{https://arxiv.org/abs/2601.06112}.
 
 \bibitem[Hu et~al.(2026)Hu, Tang, Wang, Zhao, Zhang, Qing, Yao, Huang, Zhang,
   and Ji]{hu2026saber}
 Qi~Hu, Yifeng Tang, Qinghua Wang, Lanyang Zhao, Pengji Zhang, Yuhao Qing, Xin
   Yao, Dong Huang, Lin Zhang, and Zhuoran Ji.
-\newblock Saber: Benchmarking operational safety of llm coding agents in
-  stateful project workspaces, 2026.
+\newblock {SABER}: Benchmarking operational safety of {LLM} coding agents in
+  stateful project workspaces.
+\newblock arXiv:2606.01317 [cs.SE], 2026.
+\newblock URL \url{https://arxiv.org/abs/2606.01317}.
 
 \bibitem[Khanal et~al.(2026)Khanal, Tao, and Zhou]{khanal2026beyond}
 Aaditya Khanal, Yangyang Tao, and Junxiu Zhou.
-\newblock Beyond pass@1: A reliability science framework for long-horizon llm
-  agents, 2026.
+\newblock Beyond pass@1: A reliability science framework for {Long-Horizon}
+  {LLM} agents.
+\newblock arXiv:2603.29231 [cs.AI], 2026.
+\newblock URL \url{https://arxiv.org/abs/2603.29231}.
 
 \bibitem[Li et~al.(2026)Li, Choe, Liu, Chen, Tao, You, Chen, Di, Sun, Zheng,
-  Bao, Wang, Yan, Li, and chung Lee]{li2026clawsbench}
+  Bao, Wang, Yan, Li, and Lee]{li2026clawsbench}
 Xiangyi Li, Kyoung~Whan Choe, Yimin Liu, Xiaokun Chen, Chujun Tao, Bingran You,
   Wenbo Chen, Zonglin Di, Jiankai Sun, Shenghan Zheng, Jiajun Bao, Yuanli Wang,
-  Weixiang Yan, Yiyuan Li, and Han chung Lee.
-\newblock Clawsbench: Evaluating capability and safety of llm productivity
-  agents in simulated workspaces, 2026.
+  Weixiang Yan, Yiyuan Li, and {Han-chung} Lee.
+\newblock {ClawsBench}: Evaluating capability and safety of {LLM} productivity
+  agents in simulated workspaces.
+\newblock arXiv:2604.05172 [cs.AI], 2026.
+\newblock URL \url{https://arxiv.org/abs/2604.05172}.
 
 \bibitem[Liu et~al.(2026)Liu, Zhang, Kasprova, Rabbani, Zahraei, Zhang,
   Ebrahimpour-Boroojeny, and Chandrasekaran]{liu2026agentabstain}
 Xun Liu, Yi~Evie Zhang, Vira Kasprova, Parisa Rabbani, Pardis~Sadat Zahraei,
   Tianyu Zhang, Ali Ebrahimpour-Boroojeny, and Varun Chandrasekaran.
-\newblock Agentabstain: Do llm agents know when not to act?, 2026.
+\newblock {AgentAbstain}: Do {LLM} agents know when not to act?
+\newblock arXiv:2607.10059 [cs.AI], 2026.
+\newblock URL \url{https://arxiv.org/abs/2607.10059}.
 
 \bibitem[Malay et~al.(2026)Malay, Nayak, Nair, Davasam, Tiwari, Madhusudhan,
   Nemala, Sunkara, and Rajeswar]{malay2026enterpriseops}
 Shiva Krishna~Reddy Malay, Shravan Nayak, Jishnu~Sethumadhavan Nair, Sagar
   Davasam, Aman Tiwari, Sathwik~Tejaswi Madhusudhan, Sridhar~Krishna Nemala,
   Srinivas Sunkara, and Sai Rajeswar.
-\newblock Enterpriseops-gym: Environments and evaluations for stateful agentic
-  planning and tool use in enterprise settings, 2026.
+\newblock {EnterpriseOps-Gym}: Environments and evaluations for stateful
+  agentic planning and tool use in enterprise settings.
+\newblock arXiv:2603.13594 [cs.AI], 2026.
+\newblock URL \url{https://arxiv.org/abs/2603.13594}.
 
 \bibitem[Ojewale and Venkatasubramanian(2026)]{ojewale2026abstention}
 Victor Ojewale and Suresh Venkatasubramanian.
-\newblock What benchmarks don't measure: The case for evaluating abstention
-  competence in autonomous agents, 2026.
+\newblock Designing for doubt: The case for informed abstention in autonomous
+  agents.
+\newblock arXiv:2606.02965 [cs.AI], 2026.
+\newblock URL \url{https://arxiv.org/abs/2606.02965}.
 
 \bibitem[Rabanser et~al.(2026)Rabanser, Kapoor, Kirgis, Liu, Utpala, and
   Narayanan]{rabanser2026science}
 Stephan Rabanser, Sayash Kapoor, Peter Kirgis, Kangheng Liu, Saiteja Utpala,
   and Arvind Narayanan.
-\newblock Towards a science of ai agent reliability, 2026.
+\newblock Towards a science of {AI} agent reliability.
+\newblock arXiv:2602.16666 [cs.AI], 2026.
+\newblock URL \url{https://arxiv.org/abs/2602.16666}.
 
 \bibitem[Yao et~al.(2024)Yao, Shinn, Razavi, and Narasimhan]{yao2024taubench}
 Shunyu Yao, Noah Shinn, Pedram Razavi, and Karthik Narasimhan.
-\newblock $\tau$-bench: A benchmark for tool-agent-user interaction in
-  real-world domains, 2024.
+\newblock $\tau$-bench: A benchmark for {Tool-Agent-User} interaction in
+  {Real-World} domains.
+\newblock arXiv:2406.12045 [cs.AI], 2024.
+\newblock URL \url{https://arxiv.org/abs/2406.12045}.
 
 \bibitem[Yeke et~al.(2026)Yeke, Temirel, Shreekumar, Lee, Xu, and
   Celik]{yeke2026yesman}
 Doguhan Yeke, Elif~Su Temirel, Ananth Shreekumar, Brandon Lee, Dongyan Xu, and
-  Z~Berkay Celik.
-\newblock The yes-man syndrome: Benchmarking abstention in embodied robotic
-  agents, 2026.
+  Z.~Berkay Celik.
+\newblock The {Yes-Man} syndrome: Benchmarking abstention in embodied robotic
+  agents.
+\newblock arXiv:2605.20544 [cs.RO], 2026.
+\newblock URL \url{https://arxiv.org/abs/2605.20544}.
 
 \end{thebibliography}
