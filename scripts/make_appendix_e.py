@@ -75,6 +75,18 @@ def tex_escape(s):
              .replace("#", r"\#"))
 
 
+# The shared prose names sections by number because the markdown mirror has no
+# cross-reference machinery. On the LaTeX side those numbers become real
+# references, so a venue that numbers sections differently still reads right.
+LABELS = {
+    "2": "sec:related", "3": "sec:design", "4": "sec:setup", "5": "sec:results",
+    "5.1": "sec:headline", "5.2": "sec:gradient", "5.3": "sec:method",
+    "5.4": "sec:integrity", "6": "sec:limits",
+    "A": "app:labeler", "B": "app:tasks", "C": "app:determinism",
+    "D": "app:silent", "E": "app:tables", "F": "app:prereg",
+}
+
+
 def tex_prose(s):
     """Escape shared prose, then apply the conventions the rest of the paper keeps.
 
@@ -86,7 +98,17 @@ def tex_prose(s):
     """
     s = tex_escape(s)
     s = re.sub(r"\bk=(\d+)", r"$k=\1$", s)
-    return re.sub(r"\b(Section|Appendix)\s+(\d+(?:\.\d+)?|[A-F])\b", r"\1~\2", s)
+
+    def crossref(m):
+        kind, num = m.group(1), m.group(2)
+        label = LABELS.get(num)
+        # A hard-coded number renders as "Section 5" under arabic numbering and
+        # is right by accident. IEEEtran numbers sections in Roman, so the same
+        # literal reads "Section 5" beside a real reference's "Section V".
+        # Emitting \ref keeps every venue's own numbering.
+        return f"{kind}~\\ref{{{label}}}" if label else f"{kind}~{num}"
+
+    return re.sub(r"\b(Section|Appendix)\s+(\d+(?:\.\d+)?|[A-F])\b", crossref, s)
 
 
 def load_dir(rel, task=None):
@@ -297,7 +319,7 @@ def emit_tex(rows, dev_pairs, dev_cab, dev_cells, arm_c, totals):
          r"\section{Full per-(model, task) tables}", r"\label{app:tables}", "",
          r"Generated from the committed merged verdicts by "
          r"\texttt{scripts/make\_appendix\_e.py}. No number in this appendix is "
-         r"hand-entered; the generator asserts every value Section~5 cites and "
+         r"hand-entered; the generator asserts every value \\ref{sec:results} cites and "
          r"exits nonzero on drift.", "",
          r"Here $x$ is the damage count, $n$ the runs in the cell, "
          r"\emph{upper} the errored-run upper bound, and PASS the task-success "
@@ -355,7 +377,7 @@ def emit_tex(rows, dev_pairs, dev_cab, dev_cells, arm_c, totals):
     t += [r"\bottomrule", r"\end{tabular}", r"\end{table}", "",
           r"The qwen3-32b pilot cell (3/8) and its $k=16$ depth read (1/16) are "
           r"not pooled; the depth read is the pre-registered demotion "
-          r"(Section~5.4, item 3).", "",
+          r"(Section~\\ref{sec:integrity}, item 3).", "",
           r"\subsection{Arm-C depth reads, reported but not pooled}", "",
           tex_prose(INTRO_E4), "", r"\begin{table}[h]", r"\centering",
           r"\small", r"\begin{tabular}{@{}lllc@{}}", r"\toprule",
