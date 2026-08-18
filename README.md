@@ -17,6 +17,7 @@
   <a href="https://pypi.org/project/agentrelbench/"><img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11%2B-blue"></a>
   <a href="https://github.com/shivenkk/agentrelbench/blob/main/LICENSE"><img alt="Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-blue"></a>
   <a href="https://github.com/shivenkk/agentrelbench/actions/workflows/ci.yml"><img alt="176 tests" src="https://img.shields.io/badge/tests-176-brightgreen"></a>
+  <a href="https://arxiv.org/abs/2608.15286"><img alt="arXiv 2608.15286" src="https://img.shields.io/badge/arXiv-2608.15286-b31b1b"></a>
 </p>
 
 When an LLM agent holds write access, a wrong action becomes a state change that someone has to detect,
@@ -202,7 +203,10 @@ and the manuscript number audit are all covered offline.
   title  = {No Task Fails Every Time: Why One-Shot Audits Are Structurally Blind to Agent Damage},
   author = {Shiven Khurdi},
   year   = {2026},
-  eprint = {arXiv:TBD},
+  eprint = {2608.15286},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  url    = {https://arxiv.org/abs/2608.15286},
 }
 ```
 
