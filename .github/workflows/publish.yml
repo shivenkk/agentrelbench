@@ -1,0 +1,76 @@
+name: Publish to PyPI
+
+# Publishing is the one irreversible step in this project: a version number can
+# never be reused or replaced. So this triggers on a PUBLISHED RELEASE, not on a
+# tag push. Creating a release is a deliberate two-step act in the UI, which
+# keeps a human in front of the irreversible part; a mistyped tag pushed from a
+# laptop cannot ship anything.
+#
+# Authentication is PyPI Trusted Publishing over OIDC. No API token is stored in
+# this repository, in an environment, or anywhere else, which is stronger than
+# rotating one: the credential does not exist.
+#
+# SETUP ORDER MATTERS. The Trusted Publisher must be registered on PyPI BEFORE
+# this workflow first runs, or the publish step fails with an error that does not
+# explain why. On pypi.org: the project -> Manage -> Publishing -> add a
+# GitHub publisher with owner "shivenkk", repository "agentrelbench", workflow
+# "publish.yml", environment left blank.
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # mints the OIDC token Trusted Publishing exchanges
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "ruff>=0.6,<0.7"
+          python -m pip install ".[dev,figures]" build twine
+
+      # A release can be cut from any commit, including one whose CI was red, so
+      # the gates run again here rather than being assumed from an earlier run.
+      - name: Lint
+        run: ruff check .
+
+      - name: Test
+        run: pytest -q -m "not needs_containers"
+
+      - name: Recompute every number in the manuscript from released data
+        run: python scripts/audit_numbers.py
+
+      - name: Build
+        run: python -m build
+
+      - name: Refuse to publish if the release tag and the package version disagree
+        # Cutting a release without bumping pyproject.toml would otherwise try to
+        # republish an existing version, and the failure would arrive from PyPI
+        # after the release already exists. Catch it here instead.
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          python - <<'PY'
+          import glob, os, sys
+          tag = os.environ["TAG"].lstrip("vV")
+          built = {os.path.basename(p).split("-")[1] for p in glob.glob("dist/*.whl")}
+          if built != {tag}:
+              sys.exit(f"release tag {tag!r} does not match built version(s) {sorted(built)}; "
+                       "bump the version in pyproject.toml or fix the tag")
+          print(f"tag and package version agree: {tag}")
+          PY
+
+      - name: Check the artifacts render on PyPI
+        run: twine check dist/*
+
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@release/v1
