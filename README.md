@@ -18,6 +18,7 @@
   <a href="https://github.com/shivenkk/agentrelbench/blob/main/LICENSE"><img alt="Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-blue"></a>
   <a href="https://github.com/shivenkk/agentrelbench/actions/workflows/ci.yml"><img alt="176 tests" src="https://img.shields.io/badge/tests-176-brightgreen"></a>
   <a href="https://arxiv.org/abs/2608.15286"><img alt="arXiv 2608.15286" src="https://img.shields.io/badge/arXiv-2608.15286-b31b1b"></a>
+  <a href="https://openreview.net/forum?id=eQH5SQYour"><img alt="NeurIPS 2026 workshop poster" src="https://img.shields.io/badge/NeurIPS%202026%20workshop-poster-6f42c1"></a>
 </p>
 
 When an LLM agent holds write access, a wrong action becomes a state change that someone has to detect,
@@ -197,6 +198,9 @@ pytest
 and the manuscript number audit are all covered offline.
 
 ## Citation
+
+Accepted as a poster at the NeurIPS 2026 workshop *Who Verifies the Agents? Toward Reliable Agent
+Development* ([OpenReview](https://openreview.net/forum?id=eQH5SQYour)). To cite, use the arXiv preprint:
 
 ```bibtex
 @misc{khurdi2026agentrelbench,
